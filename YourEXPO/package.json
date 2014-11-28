@@ -1,0 +1,28 @@
+{
+  "name": "YourEXPO",
+  "version": "0.1.0",
+  "description": "Your Expo 2015 Instagram challenge",
+  "main": "index.js",
+  "scripts": {
+    "css": "gulp prefix"
+  },
+  "keywords": [
+    "expo"
+  ],
+  "author": "Volox",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "1.x",
+    "express-session": "1.x",
+    "hbs": "2.x",
+    "instagram-node": "0.x",
+    "marked": "0.3.x",
+    "passport": "0.x",
+    "passport-instagram": "0.x",
+    "serve-static": "1.x"
+  },
+  "devDependencies": {
+    "gulp": "3.x",
+    "gulp-autoprefixer": "2.x"
+  }
+}

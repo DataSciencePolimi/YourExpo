@@ -1,0 +1,87 @@
+
+.profile {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+
+  margin-bottom: 50px;
+}
+
+.profile img {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  width: 170px;
+  margin-right: 25px;
+  min-height: 170px;
+}
+.profile .info {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  position: relative;
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+}
+
+.info h2 {
+  font-weight: lighter;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+.info h2.title {
+  font-weight: normal;
+}
+.info h2.my-photos {
+  position: absolute;
+  bottom: 0;
+
+  margin-bottom: 0;
+  font-size: 25px;
+}
+
+.info .name {
+  color: #D90985;
+  font-weight: lighter;
+  font-size: 20px;
+  margin: 7px 0px;
+}
+.info .bio {
+  margin: 7px 0px;
+}
+.info .bio:before {
+  content: "\"";
+}
+.info .bio:after {
+  content: "\"";
+}
+.info .bio:empty:before {
+  content: "";
+}
+.info .bio:empty:after {
+  content: "";
+}
+
+.info .mail {
+  margin: 7px 0px;
+}

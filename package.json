@@ -1,0 +1,29 @@
+{
+  "name": "EXPO",
+  "version": "0.1.0",
+  "description": "EXPO main project",
+  "main": "server.js",
+  "scripts": {
+    "mongo": "mongod -f mongo.yaml",
+    "start": "node server.js",
+    "debug": "nodemon --debug server.js"
+  },
+  "keywords": [
+    "expo"
+  ],
+  "author": "Volox",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "2.x",
+    "debug": "2.x",
+    "express": "4.x",
+    "express-slash": "2.x",
+    "lodash": "2.x",
+    "moment": "2.x",
+    "mongoose": "3.x",
+    "yargs": "1.x"
+  },
+  "devDependencies": {
+    "nodemon": "1.x"
+  }
+}

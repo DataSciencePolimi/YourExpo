@@ -1,0 +1,19 @@
+article > section {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.image {
+  flex: 1 1 auto;
+  width: 70%;
+  height: 660px;
+  max-width: 500px;
+  max-height: 660px;
+}
+
+#graph {
+  flex: 1 1 auto;
+}

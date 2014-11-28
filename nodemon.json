@@ -1,0 +1,11 @@
+{
+  "restartable": false,
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules"
+  ],
+  "verbose": false,
+  "env": {
+  },
+  "ext": "js json hbs"
+}

@@ -1,0 +1,15 @@
+
+article > section {
+  text-align: center;
+}
+
+article > section > p {
+  text-align: justify;
+}
+
+
+.example {
+  height: 692px;
+  width: 612px;
+  box-shadow: 0px 0px 10px 10px #DDD;
+}

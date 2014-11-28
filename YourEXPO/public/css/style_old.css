@@ -1,0 +1,215 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic);
+
+body {
+  /* background-color: #ddd; */
+  background-image: url( '../img/rainbow.jpg' );
+  padding-top: 15px;
+  background-position: top left;
+  background-repeat: no-repeat;
+
+  font-family: 'Lato', sans-serif;
+}
+
+
+
+header {
+
+}
+
+header .title {
+  text-transform: uppercase;
+  color: #D90985;
+  font-size: 35px;
+  font-weight: lighter;
+}
+header .logos {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #DDD;
+  padding-bottom: 15px;
+}
+header .logos .logo {
+  max-height: 70px;
+}
+
+
+footer {
+  background-color: #fff;
+  min-height: 400px;
+  padding: 25px;
+}
+
+
+.content {
+  min-height: 640px;
+  background-color: #fff;
+  padding: 40px;
+  margin-bottom: 40px;
+}
+.container {
+  /* padding: 3em; */
+  /* background-color: #fff; */
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+
+
+.nav > li > a {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #000;
+  border-right: 1px solid #DDD;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.nav > li:last-child > a {
+  border-right: none;
+}
+
+
+
+.follow {
+  margin-top: 50px;
+}
+.follow h3 {
+  text-transform: uppercase;
+  color: #D90985;
+  font-size: 20px;
+  font-weight: lighter;
+}
+.follow a {
+  background-color: #000;
+  color: #FFF;
+  border-radius: 32px;
+  height: 32px;
+  width: 32px;
+  padding: 0;
+  line-height: 30px;
+  font-size: 20px;
+}
+
+
+.expo-partners h2 {
+  font-weight: 400;
+  font-size: 1em;
+  border-bottom: 1px solid #EEE;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  color: #333;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.expo-partners .expo-partners-container {
+  margin-bottom: 30px;
+}
+.expo-partners .expo-partners-container .expo-partners-list {
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.expo-partners-list li {
+  height: 44px;
+  width: auto;
+  margin-right: 20px;
+  display: inline-block;
+}
+
+
+
+.gallery {
+  border: 20px solid #3d3d3d;
+  margin-right: -40px;
+  margin-left: -40px;
+  background-color: #3D3D3D;
+}
+.gallery .image-container {
+  width: 220px;
+  height: 220px;
+  overflow: hidden;
+  display: block;
+  float: left;
+}
+
+
+.tag {
+  margin: 50px;
+  color: #D90985;
+}
+.tag h1 {
+  font-weight: bold;
+}
+.tag h1:before {
+  content: "#";
+}
+.tag p {
+  font-weight: lighter;
+  text-transform: uppercase;
+}
+
+
+
+.image-container {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+
+}
+.image {
+  position: relative;
+  font-family: Helvetica, sans-serif;
+
+  height: 100%;
+  width: 100%;
+  display: block;
+
+  -webkit-transition: background-color 0.3s ease-out;
+  transition: background-color 0.3s ease-out;
+}
+.image .likes {
+  position: absolute;
+  top: calc( 50% - 20px );
+  left: 50%;
+  font-weight: lighter;
+  font-size: 20px;
+  color: #eee;
+  opacity: 0;
+
+  -webkit-transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out;
+}
+.image:hover .likes {
+  opacity: 1;
+}
+.image .author {
+  position: absolute;
+  bottom: 0.25em;
+  right: 0.25em;
+  color: #eee;
+  font-weight: bold;
+}
+.image .caption {
+  position: absolute;
+  top: 0;
+  background-color: #eee;
+  padding-top: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333;
+  font-size: 0.9em;
+  border-bottom: 1px solid #333;
+  height: 0%;
+  overflow: hidden;
+
+}
+.image:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.image .tags {}
+.image .tags .tag {}
+

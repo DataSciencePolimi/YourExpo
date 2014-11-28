@@ -1,0 +1,22 @@
+{
+  "name": "YourEXPO-crawler",
+  "version": "0.1.0",
+  "description": "Your Expo 2015 crawler for Instagram challenge",
+  "main": "crawler.js",
+  "scripts": {},
+  "keywords": [
+    "expo",
+    "crawler"
+  ],
+  "author": "Volox",
+  "license": "MIT",
+  "dependencies": {
+    "fbgraph": "0.x",
+    "flickrapi": "0.x",
+    "instagram-node": "0.x",
+    "mtwitter": "^1.6.4",
+    "request": "2.x",
+    "yargs": "1.x"
+  },
+  "devDependencies": {}
+}

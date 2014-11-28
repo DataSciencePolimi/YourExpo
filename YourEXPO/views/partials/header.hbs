@@ -1,0 +1,31 @@
+<div class="logos">
+  <img class="logo left" src="img/logo-expo.png" alt="EXPO 2015">
+  <div class="title">{{title}}</div>
+  <img class="logo right" src="img/logo-polimi.png" alt="Politecnico di Milano">
+</div>
+
+<nav>
+  <ul>
+    <li><a href="{{tag}}/home">Home</a></li>
+    <li><a href="{{tag}}/come">
+      <span lang="it">Come funziona</span>
+      <span lang="en">How it works</span>
+    </a></li>
+    <li><a href="{{tag}}/gallery">Gallery</a></li>
+    <li><a href="{{tag}}/gioca">
+      <span lang="it">Gioca</span>
+      <span lang="en">Play</span>
+    </a></li>
+    <li>
+      <i class="fa fa-lock"></i>
+      <a href="{{tag}}/profile">
+        {{#if user}}
+          <span>{{user.username}}</span>
+        {{else}}
+          <span lang="it">Profilo</span>
+          <span lang="en">My profile</span>
+        {{/if}}
+      </a>
+    </li>
+  </ul>
+</nav>

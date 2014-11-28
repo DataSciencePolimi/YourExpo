@@ -1,0 +1,11 @@
+<div class="gallery">
+  {{#each this}}
+    <div class="image" style="background-image: url('{{imageUrl}}');" data-id="{{_id}}">
+      <div class="overlay">
+        <a class="details" href="{{tag}}/details/{{_id}}" title="Details"><i class="fa fa-line-chart"></i></a>
+        <a class="likes" href="#" data-likes="{{ numVotes }}"><i class="fa fa-heart"></i></a>
+        <span class="author">@{{ raw.user.username }}</span>
+      </div>
+    </div>
+  {{/each}}
+</div>

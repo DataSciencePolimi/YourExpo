@@ -1,0 +1,64 @@
+
+.profile {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  margin-bottom: 50px;
+}
+
+.profile img {
+  flex: 0 0 auto;
+  width: 170px;
+  margin-right: 25px;
+  min-height: 170px;
+}
+.profile .info {
+  flex: 1 0 auto;
+  position: relative;
+  align-self: stretch;
+}
+
+.info h2 {
+  font-weight: lighter;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+.info h2.title {
+  font-weight: normal;
+}
+.info h2.my-photos {
+  position: absolute;
+  bottom: 0;
+
+  margin-bottom: 0;
+  font-size: 25px;
+}
+
+.info .name {
+  color: #D90985;
+  font-weight: lighter;
+  font-size: 20px;
+  margin: 7px 0px;
+}
+.info .bio {
+  margin: 7px 0px;
+}
+.info .bio:before {
+  content: "\"";
+}
+.info .bio:after {
+  content: "\"";
+}
+.info .bio:empty:before {
+  content: "";
+}
+.info .bio:empty:after {
+  content: "";
+}
+
+.info .mail {
+  margin: 7px 0px;
+}

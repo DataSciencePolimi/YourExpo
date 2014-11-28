@@ -1,0 +1,40 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+      "name": "EXPO Root",
+      "folder_exclude_patterns": [
+        "node_modules",
+        "yourexpo",
+        "database"
+      ],
+      "file_exclude_patterns": [
+        "*.log"
+      ]
+    },
+    {
+      "path": "YourEXPO",
+      "name": "Your EXPO",
+      "folder_exclude_patterns": [
+        "node_modules",
+        "crawler",
+        "public/lib",
+        "public/css"
+      ],
+      "file_exclude_patterns": [
+        "*.log"
+      ]
+    },
+    {
+      "path": "YourEXPO/crawler",
+      "name": "Your EXPO Crawler",
+      "folder_exclude_patterns": [
+        "node_modules"
+      ],
+      "file_exclude_patterns": [
+        "*.log"
+      ]
+    }
+	]
+}

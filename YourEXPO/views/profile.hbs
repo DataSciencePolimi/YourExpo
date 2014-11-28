@@ -1,0 +1,24 @@
+{{#extend "css"}}
+  <link href="css/gallery.css" rel="stylesheet">
+  <link href="css/profile.css" rel="stylesheet">
+{{/extend}}
+
+
+<div class="profile">
+  <img src="{{user.profilePicture}}" alt="{{user.fullName}}">
+  <div class="info">
+    <h2 class="title">Profilo</h2>
+    <div class="name">{{user.fullName}}</div>
+    <div class="bio">{{user.bio}}</div>
+    <div class="mail">{{user.email}}</div>
+    <h2 class="my-photos">Le mie fotografie</h2>
+  </div>
+</div>
+
+
+{{#each galleries }}
+  {{#if this.length }}
+    <h2>{{@key}}:</h2>
+    {{> gallery this }}
+  {{/if}}
+{{/each}}

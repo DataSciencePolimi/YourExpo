@@ -1,0 +1,33 @@
+
+
+.gallery {
+  border: 20px solid #3d3d3d;
+  margin-right: -50px;
+  margin-left: -50px;
+  background-color: #3D3D3D;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.gallery > .image {
+  flex: 1 1 200px;
+  height: 200px;
+}
+
+.image .details {
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  color: #FFF;
+  font-size: 25px;
+  opacity: 0;
+
+  transition: opacity 0.3s ease-out;
+}
+.image:hover .details {
+  opacity: 1;
+}

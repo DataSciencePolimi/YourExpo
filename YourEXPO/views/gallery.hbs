@@ -1,0 +1,32 @@
+{{#extend "css"}}
+  <link href="css/gallery.css" rel="stylesheet">
+{{/extend}}
+
+
+{{> tag }}
+
+
+{{#if highlighted.length}}
+  <h2 lang="it">Foto in evidenza:</h2>
+  <h2 lang="en">Highlighted:</h2>
+
+  {{> gallery highlighted }}
+{{/if}}
+
+
+{{#if trending.length}}
+  <h2>Trending now:</h2>
+  {{> gallery trending }}
+{{/if}}
+
+
+{{#if top.length}}
+  <h2>Top voted:</h2>
+  {{> gallery top }}
+{{/if}}
+
+
+{{#if recent.length}}
+  <h2>Recently posted:</h2>
+  {{> gallery recent }}
+{{/if}}

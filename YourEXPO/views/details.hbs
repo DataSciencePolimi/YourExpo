@@ -1,0 +1,19 @@
+{{#extend "css"}}
+  <link href="css/details.css" rel="stylesheet">
+{{/extend}}
+
+{{#extend "js"}}
+  <script src="lib/highcharts/highcharts.js"></script>
+  <script src="lib/moment/moment.js"></script>
+  {{!-- <script src="lib/highcharts/themes/dark-unica.js"></script> --}}
+  <script>
+    var photo = {{{ json photo }}};
+    var posts = {{{ json posts }}};
+  </script>
+  <script src="js/details.js"></script>
+{{/extend}}
+
+
+<iframe class="image" src="http://instagr.am/p/{{photo.shortLink}}/embed/captioned/?v=4" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+
+<div id="graph"></div>

@@ -1,0 +1,17 @@
+# Logging
+systemLog:
+  verbosity: 1
+  #destination: syslog
+  timeStampFormat: iso8601-utc
+  #path: "mongo.log"
+  #logAppend: true
+
+net:
+  port: 27017
+  #bindIp: 127.0.0.1
+  http:
+    enabled: false
+
+storage:
+  dbPath: ./database
+  directoryPerDB:  true

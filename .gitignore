@@ -1,0 +1,23 @@
+### Node
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+
+# Do not sync dependencies
+node_modules
+lib
+
+# Do not sync database
+database
+
+# Do not sync configuration files
+config/*.json
+
+### SublimeText project files
+*.sublime-workspace
