@@ -1,74 +1,78 @@
 // Load system modules
 
 // Load modules
-var Promise = require( 'bluebird' );
-var _ = require( 'lodash' );
-var debug = require( 'debug' )( 'crawler:save:photo' );
-var mongoose = require( 'mongoose' );
+var Promise = require('bluebird');
+var _ = require('lodash');
+var debug = require('debug')('crawler:save:photo');
+var mongoose = require('mongoose');
 
 
 // Load my modules
-var rootConfig = require( '../../config/' );
-var config = require( './config/' );
-
-
-
+var rootConfig = require('../../config/');
+var config = require('./config/');
+var postToCS = require('./post.js');
 
 
 // Constant declaration
 
 
 // Module variables declaration
-function savePhotos( tag, wrappedElements ) {
-  var Model = mongoose.model( rootConfig.mongo.collections.photo );
-  debug( 'Saving %d photos to the DB', wrappedElements.length );
+function savePhotos(tag, wrappedElements) {
+  var Model = mongoose.model(rootConfig.mongo.collections.photo);
+  debug('Saving %d photos to the DB', wrappedElements.length);
 
-  var promises = _.map( wrappedElements, function( element ) {
+  var promises = _.map(wrappedElements, function(element) {
 
     return Model
-    .findOne()
-    .where( 'tag', tag )
-    .where( 'providerId', element.providerId )
-    .execAsync()
-    .then( function( document ) {
+      .findOne()
+      .where('tag', tag)
+      .where('providerId', element.providerId)
+      .execAsync()
+      .then(function(document) {
 
-      var notPresent = !document;
+        var notPresent = !document;
 
-      var votes = element.votes;
-      delete element.votes;
+        var votes = element.votes;
+        delete element.votes;
 
-      // Create
-      if( notPresent ) {
+        // Create
+        if (notPresent) {
 
-        document = new Model( element );
-        document.tag = tag;
+          document = new Model(element);
+          document.tag = tag;
 
-        debug( 'Creating document for %s', document.providerId );
-      }
+          debug('Creating document for %s', document.providerId);
+        }
 
-      // Add votes
-      document.votes.push( {
-        votes: votes
-      } );
-      document.votesCount += votes;
+        // Add votes
+        document.votes.push({
+          votes: votes
+        });
+        document.votesCount += votes;
 
-      return document
-      .saveAsync();
-    } )
-    ;
-  } );
+        return document
+          .saveAsync();
+      });
+  });
 
   return Promise
-  .settle( promises )
-  .then( function( /*promiseList*/ ) {
-    /*
-    _.each( promiseList, function( promise ) {
-      if( promise.isRejected() ) {
-        debug( 'Promise failed: %s', promise.reason() );
-      }
-    } );
-    */
-  } )
+    .settle(promises)
+    .then(function(promiseList) {
+      var toPost = [];
+
+      _.each(promiseList, function(promise) {
+        if (promise.isFulfilled()) {
+
+          var object = promise.value()[0];
+
+          toPost.push(object);
+        }
+      });
+
+      return postToCS(toPost);
+
+
+    })
 
   ;
 }

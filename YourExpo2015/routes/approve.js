@@ -1,10 +1,10 @@
 // Load system modules
 
 // Load modules
-var debug = require( 'debug' )( 'yourexpo:routes:approve' );
-
+var debug = require('debug')('yourexpo:routes:approve');
+var mongoose = require('mongoose');
 // Load my modules
-var app = require( '../index.js' );
+var rootConfig = require('../../config/');
 
 
 
@@ -17,15 +17,28 @@ var app = require( '../index.js' );
 // Module initialization (at first load)
 
 
-module.exports = function( req, res, next ) {
-  debug( 'Approve' );
-  debug( app );
+module.exports = function(req, res, next) {
+  debug('Approve');
 
-  res.json( {
-    baseUrl: req.baseUrl,
-    path: app.path(),
-    mountpath: app.mountpath
-  } );
+  var Model = mongoose.model(rootConfig.mongo.collections.photo);
+  var id = req.body.id;
+
+  Model
+    .findById(id)
+    .exec(function(err, photo) {
+      if (err) throw new Error(err);
+
+      photo.moderated = true;
+      photo.moderating = false;
+
+      photo.save(function(err) {
+        if (err) throw new Error(err);
+
+        res.json({});
+      });
+
+    });
+
 };
 
 

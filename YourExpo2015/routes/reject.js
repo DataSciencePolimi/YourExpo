@@ -1,12 +1,10 @@
 // Load system modules
 
 // Load modules
-var debug = require( 'debug' )( 'yourexpo:routes:reject' );
-
+var debug = require('debug')('yourexpo:routes:reject');
+var mongoose = require('mongoose');
 // Load my modules
-
-
-
+var rootConfig = require('../../config/');
 
 // Constant declaration
 
@@ -17,10 +15,28 @@ var debug = require( 'debug' )( 'yourexpo:routes:reject' );
 // Module initialization (at first load)
 
 
-module.exports = function( req, res, next ) {
-  debug( 'Reject' );
+module.exports = function(req, res, next) {
+  debug('Reject');
 
-  res.json( {} );
+  var Model = mongoose.model(rootConfig.mongo.collections.photo);
+  var id = req.body.id;
+
+  Model
+    .findById(id)
+    .exec(function(err, photo) {
+      if (err) throw new Error(err);
+
+      photo.moderated = true;
+      photo.moderating = false;
+      photo.rejected = true;
+
+      photo.save(function(err) {
+        if (err) throw new Error(err);
+
+        res.json({});
+      });
+
+    });
 };
 
 
