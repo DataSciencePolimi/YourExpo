@@ -39,7 +39,7 @@ var hbsInstance = configureHandlebars( app );
  * Configure app
  */
 app.name = 'YourEXPO2015';
-app.locals.title = 'Your Expo 2015';
+app.locals.title = 'YourExpo2015';
 app.enable( 'trust proxy' );
 app.enable( 'strict routing' );
 app.engine( 'hbs', hbsInstance.__express );
@@ -138,8 +138,9 @@ router.get( '/:tag/home', require( './routes/tag/home.js' ) );
 router.get( '/:tag/come', require( './routes/tag/come.js' ) );
 router.get( '/:tag/gioca', require( './routes/tag/gioca.js' ) );
 router.get( '/:tag/gallery', require( './routes/tag/gallery.js' ) );
-router.get( '/:tag/profile', checkAuth, require( './routes/profile.js' ) );
 router.get( '/:tag/details/:id', require( './routes/tag/details.js' ) );
+router.get( '/:tag/about', require( './routes/about.js' ) );
+router.get( '/:tag/profile', checkAuth, require( './routes/profile.js' ) );
 
 
 

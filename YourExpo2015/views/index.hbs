@@ -1,0 +1,51 @@
+{{#extend "css"}}
+  <link href="css/home.css" rel="stylesheet">
+{{/extend}}
+
+
+
+
+<div class="images">
+
+  {{!-- Topic1 --}}
+  <div class="image ratio-box" style="background-image: url( 'img/expo/{{tagObject.topic1}}/{{randomIndex1}}.jpg' );">
+    <div class="ratio-content term" lang="en">{{tagprop tagObject 'topic1' 'en'}}</div>
+    <div class="ratio-content term" lang="it">{{tagprop tagObject 'topic1'}}</div>
+  </div>
+
+  {{!-- Topic2 --}}
+  <div class="image ratio-box" style="background-image: url( 'img/expo/{{tagObject.topic2}}/{{randomIndex2}}.jpg' );">
+    <div class="ratio-content term" lang="en">{{tagprop tagObject 'topic2' 'en'}}</div>
+    <div class="ratio-content term" lang="it">{{tagprop tagObject 'topic2'}}</div>
+  </div>
+</div>
+
+
+{{> tag }}
+
+
+{{!-- English --}}
+<div lang="en">
+  <p class="lead"><strong>YourExpo2015</strong> is the challenge launched by Expo on life, food and its perception.</p>
+
+  <p class="lead">Be ready to be challenged every week by two new topics or dimensions about food.</p>
+
+  <p class="lead">You can partecipate by posting on Instagram your photos about one of the two topics of the week, tagging it with the official hashtag.</p>
+
+  <p class="lead">The most popular photos will be added to the challenge gallery and will be promoted using the official EXPO social channels.</p>
+</div>
+
+
+{{!-- Italian --}}
+<div lang="it">
+  <p class="lead"><strong>YourExpo2015</strong> è la sfida lanciata da Expo sui temi della campagna <em>Cibo è Vita</em>.</p>
+
+  <p class="lead">Puoi partecipare caricando su Instagram le tue foto sul tema proposto.</p>
+
+  <p class="lead">Interpreta il tema e fatti votare.</p>
+
+  <p class="lead">Le foto più popolari saranno inserite nella gallery del concorso e promosse sui canali social ufficiali di Expo!</p>
+</div>
+
+
+{{> buttons }}

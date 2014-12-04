@@ -4,7 +4,8 @@
   "description": "Your Expo 2015 Instagram challenge",
   "main": "index.js",
   "scripts": {
-    "css": "gulp prefix"
+    "css": "gulp prefix",
+    "css-watch": "gulp watch"
   },
   "keywords": [
     "expo"

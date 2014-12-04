@@ -30,30 +30,25 @@ article > section {
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
-  width: 300px;
-  height: 300px;
 
   color: #FFF;
   font-weight: bold;
   text-transform: uppercase;
   font-size: 50px;
-  line-height: 300px;
 
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  background-color: #ddd;
 
-  border-radius: 10px;
-}
-.images > .image:first-child {
-  margin-right: 10px;
-}
-.images > .image:last-child {
-  margin-left: 10px;
+  margin: 0 5px;
+
+  width: 50%;
+  max-width: 300px;
+  border-radius: 16px;
 }
 
-.image > .term {
-  display: block;
-  width: 100%;
-  height: 100%;
+.image .term {
+  margin: 35% 0;
+  text-shadow: 1px 0px 1px #000;
 }

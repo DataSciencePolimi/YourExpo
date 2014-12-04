@@ -11,7 +11,7 @@ var forceTrailingSlash = require( 'express-slash' );
 // Load my modules
 var config = require( './config/' );
 var initMongo = require( './models/' );
-var yourExpo = require( './YourEXPO/' );
+var yourExpo = require( './YourExpo2015/' );
 
 
 // Constant declaration
@@ -23,7 +23,7 @@ var app = express();
 // Module initialization (at first load)
 Promise.promisifyAll( app );
 
-app.locals.title = 'Your Expo 2015';
+app.locals.title = 'YourExpo2015';
 app.enable( 'trust proxy' );
 app.enable( 'strict routing' );
 
@@ -31,7 +31,7 @@ app.use( forceTrailingSlash() );
 
 
 // Routes
-app.use( '/YourEXPO2015/', yourExpo );
+app.use( '/YourExpo2015/', yourExpo );
 
 // Entry point
 app

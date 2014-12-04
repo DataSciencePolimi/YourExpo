@@ -6,7 +6,7 @@
       "name": "EXPO Root",
       "folder_exclude_patterns": [
         "node_modules",
-        "yourexpo",
+        "YourExpo2015",
         "database"
       ],
       "file_exclude_patterns": [
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "path": "YourEXPO",
+      "path": "YourExpo2015",
       "name": "Your EXPO",
       "folder_exclude_patterns": [
         "node_modules",
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "path": "YourEXPO/crawler",
+      "path": "YourExpo2015/crawler",
       "name": "Your EXPO Crawler",
       "folder_exclude_patterns": [
         "node_modules"

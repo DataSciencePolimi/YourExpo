@@ -29,8 +29,9 @@ module.exports = function( req, res ) {
   .where( 'tag', req.tag )
   .where( 'rejected', false )
   .where( 'highlighted', false )
-  .where( 'numVotes' ).gt( 50 )
-  .sort( '-delta -numVotes' )
+  .where( 'votesCount' ).gt( 50 )
+  // .sort( '-delta -votesCount' )
+  .sort( '-votesCount' )
   .limit( 20 )
   .execAsync();
 
@@ -39,9 +40,9 @@ module.exports = function( req, res ) {
   .where( 'tag', req.tag )
   .where( 'rejected', false )
   .where( 'highlighted', false )
-  .where( 'numVotes' ).gt( 50 )
+  .where( 'votesCount' ).gt( 50 )
   .limit( 20 )
-  .sort( '-numVotes' )
+  .sort( '-votesCount' )
   .execAsync();
 
   var highlightedPromise = Model
@@ -49,9 +50,9 @@ module.exports = function( req, res ) {
   .where( 'tag', req.tag )
   .where( 'rejected', false )
   .where( 'highlighted', true )
-  // .where( 'numVotes' ).gt( 50 )
+  .where( 'votesCount' ).gt( 50 )
   .limit( 20 )
-  .sort( '-numVotes' )
+  .sort( '-votesCount' )
   .execAsync();
 
   var recentPromise = Model
@@ -59,7 +60,7 @@ module.exports = function( req, res ) {
   .where( 'tag', req.tag )
   // .where( 'rejected', false )
   // .where( 'highlighted', false )
-  // .where( 'numVotes' ).gt( 50 )
+  // .where( 'votesCount' ).gt( 50 )
   .limit( 20 )
   .sort( '-_id' )
   .execAsync();
