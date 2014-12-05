@@ -3,16 +3,29 @@
 {{/extend}}
 
 {{!-- English --}}
-<p class="lead" lang="en">Post one or more of <strong>your</strong> photos about <strong>one</strong> of the topics of the week. every photo must be related to a single topic. the photos must be posted using your instagram account with the corresponding week hashtag.</p>
-{{!-- Italian --}}
-<p class="lead" lang="it">Pubblica una o più foto scattate da te sul tema della settimana. Ogni foto deve interpretare uno solo dei due argomenti. Le foto devono essere pubblicate usando il tuo account Instagram, con il tag della settimana.</p>
+<div lang="en">
+  <p class="lead">Post one or more of <strong>your</strong> photos about this weeks topics.</p>
 
+  <p class="lead">Every photo must be related to a single topic.</p>
+
+  <p class="lead">The photos must be posted using your instagram account with the corresponding week hashtag.</p>
+</div>
+
+{{!-- Italian --}}
+<div lang="it">
+  <p class="lead">Pubblica una o più foto scattate da te sul tema della settimana.</p>
+
+  <p class="lead">Ogni foto deve interpretare uno solo dei due argomenti.</p>
+
+  <p class="lead">Le foto devono essere pubblicate usando il tuo account Instagram, con il tag della settimana.</p>
+</div>
 
 {{> tag }}
 
 
 {{!-- English --}}
 <div class="description" lang="en">{{{tagprop tagObject 'description' 'en'}}}</div>
+
 {{!-- Italian --}}
 <div class="description" lang="it">{{{tagprop tagObject 'description'}}}</div>
 

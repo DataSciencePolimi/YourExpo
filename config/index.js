@@ -1,8 +1,8 @@
 // Load system modules
-var url = require( 'url' );
 
 // Load modules
-var moment = require( 'moment' );
+var Promise = require( 'bluebird' );
+var _ = require( 'lodash' );
 var debug = require( 'debug' )( 'config:index' );
 
 // Load my modules
@@ -18,6 +18,12 @@ var config = {};
 
 
 // Module initialization (at first load)
+Promise.prototype.log = function( out, message /*, args... */ ) {
+  var args = _.toArray( arguments ).slice( 2 );
+  _.partial( out, message ).apply( null, args );
+  return this;
+};
+
 
 // Facebook
 config.facebook = require( './facebook.json' );
@@ -26,6 +32,16 @@ config.twitter = require( './twitter.json' );
 // Instagram
 config.instagram = require( './instagram.json' );
 
+
+// Crawler config
+config.crawler = {
+  minVotes: 50
+};
+// Gallery config
+config.gallery = {
+  minVotes: 50,
+  maxImages: 20
+};
 
 // MongoDB configuration
 config.mongo = {

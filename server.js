@@ -2,7 +2,6 @@
 
 // Load modules
 var Promise = require( 'bluebird' );
-var _ = require( 'lodash' );
 var debug = require( 'debug' )( 'server' );
 var express = require( 'express' );
 var forceTrailingSlash = require( 'express-slash' );
@@ -19,6 +18,8 @@ var yourExpo = require( './YourExpo2015/' );
 
 // Module variables declaration
 var app = express();
+var port = config.server.port;
+var hostname = config.server.hostname || '0.0.0.0';
 
 // Module initialization (at first load)
 Promise.promisifyAll( app );
@@ -35,8 +36,11 @@ app.use( '/YourExpo2015/', yourExpo );
 
 // Entry point
 app
-.listenAsync( config.server.port, config.server.hostname )
-.then( initMongo );
+.listenAsync( port, hostname )
+.log( debug, 'Server started on %s:%d', hostname, port )
+.then( initMongo )
+.log( debug, 'Mongo ready' );
+
 
 
 

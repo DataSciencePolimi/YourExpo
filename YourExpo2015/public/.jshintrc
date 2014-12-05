@@ -25,6 +25,7 @@
   "devel": true,
   "browser": true,
   "jquery": true,
+  "predef": [ "-Promise" ],
 
   "loopfunc": true
 }

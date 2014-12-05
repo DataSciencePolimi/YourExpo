@@ -15,24 +15,25 @@ var rootConfig = require( '../../../config/' );
 
 
 // Module variables declaration
-
+var minVotes = rootConfig.gallery.minVotes;
+var maxImages = rootConfig.gallery.maxImages;
+var photoCollection = rootConfig.mongo.collections.photo;
 
 // Module initialization (at first load)
 
 
 module.exports = function( req, res ) {
-  debug( 'Gallery' );
-  var Model = mongoose.model( rootConfig.mongo.collections.photo );
+  debug( 'Gallery, min votes: %d', minVotes );
+  var Model = mongoose.model( photoCollection );
 
   var trendingPromise = Model
   .find()
   .where( 'tag', req.tag )
   .where( 'rejected', false )
   .where( 'highlighted', false )
-  .where( 'votesCount' ).gt( 50 )
-  // .sort( '-delta -votesCount' )
+  .where( 'votesCount' ).gt( minVotes )
   .sort( '-votesCount' )
-  .limit( 20 )
+  .limit( maxImages )
   .execAsync();
 
   var topPromise = Model
@@ -40,8 +41,8 @@ module.exports = function( req, res ) {
   .where( 'tag', req.tag )
   .where( 'rejected', false )
   .where( 'highlighted', false )
-  .where( 'votesCount' ).gt( 50 )
-  .limit( 20 )
+  .where( 'votesCount' ).gt( minVotes )
+  .limit( maxImages )
   .sort( '-votesCount' )
   .execAsync();
 
@@ -50,18 +51,18 @@ module.exports = function( req, res ) {
   .where( 'tag', req.tag )
   .where( 'rejected', false )
   .where( 'highlighted', true )
-  .where( 'votesCount' ).gt( 50 )
-  .limit( 20 )
+  .where( 'votesCount' ).gt( minVotes )
+  .limit( maxImages )
   .sort( '-votesCount' )
   .execAsync();
 
   var recentPromise = Model
   .find()
   .where( 'tag', req.tag )
-  // .where( 'rejected', false )
+  .where( 'rejected', false )
   // .where( 'highlighted', false )
-  // .where( 'votesCount' ).gt( 50 )
-  .limit( 20 )
+  // .where( 'votesCount' ).gt( minVotes )
+  .limit( maxImages )
   .sort( '-_id' )
   .execAsync();
 

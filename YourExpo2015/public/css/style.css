@@ -211,6 +211,8 @@ article > header {}
 article > section {
   min-height: 500px;
 }
+
+
 article > .follow {
   margin-top: 50px;
 
@@ -247,50 +249,25 @@ article > .follow {
 }
 
 .link-container > a {
+  display: inline-block;
+
   color: #eee;
+  background-color: #111;
   font-size: 20px;
   line-height: 30px;
 
   padding: 0;
   height: 32px;
   width: 32px;
-  display: inline-block;
+  border-radius: 16px;
 
   margin-right: 3px;
   margin-left: 3px;
-
-  -webkit-perspective: 800px;
-
-  perspective: 800px;
-  -webkit-perspective-origin: 50% 0%;
-  perspective-origin: 50% 0%
-
-  /*overflow: hidden;*/
 }
-.link-container > a > .link {
-  background-color: #111;
-
-  width: 100%;
-  height: 100%;
-
-  -webkit-transform-origin: 50% 0%;
-
-  -ms-transform-origin: 50% 0%;
-
-  transform-origin: 50% 0%;
-  -webkit-transition: all 0.35s ease-out;
-  transition: all 0.35s ease-out;
-}
-.link-container > a:hover > .link {
+.link-container > a:hover {
   color: #111;
-  text-decoration: none;
-
   background-color: #eee;
-  border: 1px solid #111;
-
-  -webkit-transform: rotateX(360deg);
-
-  transform: rotateX(360deg);
+  text-decoration: none;
 }
 .follow > h3 {
   -webkit-box-flex: 0;
@@ -339,14 +316,13 @@ footer > .partners > .partners-container > .partners-list {
 }
 
 
-
-.image {
+.topic-images > .image {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
 }
 
-.image > .overlay {
+.topic-images > .image > .overlay {
   width: 100%;
   height: 100%;
 
@@ -380,10 +356,10 @@ footer > .partners > .partners-container > .partners-list {
 
   transition: background-color 0.3s ease-out;
 }
-.image:hover > .overlay {
+.topic-images > .image:hover > .overlay {
   background-color: rgba(0, 0, 0, 0.7);
 }
-.image .author {
+.topic-images > .image .author {
   color: #eee;
   font-weight: bold;
 
@@ -391,7 +367,7 @@ footer > .partners > .partners-container > .partners-list {
   bottom: 1%;
   right: 1%;
 }
-.image .likes {
+.topic-images > .image .likes {
   font-weight: lighter;
   font-size: 20px;
   color: #eee;
@@ -409,19 +385,19 @@ footer > .partners > .partners-container > .partners-list {
 
   transition: opacity 0.3s ease-out;
 }
-.image .likes:after {
+.topic-images > .image .likes:after {
   content: " " attr( data-likes );
 }
-.image:hover .likes {
+.topic-images > .image:hover .likes {
   opacity: 1;
   text-decoration: none;
 }
 
-.image .likes i {
+.topic-images > .image .likes i {
   -webkit-transition: color 0.2s ease-out;
   transition: color 0.2s ease-out;
 }
-.image .likes:hover i {
+.topic-images > .image .likes:hover i {
   color: #f00;
 }
 
