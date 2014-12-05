@@ -1,12 +1,12 @@
 // Load system modules
 
 // Load modules
-var Promise = require( 'bluebird' );
-var debug = require( 'debug' )( 'models:photo' );
-var mongoose = require( 'mongoose' );
+var Promise = require('bluebird');
+var debug = require('debug')('models:photo');
+var mongoose = require('mongoose');
 
 // Load my modules
-var VoteSchema = require( './vote.js' );
+var VoteSchema = require('./vote.js');
 
 // Constant declaration
 
@@ -16,7 +16,7 @@ var Schema = mongoose.Schema;
 
 // Module initialization (at first load)
 
-var PhotoSchema = new Schema( {
+var PhotoSchema = new Schema({
   /**
    * The weekly tag associated to this post.
    * @type {String}
@@ -93,7 +93,7 @@ var PhotoSchema = new Schema( {
     default: false
   },
   /**
-   * Flag indicating wether the post must be highlighted.
+   * Flag indicating wether the post must be rejected.
    * @type {Boolean}
    */
   rejected: {
@@ -144,7 +144,7 @@ var PhotoSchema = new Schema( {
     required: true,
     default: 0
   }
-} );
+});
 
 module.exports = PhotoSchema;
 

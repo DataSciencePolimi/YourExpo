@@ -1,11 +1,10 @@
 // Load system modules
 
 // Load modules
-var debug = require( 'debug' )( 'yourexpo:routes:highlight' );
-
+var debug = require('debug')('yourexpo:routes:highlight');
+var mongoose = require('mongoose');
 // Load my modules
-
-
+var rootConfig = require('../../config/');
 
 
 // Constant declaration
@@ -17,10 +16,30 @@ var debug = require( 'debug' )( 'yourexpo:routes:highlight' );
 // Module initialization (at first load)
 
 
-module.exports = function( req, res, next ) {
-  debug( 'Highlight' );
+module.exports = function(req, res, next) {
+  debug('Highlight');
 
-  res.json( {} );
+
+  var Model = mongoose.model(rootConfig.mongo.collections.photo);
+  var id = req.body.id;
+
+  Model
+    .findById(id)
+    .exec(function(err, photo) {
+      if (err) throw new Error(err);
+
+      photo.moderated = true;
+      photo.highlighted = true;
+      photo.moderating = false;
+
+
+      photo.save(function(err) {
+        if (err) throw new Error(err);
+
+        res.json({});
+      });
+
+    });
 };
 
 

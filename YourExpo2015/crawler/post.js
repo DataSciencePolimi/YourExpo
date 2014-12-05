@@ -1,17 +1,15 @@
 // Load system modules
-var url = require( 'url' );
+var url = require('url');
 
 // Load modules
-var Promise = require( 'bluebird' );
-var _ = require( 'lodash' );
-var rootConfig = require( '../config/' );
-var config = require( './config/' );
-var debug = require( 'debug' )( 'crawler:postToCS' );
-var request = require( 'request' );
+var Promise = require('bluebird');
+var _ = require('lodash');
+var rootConfig = require('../../config/');
+var config = require('./config/');
+var debug = require('debug')('crawler:postToCS');
+var request = require('request');
 
 // Load my modules
-
-
 
 
 
@@ -26,10 +24,10 @@ var queue = [];
 
 
 // Module initialization (at first load)
-Promise.promisifyAll( request );
+Promise.promisifyAll(request);
 
 // Module exports
-module.exports = function postToCS( document ) {
+module.exports = function postToCS(documents) {
   // Do not use Mongoose objects
   /*
   document = document.toObject( {
@@ -39,42 +37,73 @@ module.exports = function postToCS( document ) {
   document.id = document._id;
   */
 
+  if (!_.isArray(documents)) {
+    documents = [documents];
+  }
 
-  // Add to queue
-  queue.push( document );
-  if( queue.length<MAX_QUEUE_SIZE )
+
+  _.each(documents, function(document) {
+
+    // If the numer of likes is too little, do not post
+    if (document.votesCount < 50)
+      return;
+
+    // Do not add the object if it's already been posted to the CS
+    if (document.moderating || document.moderated)
+      return;
+
+    // Add to queue
+    queue.push(document);
+  });
+
+
+  if (queue.length < MAX_QUEUE_SIZE)
     return;
 
-  // If the numer of likes is too little, do not post
-  if( document.numVotes<50 )
-    return;
 
   // Map the queue to the CS objects
-  var objects = _.map( queue, function( data ) {
+  var objects = _.map(queue, function(data) {
     return {
-      data: data
+      data: {
+        id: data._id,
+        url: data.imageUrl
+      }
     };
-  } );
+  });
 
-  var postUrl = url.resolve( csBaseUrl, addObjectPath  );
+  var postUrl = url.resolve(csBaseUrl, addObjectPath);
 
   // Post to CS
   request
-  .postAsync( {
-    url: postUrl,
-    qs: {
-      task: taskId
-    },
-    json: {
-      objects: objects
-    }
-  } )
-  .spread( function() {
-    debug( 'Post done!' );
+    .postAsync({
+      url: postUrl,
+      qs: {
+        task: taskId
+      },
+      json: {
+        objects: objects
+      }
+    })
+    .then(function() {
 
-    // Reset the queue
-    queue = [];
-  } );
+      var promises = _.map(queue, function(element) {
+
+        Promise.promisifyAll(element);
+        element.moderating = true;
+        return element.saveAsync();
+
+      });
+
+      return Promise
+        .settle(promises);
+
+    })
+    .spread(function() {
+      debug('Post done!');
+
+      // Reset the queue
+      queue = [];
+    });
 };
 
 
