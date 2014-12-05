@@ -3,14 +3,14 @@ article > section {
 }
 
 
-.images {
+.topic-images {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
 }
-.images > .image {
+.topic-images > .image {
   flex: 0 0 auto;
 
   color: #FFF;

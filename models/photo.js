@@ -143,7 +143,26 @@ var PhotoSchema = new Schema({
     type: Number,
     required: true,
     default: 0
-  }
+  },
+
+  /**
+   * Delta calculated each crawler cycle.
+   * @type {Number}
+   */
+  delta: {
+    type: Number,
+    required: true,
+    default: 0
+  },
+  /**
+   * Daily delta
+   * @type {Number}
+   */
+  dailyDelta: {
+    type: Number,
+    required: true,
+    default: 0
+  },
 });
 
 module.exports = PhotoSchema;

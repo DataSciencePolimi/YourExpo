@@ -1,16 +1,19 @@
 // Load system modules
+var path = require( 'path' );
 
 // Load modules
 var Promise = require( 'bluebird' );
 var debug = require( 'debug' )( 'server' );
 var express = require( 'express' );
 var forceTrailingSlash = require( 'express-slash' );
+var serveStatic = require( 'serve-static' );
 
 
 // Load my modules
 var config = require( './config/' );
 var initMongo = require( './models/' );
 var yourExpo = require( './YourExpo2015/' );
+var publicPath = path.join(__dirname, 'public');
 
 
 // Constant declaration
@@ -29,6 +32,7 @@ app.enable( 'trust proxy' );
 app.enable( 'strict routing' );
 
 app.use( forceTrailingSlash() );
+app.use( serveStatic( publicPath ) );
 
 
 // Routes

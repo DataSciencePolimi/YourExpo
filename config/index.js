@@ -26,7 +26,7 @@ Promise.prototype.log = function( out, message /*, args... */ ) {
 
 
 // Facebook
-config.facebook = require( './facebook.json' );
+// config.facebook = require( './facebook.json' );
 // Twitter
 config.twitter = require( './twitter.json' );
 // Instagram
@@ -35,7 +35,7 @@ config.instagram = require( './instagram.json' );
 
 // Crawler config
 config.crawler = {
-  minVotes: 50
+  minVotes: 50 // Min votes to post to the CS
 };
 // Gallery config
 config.gallery = {
@@ -45,7 +45,7 @@ config.gallery = {
 
 // MongoDB configuration
 config.mongo = {
-  url: 'mongodb://localhost/YourEXPO2015',
+  url: 'mongodb://localhost/YourExpo2015',
   collections: {
     post: 'Post',
     photo: 'Photo',

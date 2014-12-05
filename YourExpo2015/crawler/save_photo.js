@@ -5,7 +5,7 @@ var Promise = require('bluebird');
 var _ = require('lodash');
 var debug = require('debug')('crawler:save:photo');
 var mongoose = require('mongoose');
-
+var moment = require( 'moment' );
 
 // Load my modules
 var rootConfig = require('../../config/');
@@ -48,7 +48,20 @@ function savePhotos(tag, wrappedElements) {
         document.votes.push({
           votes: votes
         });
-        document.votesCount += votes;
+
+        // Calc deltas
+        var delta = votes - document.votesCount;
+        var dayOfYear = moment().dayOfYear();
+        var dailyVotes = _.filter( document.votes, function( vote ) {
+          return dayOfYear===moment( vote.timestamp ).dayOfYear();
+        } );
+
+        var dailyDelta = _.last( dailyVotes ).votes - _.first( dailyVotes ).votes;
+
+
+        document.delta = delta;
+        document.dailyDelta = dailyDelta;
+        document.votesCount = votes;
 
         return document
           .saveAsync();

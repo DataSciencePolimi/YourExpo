@@ -3,7 +3,7 @@ article > section {
 }
 
 
-.images {
+.topic-images {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -25,7 +25,7 @@ article > section {
   -ms-flex-align: center;
   align-items: center;
 }
-.images > .image {
+.topic-images > .image {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;

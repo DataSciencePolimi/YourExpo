@@ -20,7 +20,7 @@ var DATE_FORMAT = 'YYYY-MM-DD';
 // Module variables declaration
 var topic1 = 'volo';
 var topic2 = 'test';
-var startDate = '2014-11-25';
+var startDate = '2014-11-06';
 var endDate = '2014-12-25';
 var sampleId = 'v3zCA0xYyi';
 

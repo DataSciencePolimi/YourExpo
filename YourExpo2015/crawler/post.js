@@ -15,6 +15,7 @@ var request = require('request');
 
 // Constant declaration
 var MAX_QUEUE_SIZE = config.MAX_QUEUE_SIZE;
+var MIN_VOTES_TO_POST = rootConfig.crawler.minVotes;
 var csBaseUrl = rootConfig.crowdSearcher.url;
 var addObjectPath = rootConfig.crowdSearcher.addObjectLocation;
 var taskId = rootConfig.crowdSearcher.taskId;
@@ -28,14 +29,6 @@ Promise.promisifyAll(request);
 
 // Module exports
 module.exports = function postToCS(documents) {
-  // Do not use Mongoose objects
-  /*
-  document = document.toObject( {
-    getter: true,
-    virtual: true
-  } );
-  document.id = document._id;
-  */
 
   if (!_.isArray(documents)) {
     documents = [documents];
@@ -45,7 +38,7 @@ module.exports = function postToCS(documents) {
   _.each(documents, function(document) {
 
     // If the numer of likes is too little, do not post
-    if (document.votesCount < 50)
+    if (document.votesCount < MIN_VOTES_TO_POST)
       return;
 
     // Do not add the object if it's already been posted to the CS

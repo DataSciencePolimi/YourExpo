@@ -25,7 +25,24 @@ var DATE_FORMAT = 'ddd MMM D H:m:ss Z YYYY';
 var TWITTER_POST_URL = 'https://twitter.com/';
 
 // Module variables declaration
+function trimLeft(s, c) {
+  var i = 0;
+  while (i < s.length && s[i] === c) { i++; }
+  return s.substring( i );
+}
+function decrementHugeNumberBy1(n) {
+  // make sure s is a string, as we can't do math on numbers over a certain size
+  n = n.toString();
+  var allButLast = n.substr(0, n.length - 1);
+  var lastNumber = n.substr(n.length - 1);
 
+  if (lastNumber==='0') {
+    return decrementHugeNumberBy1(allButLast) + '9';
+  } else {
+    var finalResult = allButLast + (parseInt(lastNumber, 10) - 1).toString();
+    return trimLeft(finalResult, '0');
+  }
+}
 
 // Module initialization (at first load)
 
@@ -64,7 +81,7 @@ Twitter.prototype.handleError = function( error ) {
 };
 
 Twitter.prototype.wrapElement = function( element ) {
-  debug( 'Wrapping %s element', element.id );
+  // debug( 'Wrapping %s element', element.id );
 
   var date = moment( element.created_at, DATE_FORMAT, 'en' ).utc().toDate();
   var instagramPost = element.entities.urls[0].expanded_url;
@@ -85,7 +102,7 @@ Twitter.prototype.wrapElement = function( element ) {
 };
 
 Twitter.prototype.wrapElements = function( elements ) {
-  debug( 'Wrapping %d elements to the model structure', elements.length );
+  // debug( 'Wrapping %d elements to the model structure', elements.length );
   return _.map( elements, this.wrapElement );
 };
 
@@ -107,13 +124,16 @@ Twitter.prototype.getMorePages = function( item ) {
 
   if( item.statuses && item.statuses.length>0 ) {
     var meta = item.search_metadata;
-
     var searchPath = 'search/tweets';
+
+    var lastId = _.last( item.statuses ).id;
+
     var params = {
       q: querystring.unescape( meta.query ),
       count: meta.count,
-      max_id: meta.max_id,
-      include_entities: meta.include_entitiesn
+      result_type: 'recent',
+      max_id: decrementHugeNumberBy1( lastId ),
+      include_entities: meta.include_entities
     };
 
     debug( 'More page query: %j', params );
@@ -138,14 +158,15 @@ Twitter.prototype.searchTag = function( tag, options, callback ) {
   options = options || {};
   var fetchAll = options.fetchAll || false;
 
-  // var startDate = options.startDate;
-  var endDate = options.endDate;
+  var startDate = options.startDate;
+  // var endDate = options.endDate;
 
   var searchPath = 'search/tweets';
   var params = {
-    q: tag,
+    q: tag+' since:'+startDate.format( 'YYYY-MM-DD' ),
     count: 100,
-    until: endDate.format( 'YYYY-MM-DD' ),
+    result_type: 'recent',
+    // until: endDate.format( 'YYYY-MM-DD' ),
     include_entities: true
   };
 

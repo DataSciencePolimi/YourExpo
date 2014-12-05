@@ -13,6 +13,9 @@ lib-cov
 node_modules
 lib
 
+# Do not sync landing page
+public/**/*
+
 # Do not sync database
 database
 

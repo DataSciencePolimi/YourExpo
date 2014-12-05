@@ -1,5 +1,4 @@
 
-
 .gallery {
   border: 20px solid #3d3d3d;
   margin-right: -50px;
@@ -37,9 +36,13 @@
   -ms-flex: 1 1 200px;
   flex: 1 1 200px;
   height: 200px;
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
-.image .details {
+.gallery > .image .details {
   position: absolute;
   top: 1%;
   right: 1%;
@@ -51,6 +54,111 @@
 
   transition: opacity 0.3s ease-out;
 }
-.image:hover .details {
+.gallery > .image:hover .details {
   opacity: 1;
 }
+
+
+.gallery > .image > .overlay {
+  width: 100%;
+  height: 100%;
+
+  display: -webkit-box;
+
+  display: -webkit-flex;
+
+  display: -ms-flexbox;
+
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+
+  position: relative;
+
+  -webkit-transition: background-color 0.3s ease-out;
+
+  transition: background-color 0.3s ease-out;
+}
+.gallery > .image:hover > .overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.gallery > .image .author {
+  color: #eee;
+  font-weight: bold;
+
+  position: absolute;
+  bottom: 1%;
+  right: 1%;
+}
+.gallery > .image .likes {
+  font-weight: lighter;
+  font-size: 20px;
+  color: #eee;
+  opacity: 0;
+
+  -webkit-box-flex: 0;
+
+  -webkit-flex: 0 0 auto;
+
+  -ms-flex: 0 0 auto;
+
+  flex: 0 0 auto;
+
+  -webkit-transition: opacity 0.3s ease-out;
+
+  transition: opacity 0.3s ease-out;
+}
+.gallery > .image .likes:after {
+  content: " " attr( data-likes );
+}
+.gallery > .image:hover .likes {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.gallery > .image .likes i {
+  -webkit-transition: color 0.2s ease-out;
+  transition: color 0.2s ease-out;
+}
+.gallery > .image .likes:hover i {
+  color: #f00;
+}
+
+
+@media (max-width: 768px) {
+  .gallery {
+    margin-left: -30px;
+    margin-right: -30px;
+    border-width: 10px;
+  }
+}
+@media (max-width: 550px) {
+  .gallery {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  .gallery > .image {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 150px;
+    -ms-flex: 1 1 150px;
+    flex: 1 1 150px;
+    height: 150px;
+  }
+}
+
+

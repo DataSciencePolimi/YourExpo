@@ -57,6 +57,9 @@ function savePosts( tag, wrappedElements ) {
       return document
       .saveAsync();
     } )
+
+    // Update the photo votes counter
+    /*
     .then( function() {
 
       // Try to find the corresponding photo
@@ -75,6 +78,7 @@ function savePosts( tag, wrappedElements ) {
       }
 
     } )
+    */
     ;
   } );
 

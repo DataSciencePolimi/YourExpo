@@ -21,6 +21,7 @@
     "lodash": "2.x",
     "moment": "2.x",
     "mongoose": "3.x",
+    "serve-static": "1.x",
     "yargs": "1.x"
   },
   "devDependencies": {
