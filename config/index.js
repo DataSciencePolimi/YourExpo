@@ -39,7 +39,7 @@ config.crawler = {
 };
 // Gallery config
 config.gallery = {
-  minVotes: 50,
+  minVotes: 10,
   maxImages: 20
 };
 

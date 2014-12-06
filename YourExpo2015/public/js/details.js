@@ -31,7 +31,7 @@ var instagramSerie = {
   data: $.map( photo.votes, toPoint ).sort( compare )
 };
 var platformSerie = {
-  name: 'Platform',
+  name: 'Challenge site',
   data: $.map( photo.platform, platformToPoint ).sort( compare )
 };
 
