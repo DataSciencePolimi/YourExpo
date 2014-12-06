@@ -85,3 +85,23 @@
 .info .mail {
   margin: 7px 0px;
 }
+
+
+
+@media (max-width: 550px) {
+  .profile img {
+    width: 100px;
+    max-width: 100px;
+    margin-right: 10px;
+  }
+
+  .info h2.title {
+    display: none;
+  }
+  .info .name {
+    margin-top: 0;
+  }
+  .info h2.my-photos {
+    display: none;
+  }
+}

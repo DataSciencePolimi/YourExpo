@@ -22,20 +22,6 @@ function changeLocale( locale ) {
 }
 
 
-$( '.likes' ).click( function( evt ) {
-  evt.preventDefault();
-
-  var $this = $( this );
-  var id = $this.closest( '.image' ).data( 'id' );
-  var likes = Number( $this.attr( 'data-likes' ) );
-
-  console.log( 'Like it: %s', id );
-  $this.attr( 'data-likes', ++likes );
-
-  return false;
-} );
-
-
 $( 'button.lang' ).click( function() {
   var locale = $( this ).data( 'lang' );
   changeLocale( locale );

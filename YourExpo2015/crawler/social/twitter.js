@@ -125,8 +125,7 @@ Twitter.prototype.getMorePages = function( item ) {
   if( item.statuses && item.statuses.length>0 ) {
     var meta = item.search_metadata;
     var searchPath = 'search/tweets';
-
-    var lastId = _.last( item.statuses ).id;
+    var lastId = _.last( item.statuses ).id_str;
 
     var params = {
       q: querystring.unescape( meta.query ),

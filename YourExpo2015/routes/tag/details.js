@@ -25,9 +25,7 @@ Promise.promisifyAll( request );
 module.exports = function( req, res ) {
   debug( 'Details' );
   var PhotoModel = mongoose.model( rootConfig.mongo.collections.photo );
-  var PostModel = mongoose.model( rootConfig.mongo.collections.post );
   var id = req.params.id;
-  var tag = req.tag;
 
   PhotoModel
   .findById( id )
@@ -38,7 +36,10 @@ module.exports = function( req, res ) {
 
     return photo;
   } )
+  /*
   .then( function( photo ) {
+    var PostModel = mongoose.model( rootConfig.mongo.collections.post );
+    var tag = req.tag;
 
     return PostModel
     .find()
@@ -52,8 +53,11 @@ module.exports = function( req, res ) {
       };
     } );
   } )
-  .then( function( data ) {
-    return res.render( 'details', data );
+  */
+  .then( function( photo ) {
+    return res.render( 'details', {
+      photo: photo
+    } );
   } )
   .catch( debug );
 };

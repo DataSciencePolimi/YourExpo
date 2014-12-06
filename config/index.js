@@ -57,8 +57,8 @@ config.mongo = {
 config.server = {
   port: 80,
   //hostname: 'volox.io',
-  // externalUrl: 'http://volox.io/'
-  externalUrl: 'http://131.175.59.93/'
+  externalUrl: 'http://localhost/'
+  // externalUrl: 'http://131.175.59.93/'
 };
 
 // CS

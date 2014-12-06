@@ -8,12 +8,20 @@
   {{!-- <script src="lib/highcharts/themes/dark-unica.js"></script> --}}
   <script>
     var photo = {{{ json photo }}};
-    var posts = {{{ json posts }}};
+    // var posts = {{{ json posts }}};
   </script>
   <script src="js/details.js"></script>
 {{/extend}}
 
 
-<iframe class="image" src="http://instagr.am/p/{{photo.shortLink}}/embed/captioned/?v=4" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+<div class="ratio-box ratio-instagram">
+  <div class="ratio-content">
+    <iframe class="image" src="http://instagr.am/p/{{photo.shortLink}}/embed/captioned/?v=4" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+  </div>
+</div>
 
-<div id="graph"></div>
+<div class="ratio-box ratio-graph">
+  <div class="ratio-content">
+    <div id="graph"></div>
+  </div>
+</div>

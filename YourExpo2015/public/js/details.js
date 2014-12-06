@@ -36,7 +36,7 @@ var platformSerie = {
 };
 
 var series = [ instagramSerie, platformSerie ];
-
+/*
 $.each( posts, function( i, post ) {
   sum = 0;
   var name = post.provider[0].toUpperCase();
@@ -48,7 +48,7 @@ $.each( posts, function( i, post ) {
 
   series.push( postSerie );
 } );
-
+*/
 
 
 $graph.highcharts( {

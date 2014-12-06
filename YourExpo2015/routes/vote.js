@@ -39,8 +39,10 @@ module.exports = function( req, res, next ) {
     return post
     .saveAsync();
   } )
-  .spread( function( post ) {
-    return res.json( post );
+  .spread( function() {
+    return res.json( {
+      message: 'ok'
+    } );
   } )
   .catch( next );
 };

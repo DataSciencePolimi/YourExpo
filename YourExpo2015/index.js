@@ -132,6 +132,7 @@ router.get('/vote/:id', require('./routes/vote.js'));
  */
 router.get('/', require('./routes/index.js'));
 router.get('/profile', checkAuth, require('./routes/profile.js'));
+router.get('/vote/:id', require('./routes/vote.js'));
 router.get('/:tag/', require('./routes/tag/index.js'));
 router.get('/:tag/home', require('./routes/tag/home.js'));
 router.get('/:tag/come', require('./routes/tag/come.js'));
