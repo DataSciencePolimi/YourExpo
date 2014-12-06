@@ -4,6 +4,7 @@ var url = require( 'url' );
 // Load modules
 var mongoose = require( 'mongoose' );
 var passport = require( 'passport' );
+var debug = require( 'debug' )( 'config:passport' );
 var InstagramStrategy = require( 'passport-instagram' ).Strategy;
 
 // Load my modules
@@ -15,6 +16,7 @@ var config = require( '../../config/' );
 
 
 // Module variables declaration
+var userCollection = config.mongo.collections.user;
 function instagramStrategyCallback( accessToken, refreshToken, profile, done ) {
   var User = mongoose.model( 'User' );
 
@@ -34,10 +36,10 @@ function instagramStrategyCallback( accessToken, refreshToken, profile, done ) {
         refreshToken: refreshToken,
         profile: profile,
         username: profile.username,
-        email: profile._json.data.email || 'you-did-not@provided.it',
+        email: profile._json.data.email || '',
         fullName: profile._json.data.full_name,
         profilePicture: profile._json.data.profile_picture,
-        bio: profile._json.data.bio || 'No bio provided',
+        bio: profile._json.data.bio || '',
       } );
 
       return user
@@ -45,9 +47,9 @@ function instagramStrategyCallback( accessToken, refreshToken, profile, done ) {
     }
 
     // Return
-    return user;
+    return [user];
   } )
-  .then( function( user ) {
+  .spread( function( user ) {
     return done( null, user );
   }, function( err ) {
     return done( err );
@@ -79,6 +81,7 @@ module.exports = function( app ) {
      */
     passport.serializeUser( function( user, done ) {
       // debug( 'Serializing user: %j', user );
+      //
       done( null, user._id );
     } );
     /**
@@ -89,7 +92,7 @@ module.exports = function( app ) {
     passport.deserializeUser( function( id, done ) {
       // debug( 'Deserializing user: %s', id );
       //
-      var User = mongoose.model( 'User' );
+      var User = mongoose.model( userCollection );
 
       User
       .findById( id )
