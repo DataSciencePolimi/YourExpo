@@ -55,17 +55,17 @@ config.mongo = {
 
 // Web Server
 config.server = {
-  port: 80,
+  port: 4324,
   //hostname: 'volox.io',
-  externalUrl: 'http://localhost/'
-  // externalUrl: 'http://131.175.59.93/'
+  // externalUrl: 'http://volox.io/'
+  externalUrl: 'http://expo2015.como.polimi.it/'
 };
 
 // CS
 config.crowdSearcher = {
   url: 'http://localhost:4322',
   addObjectLocation: '/api/objects',
-  taskId: '546f1a90695672dc4e526991'
+  taskId: '548189150b412c40510b952f'
 };
 
 
