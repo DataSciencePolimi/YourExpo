@@ -62,7 +62,10 @@ module.exports = function postToCS(documents) {
     return {
       data: {
         id: data._id,
-        url: data.imageUrl
+        url: data.imageUrl,
+        username: data.username,
+        votesCount: data.votesCount,
+        detla: data.delta
       }
     };
   });
