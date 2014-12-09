@@ -193,12 +193,16 @@ header > nav > ul {
 
   text-transform: uppercase;
 }
+header > nav > ul> li.active {
+  font-weight: bold;
+}
 header > nav > ul > li {
   -webkit-box-flex: 1;
   -webkit-flex: 1 0 auto;
   -ms-flex: 1 0 auto;
   flex: 1 0 auto;
   border-right: 1px solid #ddd;
+  padding-bottom: 5px;
 }
 header > nav > ul > li:last-child {
   border-right: none;

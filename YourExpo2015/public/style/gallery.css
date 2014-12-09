@@ -18,6 +18,10 @@
 
   background-repeat: no-repeat;
   background-position: center center;
+  background-size: initial;
+  background-color: #eee;
+}
+.gallery > .image.loaded {
   background-size: cover;
 }
 
@@ -36,6 +40,10 @@
 }
 
 
+.gallery > .image.voted > .overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+}
 .gallery > .image > .overlay {
   width: 100%;
   height: 100%;
@@ -43,7 +51,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
   position: relative;
@@ -52,6 +60,7 @@
 }
 .gallery > .image:hover > .overlay {
   background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
 }
 .gallery > .image .author {
   color: #eee;
@@ -68,22 +77,33 @@
   opacity: 0;
 
   flex: 0 0 auto;
-
-  transition: opacity 0.3s ease-out;
+}
+.gallery > .image.voted .likes {
+  color: #f00;
+  opacity: 1;
 }
 .gallery > .image .likes:after {
   content: " " attr( data-likes );
+  color: #eee;
 }
 .gallery > .image:hover .likes {
   opacity: 1;
   text-decoration: none;
 }
 
-.gallery > .image .likes i {
-  transition: color 0.2s ease-out;
+
+.gallery > .image:nth-child(n+10) {
+  display: none;
 }
-.gallery > .image .likes:hover i {
-  color: #f00;
+.gallery > .more-images {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  background-color: #DDD;
+  text-align: center;
+  cursor: pointer;
 }
 
 

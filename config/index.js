@@ -35,12 +35,12 @@ config.instagram = require( './instagram.json' );
 
 // Crawler config
 config.crawler = {
-  minVotes: 1 // Min votes to post to the CS
+  minVotes: 20 // Min votes to post to the CS
 };
 // Gallery config
 config.gallery = {
-  minVotes: 10,
-  maxImages: 20
+  minVotes: 20,
+  maxImages: 50
 };
 
 // MongoDB configuration
@@ -57,7 +57,6 @@ config.mongo = {
 config.server = {
   port: 4324,
   //hostname: 'volox.io',
-  // externalUrl: 'http://volox.io/'
   externalUrl: 'http://expo2015.como.polimi.it/'
 };
 
@@ -68,6 +67,15 @@ config.crowdSearcher = {
   taskId: '548189150b412c40510b952f'
 };
 
+
+
+// Load override if present
+try {
+  var override = require( './override.js' );
+  config = _.assign( config, override );
+} catch( ex ) {
+  debug( 'No override file found' );
+}
 
 
 // Module exports

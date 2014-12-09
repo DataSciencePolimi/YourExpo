@@ -106,6 +106,7 @@ router.param('tag', function(req, res, next, tag) {
   if (_.isUndefined(tags[tag])) {
     return res.redirect(req.app.baseUrl);
   }
+  var segments = req.path.toLowerCase().split( '/' );
 
   req.tag = tag;
   req.tagObject = tags[tag];
@@ -114,6 +115,8 @@ router.param('tag', function(req, res, next, tag) {
 
   res.locals.tag = req.tag;
   res.locals.tagObject = req.tagObject;
+  res.locals.page = segments.pop();
+  res.locals[ res.locals.page+'_active' ] = true;
 
   return next();
 });

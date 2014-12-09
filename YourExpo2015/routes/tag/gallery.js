@@ -28,6 +28,7 @@ module.exports = function( req, res ) {
 
   var trendingPromise = Model
   .find()
+  .select( '-raw' )
   .where( 'tag', req.tag )
   .where( 'rejected', false )
   .where( 'highlighted', false )
@@ -38,32 +39,33 @@ module.exports = function( req, res ) {
 
   var topPromise = Model
   .find()
+  .select( '-raw' )
   .where( 'tag', req.tag )
   .where( 'rejected', false )
   .where( 'highlighted', false )
   .where( 'votesCount' ).gt( minVotes )
-  .limit( maxImages )
   .sort( '-votesCount' )
+  .limit( maxImages )
   .execAsync();
 
   var highlightedPromise = Model
   .find()
+  .select( '-raw' )
   .where( 'tag', req.tag )
   .where( 'rejected', false )
   .where( 'highlighted', true )
   .where( 'votesCount' ).gt( minVotes )
-  .limit( maxImages )
   .sort( '-votesCount' )
+  .limit( maxImages )
   .execAsync();
 
   var recentPromise = Model
   .find()
+  .select( '-raw' )
   .where( 'tag', req.tag )
   .where( 'rejected', false )
-  // .where( 'highlighted', false )
-  // .where( 'votesCount' ).gt( minVotes )
-  .limit( maxImages )
   .sort( '-_id' )
+  .limit( maxImages )
   .execAsync();
 
 

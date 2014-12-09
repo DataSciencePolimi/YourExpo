@@ -21,6 +21,7 @@ database
 
 # Do not sync configuration files
 config/*.json
+config/override.js
 
 ### SublimeText project files
 *.sublime-workspace

@@ -1,10 +1,77 @@
 
+var $gallery = $( '.gallery' );
+var votes = JSON.parse( localStorage.getItem( 'votes' ) || '{}' );
+var START_IMAGES = 10;
+var MORE_IMAGES = 5;
+
+function setVoted( id ) {
+  $( '.image[data-id="'+id+'"]', $gallery ).addClass( 'voted' );
+  votes[ id ] = true;
+  localStorage.setItem( 'votes', JSON.stringify( votes ) );
+}
+
+
+
+function lazyload() {
+  $( '.image:visible:not(.loaded)' ).each( function() {
+    var $image = $( this );
+    var imageUrl = $( this ).data( 'image' );
+
+    var $img = $( '<img/>' );
+    $img.prop( 'src', imageUrl );
+
+    $img.load( function() {
+      $image.addClass( 'loaded' );
+      $image.css( 'background-image', 'url("'+imageUrl+'")' );
+    } );
+  } );
+}
+
+
+$( '.more-images' ).click( function() {
+  var $myGallery = $( this ).closest( '.gallery' );
+
+  var toShow = $myGallery.data( 'show' ) || START_IMAGES;
+  toShow += MORE_IMAGES;
+  $myGallery.find( '.image:lt('+toShow+')' ).show();
+  $myGallery.data( 'show', toShow );
+  lazyload();
+} );
+
 
 $( '.likes' ).click( function( evt ) {
   evt.preventDefault();
 
-  eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('3 $0=$(0);3 1=$0.c(\'.d\').4(\'1\');b(9.e(\'a\'+1)!==\'8\'){3 2=f($0.7(\'4-2\'));$0.7(\'4-2\',++2);3 5=$(\'p>m>n\').g(\'o\');$.l(5+\'k/\'+1).h(6(){9.i(\'a\'+1,\'8\')}).j(6(){})}',26,26,'this|id|likes|var|data|baseUrl|function|attr|true|localStorage|voted_|if|closest|image|getItem|Number|prop|done|setItem|fail|vote|getJSON|head|base|href|html'.split('|'),0,{}))
-
+  var id = $( this ).closest( '.image' ).data( 'id' );
+  if( id && !votes[ id ] ) {
+    var baseUrl = $( 'html > head > base' ).prop( 'href' );
+    var url = baseUrl + 'vote/' + id;
+    $.getJSON( url )
+    .done( function() {
+      setVoted( id );
+    } )
+    .fail( function() {
+      console.error( 'Unable to vote :(' );
+    } );
+  }
 
   return false;
 } );
+
+
+
+// convet old votes
+$.each( localStorage, function( key ) {
+  var matches = key.match( /^voted_([0-9a-f]{24})$/i );
+  if( matches ) {
+    var id = matches[1];
+    setVoted( id );
+    delete localStorage[ key ];
+  }
+} );
+
+
+$.each( votes, setVoted );
+
+// Images
+lazyload();

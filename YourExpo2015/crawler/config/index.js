@@ -1,6 +1,7 @@
 // Load system modules
 
 // Load modules
+var _ = require( 'lodash' );
 var moment = require( 'moment' );
 var debug = require( 'debug' )( 'crawler:config:index' );
 
@@ -28,6 +29,16 @@ config.INTERVAL = moment.duration( 1, 'hours' ).asMilliseconds();
  * @type {Number}
  */
 config.MAX_QUEUE_SIZE = 10;
+
+
+// Load override if present
+try {
+  var override = require( './override.js' );
+  config = _.assign( config, override );
+} catch( ex ) {
+  debug( 'No override file found' );
+}
+
 
 // Module exports
 module.exports = config;

@@ -1,11 +1,16 @@
 <div class="gallery">
   {{#each this}}
-    <div class="image" style="background-image: url('{{imageUrl}}');" data-id="{{_id}}">
+    {{!-- <pre>{{ json this }}</pre> --}}
+    <div class="image" style="background-image: url('img/load.gif');" data-id="{{_id}}" data-image="{{imageUrl}}">
       <div class="overlay">
         <a class="details" href="{{tag}}/details/{{_id}}" title="Details"><i class="fa fa-line-chart"></i></a>
-        <a class="likes" href="#" data-likes="{{ numVotes }}"><i class="fa fa-heart"></i></a>
-        <span class="author">@{{ raw.user.username }}</span>
+        <a class="likes" href="#" data-likes="{{ votesCount }}"><i class="fa fa-heart"></i></a>
+        <span class="author">@{{ username }}</span>
       </div>
     </div>
   {{/each}}
+  <div class="more-images">
+    <span lang="it">Carica altre immagini...</span>
+    <span lang="en">More images...</span>
+  </div>
 </div>

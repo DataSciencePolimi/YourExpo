@@ -129,9 +129,13 @@ header > nav > ul {
 
   text-transform: uppercase;
 }
+header > nav > ul> li.active {
+  font-weight: bold;
+}
 header > nav > ul > li {
   flex: 1 0 auto;
   border-right: 1px solid #ddd;
+  padding-bottom: 5px;
 }
 header > nav > ul > li:last-child {
   border-right: none;

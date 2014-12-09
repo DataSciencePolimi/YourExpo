@@ -23,6 +23,7 @@ var publicPath = path.join(__dirname, 'public');
 var app = express();
 var port = config.server.port;
 var hostname = config.server.hostname || '0.0.0.0';
+var externalUrl = config.server.externalUrl;
 
 // Module initialization (at first load)
 Promise.promisifyAll( app );
@@ -31,20 +32,23 @@ app.locals.title = 'YourExpo2015';
 app.enable( 'trust proxy' );
 app.enable( 'strict routing' );
 
+
 app.use( forceTrailingSlash() );
-//app.use( serveStatic( publicPath ) );
 
 
-// Routes
+// Redirect to the challenge
 app.get( '/', function( req, res ) {
   res.redirect( '/YourExpo2015' );
 } );
+
 app.use( '/YourExpo2015/', yourExpo );
+
+app.use( serveStatic( publicPath ) ); // Placed after the 'GET /' route to enable redirects
 
 // Entry point
 app
 .listenAsync( port, hostname )
-.log( debug, 'Server started on %s:%d', hostname, port )
+.log( debug, 'Server started on %s:%d, external url: "%s"', hostname, port, externalUrl )
 .then( initMongo )
 .log( debug, 'Mongo ready' );
 

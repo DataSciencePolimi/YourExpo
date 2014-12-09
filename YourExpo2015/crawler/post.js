@@ -16,6 +16,7 @@ var request = require('request');
 // Constant declaration
 var MAX_QUEUE_SIZE = config.MAX_QUEUE_SIZE;
 var MIN_VOTES_TO_POST = rootConfig.crawler.minVotes;
+var csEnabled = rootConfig.crowdSearcher.enabled;
 var csBaseUrl = rootConfig.crowdSearcher.url;
 var addObjectPath = rootConfig.crowdSearcher.addObjectLocation;
 var taskId = rootConfig.crowdSearcher.taskId;
@@ -29,6 +30,8 @@ Promise.promisifyAll(request);
 
 // Module exports
 module.exports = function postToCS(documents) {
+  if( !csEnabled )
+    return;
 
   if (!_.isArray(documents)) {
     documents = [documents];

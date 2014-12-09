@@ -1,8 +1,37 @@
 /* global $, photo, posts, moment */
 
-
+var sum = 0;
+var MIN_POINTS = 30;
 
 var $graph = $( '#graph' );
+
+
+
+function padData( data ) {
+  if( data.length>0 && data.length<MIN_POINTS ) {
+    var toAdd = MIN_POINTS-data.length;
+    var initalPad = Math.floor( toAdd/2 );
+    var finalPad = Math.ceil( toAdd/2 );
+
+    var firstPoint = data[0];
+    for( var i=0; i<initalPad; i++ ) {
+      firstPoint = {
+        y: firstPoint.y,
+        x: moment( firstPoint.x ).utc().subtract( 1, 'h' ).toDate()
+      };
+      data.unshift( firstPoint );
+    }
+
+    var lastPoint = data[ data.length-1 ];
+    for( var j=0; j<finalPad; j++ ) {
+      lastPoint = {
+        y: lastPoint.y,
+        x: moment( lastPoint.x ).utc().add( 1, 'h' ).toDate()
+      };
+      data.push( lastPoint );
+    }
+  }
+}
 
 function compare( a, b ) {
   return a.x - b.x;
@@ -18,7 +47,6 @@ function toPoint( element ) {
   };
 }
 
-var sum = 0;
 function platformToPoint( element ) {
   sum += element.votes;
   var point = toPoint( element );
@@ -35,23 +63,20 @@ var platformSerie = {
   data: $.map( photo.platform, platformToPoint ).sort( compare )
 };
 
-var series = [ instagramSerie, platformSerie ];
-/*
-$.each( posts, function( i, post ) {
-  sum = 0;
-  var name = post.provider[0].toUpperCase();
-  name += post.provider.substring( 1 );
-  var postSerie = {
-    name: name,
-    data: $.map( post.votes, toPoint ).sort( compare )
-  };
+var series = [ instagramSerie /*, platformSerie */ ];
 
-  series.push( postSerie );
-} );
-*/
 
+padData( instagramSerie.data );
+//padData( platformSerie.data );
 
 $graph.highcharts( {
+  plotOptions: {
+    spline: {
+      marker: {
+        enabled: false
+      }
+    }
+  },
   chart: {
     type: 'spline',
     zoomType: 'x'
@@ -66,13 +91,20 @@ $graph.highcharts( {
     title: {
       text: 'Time'
     },
-    type: 'datetime'
+    type: 'datetime',
+    maxPadding: 0.1,
+    minPadding: 0.1,
   },
   yAxis: {
     title: {
       text: 'Votes'
     },
-    type: 'linear'
+    type: 'linear',
+    allowDecimals: false,
+    maxPadding: 0.1,
+    minPadding: 0.1,
+    minTickInterval: 1,
+    min: 0
   },
   series: series
 } );
