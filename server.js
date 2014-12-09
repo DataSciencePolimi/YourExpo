@@ -32,10 +32,13 @@ app.enable( 'trust proxy' );
 app.enable( 'strict routing' );
 
 app.use( forceTrailingSlash() );
-app.use( serveStatic( publicPath ) );
+//app.use( serveStatic( publicPath ) );
 
 
 // Routes
+app.get( '/', function( req, res ) {
+  res.redirect( '/YourExpo2015' );
+} );
 app.use( '/YourExpo2015/', yourExpo );
 
 // Entry point

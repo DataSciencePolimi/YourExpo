@@ -35,7 +35,7 @@ config.instagram = require( './instagram.json' );
 
 // Crawler config
 config.crawler = {
-  minVotes: 50 // Min votes to post to the CS
+  minVotes: 1 // Min votes to post to the CS
 };
 // Gallery config
 config.gallery = {
