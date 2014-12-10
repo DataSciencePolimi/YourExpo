@@ -29,13 +29,17 @@ function lazyload() {
 
 
 $( '.more-images' ).click( function() {
-  var $myGallery = $( this ).closest( '.gallery' );
+  var $this = $( this );
+  var $myGallery = $this.closest( '.gallery' );
 
   var toShow = $myGallery.data( 'show' ) || START_IMAGES;
   toShow += MORE_IMAGES;
   $myGallery.find( '.image:lt('+toShow+')' ).show();
   $myGallery.data( 'show', toShow );
   lazyload();
+
+  if( toShow>50 )
+    $this.hide();
 } );
 
 
