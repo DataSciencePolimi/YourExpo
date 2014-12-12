@@ -27,23 +27,18 @@ module.exports = function( req, res ) {
 
   var now = moment();
 
-  var closestTag;
-  var dist = +Infinity;
 
-  _.each( tags, function( tagObject, tag ) {
-
-    if( now.isAfter( tagObject.startDate ) && now.isBefore() ) {
-      closestTag = tag;
-      return false;
-    }
-
-    var currDist = now.diff( tagObject.startDate );
-    if( currDist<dist ) {
-      dist = currDist;
-      closestTag = tag;
+  var sortedTags = _.sortBy( tags, 'startDate' );
+  var tagMatches = _.filter( sortedTags, function( tagObject ) {
+    if( now.isAfter( tagObject.startDate ) && now.isBefore( tagObject.endDate ) ) {
+      return true;
     }
   } );
+  debug( 'sortedTags: %j', _.map( sortedTags, 'tag' ) );
+  debug( 'tagMatches: %j', _.map( tagMatches, 'tag' ) );
 
+  // if we have a valid tag then use it, otherwise use first... :(
+  var closestTag = tagMatches[ 0 ]? tagMatches[ 0 ].tag : sortedTags[ 0 ].tag;
 
   var destinationUrl = url.resolve( req.app.baseUrl, closestTag+'/' );
   res.redirect( destinationUrl );

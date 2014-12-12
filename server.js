@@ -45,6 +45,11 @@ app.use( '/YourExpo2015/', yourExpo );
 
 app.use( serveStatic( publicPath ) ); // Placed after the 'GET /' route to enable redirects
 
+// Default redirect
+app.use( '/*', function( req, res ) {
+  res.redirect( '/' );
+} );
+
 // Entry point
 app
 .listenAsync( port, hostname )

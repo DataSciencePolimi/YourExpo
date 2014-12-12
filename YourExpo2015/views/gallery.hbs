@@ -18,9 +18,11 @@
 {{/if}}
 
 
-{{#if trending.length}}
-  <h2>Trending now:</h2>
-  {{> gallery trending }}
+{{#if isActive }}
+  {{#if trending.length }}
+    <h2>Trending now:</h2>
+    {{> gallery trending }}
+  {{/if}}
 {{/if}}
 
 

@@ -3,6 +3,7 @@
 // Load modules
 var Promise = require( 'bluebird' );
 var mongoose = require( 'mongoose' );
+var moment = require( 'moment' );
 var debug = require( 'debug' )( 'yourexpo:routes:tag:gallery' );
 
 // Load my modules
@@ -73,7 +74,8 @@ module.exports = function( req, res ) {
     trending: trendingPromise,
     top: topPromise,
     highlighted: highlightedPromise,
-    recent: recentPromise
+    recent: recentPromise,
+    isActive: moment().isAfter( req.tagObject.endDate )
   };
 
   Promise

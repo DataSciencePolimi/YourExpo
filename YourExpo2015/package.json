@@ -19,9 +19,10 @@
     "hbs": "2.x",
     "instagram-node": "0.x",
     "marked": "0.3.x",
+    "moment": "2.x",
     "passport": "0.x",
     "passport-instagram": "0.x",
-    "request": "^2.49.0",
+    "request": "2.x",
     "serve-static": "1.x"
   },
   "devDependencies": {
