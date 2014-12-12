@@ -32,6 +32,8 @@ module.exports = function( req, res ) {
   var tagMatches = _.filter( sortedTags, function( tagObject ) {
     if( now.isAfter( tagObject.startDate ) && now.isBefore( tagObject.endDate ) ) {
       return true;
+    } else {
+      return false;
     }
   } );
   debug( 'sortedTags: %j', _.map( sortedTags, 'tag' ) );

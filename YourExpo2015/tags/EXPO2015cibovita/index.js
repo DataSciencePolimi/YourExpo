@@ -40,8 +40,8 @@ var exported = {
   tag: tag,
   topic1: topic1,
   topic2: topic2,
-  startDate: moment( startDate, DATE_FORMAT ),
-  endDate: moment( endDate, DATE_FORMAT ),
+  startDate: moment( startDate, DATE_FORMAT ).startOf( 'day' ),
+  endDate: moment( endDate, DATE_FORMAT ).endOf( 'day' ),
   sampleId: sampleId,
   description: readMarkdown( 'description.md' ),
 
