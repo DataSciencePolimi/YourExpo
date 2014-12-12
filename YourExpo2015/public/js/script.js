@@ -19,6 +19,11 @@ function changeLocale( locale ) {
   $( '[lang="'+locale+'"]').show();
 
   localStorage.setItem( 'lang', locale );
+
+  var text = $( 'header > nav li.active [lang="'+locale+'"]' ).text();
+  if( text==='' )
+    text = $( 'header > nav li.active' ).text();
+  $( '.page-name' ).text( text );
 }
 
 
@@ -36,6 +41,7 @@ $( '.button-container > a.button' ).each( function() {
   if( osUrl )
     $this.prop( 'href', osUrl );
 } );
+
 
 
 

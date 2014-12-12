@@ -155,6 +155,9 @@ header > nav {
   padding-top: 20px;
 }
 
+header > nav > .page-name {
+  display: none;
+}
 header > nav > .toggle {
   display: none;
 }
@@ -552,9 +555,23 @@ footer > .partners > .partners-container > .partners-list {
     display: block;
     position: absolute;
     right: 10px;
+    z-index: 1000;
   }
   header > nav > input:checked+ul {
     display: block;
+  }
+  header > nav > .page-name {
+    display: block;
+    position: absolute;
+    line-height: 32px;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+  }
+  header > nav > input:checked~.page-name {
+    display: none;
   }
 
   .logos {
