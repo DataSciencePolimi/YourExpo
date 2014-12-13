@@ -40,7 +40,12 @@ module.exports = function( req, res ) {
   debug( 'tagMatches: %j', _.map( tagMatches, 'tag' ) );
 
   // if we have a valid tag then use it, otherwise use first... :(
-  var closestTag = tagMatches[ 0 ]? tagMatches[ 0 ].tag : sortedTags[ 0 ].tag;
+  var closestTag = sortedTags[ 0 ].tag;
+  if( tagMatches.length===1 ) {
+    closestTag = tagMatches[ 0 ].tag;
+  } else if( tagMatches.length===2 ) {
+    closestTag = tagMatches[ 1 ].tag;
+  }
 
   var destinationUrl = url.resolve( req.app.baseUrl, closestTag+'/' );
   res.redirect( destinationUrl );
