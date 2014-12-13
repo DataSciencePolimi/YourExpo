@@ -1,8 +1,10 @@
 
 var $gallery = $( '.gallery' );
 var votes = JSON.parse( localStorage.getItem( 'votes' ) || '{}' );
+
 var START_IMAGES = 10;
 var MORE_IMAGES = 5;
+
 
 function setVoted( id ) {
   $( '.image[data-id="'+id+'"]', $gallery ).addClass( 'voted' );

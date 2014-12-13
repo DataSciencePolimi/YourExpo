@@ -1,4 +1,4 @@
-/* global $, localStorage */
+/* global $, localStorage,  */
 /* exported changeLocale */
 
 
@@ -50,3 +50,5 @@ if( locale!=='it' && locale!=='en')
   locale = 'en';
 
 changeLocale( locale );
+
+
