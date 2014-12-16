@@ -1,7 +1,7 @@
 // Load system modules
 
 // Load modules
-var debug = require( 'debug' )( 'yourexpo:routes:vote' );
+var debug = require( 'debug' )( 'yourexpo:routes:like' );
 var mongoose = require( 'mongoose' );
 
 // Load my modules
@@ -27,16 +27,16 @@ module.exports = function( req, res, next ) {
   Model
   .findById( id )
   .execAsync()
-  .then( function( post ) {
-    if( !post )
-      throw new Error( 'Post not found' );
+  .then( function( photo ) {
+    if( !photo )
+      throw new Error( 'Photo not found' );
 
     // Add one vote from the platform
-    post.platform.push( {
+    photo.platform.push( {
       votes: 1
     } );
 
-    return post
+    return photo
     .saveAsync();
   } )
   .spread( function() {

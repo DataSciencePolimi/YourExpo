@@ -2,12 +2,9 @@
 var url = require( 'url' );
 
 // Load modules
-var _ = require( 'lodash' );
 var debug = require( 'debug' )( 'yourexpo:routes:index' );
-var moment = require( 'moment' );
 
 // Load my modules
-var config = require( '../../config/' );
 var tags = require( '../tags/' );
 
 
@@ -25,27 +22,7 @@ var tags = require( '../tags/' );
 module.exports = function( req, res ) {
   debug( 'Index' );
 
-  var now = moment();
-
-
-  var sortedTags = _.sortBy( tags, 'startDate' );
-  var tagMatches = _.filter( sortedTags, function( tagObject ) {
-    if( now.isAfter( tagObject.startDate ) && now.isBefore( tagObject.endDate ) ) {
-      return true;
-    } else {
-      return false;
-    }
-  } );
-  debug( 'sortedTags: %j', _.map( sortedTags, 'tag' ) );
-  debug( 'tagMatches: %j', _.map( tagMatches, 'tag' ) );
-
-  // if we have a valid tag then use it, otherwise use first... :(
-  var closestTag = sortedTags[ 0 ].tag;
-  if( tagMatches.length===1 ) {
-    closestTag = tagMatches[ 0 ].tag;
-  } else if( tagMatches.length===2 ) {
-    closestTag = tagMatches[ 1 ].tag;
-  }
+  var closestTag = tags.current.tag;
 
   var destinationUrl = url.resolve( req.app.baseUrl, closestTag+'/' );
   res.redirect( destinationUrl );

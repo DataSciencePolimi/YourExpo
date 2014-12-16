@@ -16,7 +16,8 @@ var tags = require( '../tags/' );
 
 
 // Module variables declaration
-
+var maxImages = rootConfig.gallery.maxImages;
+var photoCollection = rootConfig.mongo.collections.photo;
 
 // Module initialization (at first load)
 
@@ -24,25 +25,32 @@ var tags = require( '../tags/' );
 module.exports = function( req, res ) {
   debug( 'Profile' );
 
-  var Model = mongoose.model( rootConfig.mongo.collections.photo );
+  var Model = mongoose.model( photoCollection );
 
   var promises = {};
 
   _.each( tags, function( nope, tag ) {
     promises[ tag ] = Model
     .find()
+    .select( '-raw' )
     .where( 'tag', tag )
     .where( 'username', req.user.username )
-    .sort( '-numVotes' )
-    .limit( 20 )
+    .sort( '-votesCount' )
+    .limit( maxImages )
     .execAsync();
   } );
+
+  promises.test = Model
+  .find()
+  .select( '-raw' )
+  .limit( maxImages )
+  .execAsync();
 
   Promise
   .props( promises )
   .then( function( results ) {
     return res.render( 'profile', {
-      galleries: results
+      galleries: results,
     } );
   } );
 };

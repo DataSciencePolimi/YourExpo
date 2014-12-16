@@ -15,6 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "1.x",
+    "cors": "2.x",
     "express-session": "1.x",
     "hbs": "2.x",
     "instagram-node": "0.x",

@@ -2,8 +2,8 @@
 var $gallery = $( '.gallery' );
 var votes = JSON.parse( localStorage.getItem( 'votes' ) || '{}' );
 
-var START_IMAGES = 10;
-var MORE_IMAGES = 5;
+var START_IMAGES = 6;
+var MORE_IMAGES = 6;
 
 
 function setVoted( id ) {
@@ -15,17 +15,23 @@ function setVoted( id ) {
 
 
 function lazyload() {
-  $( '.image:visible:not(.loaded)' ).each( function() {
-    var $image = $( this );
-    var imageUrl = $( this ).data( 'image' );
+
+  var imagesToLoad = $( '.image:visible:not(.loaded)' ).map( function() {
+    return $( this ).data( 'image' );
+  } ).get();
+  imagesToLoad = $.unique( imagesToLoad );
+
+
+  $.each( imagesToLoad, function( i, url ) {
+    var $destElements = $( '.image[data-image="'+url+'"]' );
 
     var $img = $( '<img/>' );
-    $img.prop( 'src', imageUrl );
-
     $img.load( function() {
-      $image.addClass( 'loaded' );
-      $image.css( 'background-image', 'url("'+imageUrl+'")' );
+      $destElements.addClass( 'loaded' );
+      $destElements.css( 'background-image', 'url("'+url+'")' );
     } );
+    // Trigger image loading
+    $img.prop( 'src', url );
   } );
 }
 
@@ -40,7 +46,8 @@ $( '.more-images' ).click( function() {
   $myGallery.data( 'show', toShow );
   lazyload();
 
-  if( toShow>50 )
+  // No more images to find
+  if( $myGallery.find( '.image:not(.loaded)' ).length===0 )
     $this.hide();
 } );
 
@@ -51,7 +58,7 @@ $( '.likes' ).click( function( evt ) {
   var id = $( this ).closest( '.image' ).data( 'id' );
   if( id && !votes[ id ] ) {
     var baseUrl = $( 'html > head > base' ).prop( 'href' );
-    var url = baseUrl + 'vote/' + id;
+    var url = baseUrl + 'like/' + id;
     $.getJSON( url )
     .done( function() {
       setVoted( id );

@@ -93,6 +93,8 @@
     width: 100px;
     max-width: 100px;
     margin-right: 10px;
+    max-height: 100px;
+    min-height: 0;
   }
 
   .info h2.title {

@@ -1,7 +1,7 @@
 <div class="gallery">
   {{#each this}}
     {{!-- <pre>{{ json this }}</pre> --}}
-    <div class="image" style="background-image: url('img/load.gif');" data-id="{{_id}}" data-image="{{imageUrl}}">
+    <div class="image" style="background-image: url('img/load.gif');" data-id="{{_id}}" data-image="http://instagram.com/p/{{shortLink}}/media/?size=m">
       <div class="overlay">
         <a class="details" href="{{tag}}/details/{{_id}}" title="Details"><i class="fa fa-line-chart"></i></a>
         <a class="likes" href="#" data-likes="{{ votesCount }}"><i class="fa fa-heart"></i></a>

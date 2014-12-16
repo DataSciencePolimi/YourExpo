@@ -12,20 +12,21 @@
   align-items: flex-start;
 }
 
-.gallery > .image {
-  flex: 1 1 200px;
-  height: 200px;
-
+.gallery > * {
+  flex: 1 1 300px;
+  height: 300px;
+}
+.gallery .image {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: initial;
   background-color: #eee;
 }
-.gallery > .image.loaded {
+.gallery .image.loaded {
   background-size: cover;
 }
 
-.gallery > .image .details {
+.gallery .image .details {
   position: absolute;
   top: 1%;
   right: 1%;
@@ -35,16 +36,16 @@
 
   transition: opacity 0.3s ease-out;
 }
-.gallery > .image:hover .details {
+.gallery .image:hover .details {
   opacity: 1;
 }
 
 
-.gallery > .image.voted > .overlay {
+.gallery .image.voted > .overlay {
   background-color: rgba(0, 0, 0, 0.7);
   justify-content: center;
 }
-.gallery > .image > .overlay {
+.gallery .image > .overlay {
   width: 100%;
   height: 100%;
 
@@ -58,11 +59,11 @@
 
   transition: background-color 0.3s ease-out;
 }
-.gallery > .image:hover > .overlay {
+.gallery .image:hover > .overlay {
   background-color: rgba(0, 0, 0, 0.7);
   justify-content: center;
 }
-.gallery > .image .author {
+.gallery .image .author {
   color: #eee;
   font-weight: bold;
 
@@ -70,7 +71,7 @@
   bottom: 1%;
   right: 1%;
 }
-.gallery > .image .likes {
+.gallery .image .likes {
   font-weight: lighter;
   font-size: 20px;
   color: #eee;
@@ -78,21 +79,21 @@
 
   flex: 0 0 auto;
 }
-.gallery > .image.voted .likes {
+.gallery .image.voted .likes {
   color: #f00;
   opacity: 1;
 }
-.gallery > .image .likes:after {
+.gallery .image .likes:after {
   content: " " attr( data-likes );
   color: #eee;
 }
-.gallery > .image:hover .likes {
+.gallery .image:hover .likes {
   opacity: 1;
   text-decoration: none;
 }
 
 
-.gallery > .image:nth-child(n+10) {
+.gallery > .image:nth-child(n+7) {
   display: none;
 }
 .gallery > .more-images {
@@ -104,6 +105,7 @@
   background-color: #DDD;
   text-align: center;
   cursor: pointer;
+  max-width: none;
 }
 
 
@@ -113,6 +115,10 @@
     margin-right: -30px;
     border-width: 10px;
   }
+  .gallery > * {
+    flex: 1 1 200px;
+    height: 200px;
+  }
 }
 @media (max-width: 550px) {
   .gallery {
@@ -120,7 +126,7 @@
     margin-right: -10px;
   }
 
-  .gallery > .image {
+  .gallery > * {
     flex: 1 1 150px;
     height: 150px;
   }

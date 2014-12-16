@@ -3,6 +3,7 @@
 // Load modules
 var Promise = require( 'bluebird' );
 var debug = require( 'debug' )( 'yourexpo:tag:index' );
+var _ = require( 'lodash' );
 var moment = require( 'moment' );
 
 // Load my modules
@@ -23,6 +24,36 @@ var tags = {
   */
 };
 
+
+Object.defineProperty( tags, 'current', {
+  enumerable: false,
+  // writable: false,
+  configurable: false,
+  get: function() {
+    var now = moment();
+
+    var sortedTags = _.sortBy( tags, 'startDate' );
+    var tagMatches = _.filter( sortedTags, function( tagObject ) {
+      if( now.isAfter( tagObject.startDate ) && now.isBefore( tagObject.endDate ) ) {
+        return true;
+      } else {
+        return false;
+      }
+    } );
+    debug( 'sortedTags: %j', _.map( sortedTags, 'tag' ) );
+    debug( 'tagMatches: %j', _.map( tagMatches, 'tag' ) );
+
+    // if we have a valid tag then use it, otherwise use first... :(
+    var closestTag = sortedTags[ 0 ];
+    if( tagMatches.length===1 ) {
+      closestTag = tagMatches[ 0 ];
+    } else if( tagMatches.length===2 ) {
+      closestTag = tagMatches[ 1 ];
+    }
+
+    return closestTag;
+  }
+} );
 
 // Module initialization (at first load)
 

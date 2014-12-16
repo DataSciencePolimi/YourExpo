@@ -26,11 +26,13 @@ var photoCollection = rootConfig.mongo.collections.photo;
 module.exports = function( req, res ) {
   debug( 'Gallery, min votes: %d', minVotes );
   var Model = mongoose.model( photoCollection );
+  var tag = req.tag;
+  var tagObj = req.tagObject;
 
   var trendingPromise = Model
   .find()
   .select( '-raw' )
-  .where( 'tag', req.tag )
+  .where( 'tag', tag )
   .where( 'rejected', false )
   .where( 'highlighted', false )
   .where( 'votesCount' ).gt( minVotes )
@@ -41,7 +43,7 @@ module.exports = function( req, res ) {
   var topPromise = Model
   .find()
   .select( '-raw' )
-  .where( 'tag', req.tag )
+  .where( 'tag', tag )
   .where( 'rejected', false )
   .where( 'highlighted', false )
   .where( 'votesCount' ).gt( minVotes )
@@ -52,7 +54,7 @@ module.exports = function( req, res ) {
   var highlightedPromise = Model
   .find()
   .select( '-raw' )
-  .where( 'tag', req.tag )
+  .where( 'tag', tag )
   .where( 'rejected', false )
   .where( 'highlighted', true )
   .where( 'votesCount' ).gt( minVotes )
@@ -63,19 +65,21 @@ module.exports = function( req, res ) {
   var recentPromise = Model
   .find()
   .select( '-raw' )
-  .where( 'tag', req.tag )
+  .where( 'tag', tag )
   .where( 'rejected', false )
   .sort( '-_id' )
   .limit( maxImages )
   .execAsync();
 
 
+  var now = moment();
+  var isActive = now.isAfter( tagObj.startDate ) && now.isBefore( tagObj.endDate );
   var data = {
     trending: trendingPromise,
     top: topPromise,
     highlighted: highlightedPromise,
     recent: recentPromise,
-    isActive: moment().isAfter( req.tagObject.endDate )
+    isActive: isActive
   };
 
   Promise

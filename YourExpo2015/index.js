@@ -9,6 +9,7 @@ var _ = require('lodash');
 
 var passport = require('passport');
 var express = require('express');
+var cors = require('cors');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var serveStatic = require('serve-static');
@@ -128,14 +129,15 @@ router.param('tag', function(req, res, next, tag) {
 router.post('/approve', require('./routes/approve.js'));
 router.post('/reject', require('./routes/reject.js'));
 router.post('/highlight', require('./routes/highlight.js'));
-router.get('/vote/:id', require('./routes/vote.js'));
 // router.get( '/sample/:id', require( './routes/sample.js' ) );
 /**
  * Routes
  */
 router.get('/', require('./routes/index.js'));
+router.get('/tag', cors(), require('./routes/tag.js'));
 router.get('/profile', checkAuth, require('./routes/profile.js'));
-router.get('/vote/:id', require('./routes/vote.js'));
+router.get('/like/:id', require('./routes/like.js'));
+router.get('/unlike/:id', require('./routes/unlike.js'));
 router.get('/:tag/', require('./routes/tag/index.js'));
 router.get('/:tag/home', require('./routes/tag/home.js'));
 router.get('/:tag/come', require('./routes/tag/come.js'));

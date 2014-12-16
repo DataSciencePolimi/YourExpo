@@ -10,6 +10,11 @@
     <!-- Bootstrap -->
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="lib/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+    <style id="lang-remove">
+      *[lang="en"] {
+        display: none;
+      }
+    </style>
     <link href="css/style.css" rel="stylesheet">
     {{{block "css"}}}
 
@@ -48,7 +53,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="lib/jquery/dist/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    {{!-- <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script> --}}
     <script src="js/script.js"></script>
     {{{block "js"}}}
   </body>
