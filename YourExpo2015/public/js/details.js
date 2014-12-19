@@ -104,7 +104,7 @@ $graph.highcharts( {
     maxPadding: 0.1,
     minPadding: 0.1,
     minTickInterval: 1,
-    min: 0
+    // min: 0
   },
   series: series
 } );

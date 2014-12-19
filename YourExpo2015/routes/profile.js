@@ -40,11 +40,13 @@ module.exports = function( req, res ) {
     .execAsync();
   } );
 
+  /*
   promises.test = Model
   .find()
   .select( '-raw' )
   .limit( maxImages )
   .execAsync();
+  */
 
   Promise
   .props( promises )
