@@ -40,6 +40,7 @@ module.exports = function( req, res ) {
     .where( 'votesCount' ).gt( minVotes )
     .sort( '-votesCount' )
     .limit( maxImages )
+    .lean()
     .execAsync();
 
     var topPromise = Model
@@ -51,6 +52,7 @@ module.exports = function( req, res ) {
     .where( 'votesCount' ).gt( minVotes )
     .sort( '-votesCount' )
     .limit( maxImages )
+    .lean()
     .execAsync();
 
     var highlightedPromise = Model
@@ -62,6 +64,7 @@ module.exports = function( req, res ) {
     .where( 'votesCount' ).gt( minVotes )
     .sort( '-votesCount' )
     .limit( maxImages )
+    .lean()
     .execAsync();
 
     var recentPromise = Model
@@ -71,6 +74,7 @@ module.exports = function( req, res ) {
     .where( 'rejected', false )
     .sort( '-_id' )
     .limit( maxImages )
+    .lean()
     .execAsync();
 
 
@@ -100,6 +104,7 @@ module.exports = function( req, res ) {
     .where( 'rejected', false )
     .where( 'votesCount' ).gt( minVotes )
     .sort( '-_id' )
+    .lean()
     .execAsync()
     .then( function( images ) {
       return res.render( 'gallery', {

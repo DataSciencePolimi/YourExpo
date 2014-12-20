@@ -37,6 +37,7 @@ module.exports = function( req, res ) {
     .where( 'username', req.user.username )
     .sort( '-votesCount' )
     .limit( maxImages )
+    .lean()
     .execAsync();
   } );
 
