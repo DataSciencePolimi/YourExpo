@@ -104,6 +104,7 @@ module.exports = function( req, res ) {
     .where( 'rejected', false )
     .where( 'votesCount' ).gt( minVotes )
     .sort( '-_id' )
+    .limit( 100 ) // BAD FIX
     .lean()
     .execAsync()
     .then( function( images ) {
