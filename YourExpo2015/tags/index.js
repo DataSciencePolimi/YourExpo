@@ -17,11 +17,10 @@ var moment = require( 'moment' );
 
 // Module variables declaration
 var tags = {
-  EXPO2015terramare: require( './EXPO2015terramare/' ),
+  EXPO2015showcooking: require( './EXPO2015showcooking/' ),
   EXPO2015cibovita: require( './EXPO2015cibovita/' ),
+  EXPO2015terramare: require( './EXPO2015terramare/' ),
   //EXPO2015volotest: require( './EXPO2015volotest/' ),
-  /*
-  */
 };
 
 

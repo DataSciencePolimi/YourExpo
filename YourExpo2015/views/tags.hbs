@@ -1,0 +1,19 @@
+{{#extend "css"}}
+  <link href="css/tags.css" rel="stylesheet">
+{{/extend}}
+
+
+{{> tag }}
+
+
+<h2 lang="it">Tutti i tag:</h2>
+<h2 lang="en">All the tags:</h2>
+<ul class="tags">
+  {{#each tags}}
+    <li class="tag"><a href="{{this.tag}}/home">
+      <div class="name">{{this.tag}}</div>
+      <div class="dates" lang="en">{{date this.startDate 'DD MMMM' 'en' }} - {{date this.endDate 'DD MMMM' 'en' }}</div>
+      <div class="dates" lang="it">{{date this.startDate 'DD MMMM' 'it' }} - {{date this.endDate 'DD MMMM' 'it' }}</div>
+    </a></li>
+  {{/each}}
+</ul>

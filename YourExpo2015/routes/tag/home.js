@@ -1,4 +1,5 @@
 // Load system modules
+var url = require( 'url' );
 
 // Load modules
 var _ = require( 'lodash' );
@@ -21,10 +22,17 @@ var debug = require( 'debug' )( 'yourexpo:routes:tag:home' );
 module.exports = function( req, res ) {
   debug( 'Home' );
 
-  return res.render( 'index', {
-    randomIndex1: _.random( 0, 5 ),
-    randomIndex2: _.random( 0, 5 )
-  } );
+  if( req.tagActive ) {
+    debug( 'Tag ACTIVE' );
+    return res.render( 'index', {
+      randomIndex1: _.random( 0, 5 ),
+      randomIndex2: _.random( 0, 5 )
+    } );
+  } else {
+    debug( 'Tag NOT active' );
+    var destinationUrl = url.resolve( req.app.baseUrl, req.tag+'/gallery' );
+    return res.redirect( destinationUrl );
+  }
 };
 
 

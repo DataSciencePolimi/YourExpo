@@ -7,16 +7,22 @@
   <label for="toggle_menu" class="toggle"><i class="fa fa-navicon"></i></label>
   <input type="checkbox" id="toggle_menu">
   <ul>
-    <li class="{{#if home_active}}active{{/if}}"><a href="{{tag}}/home">Home</a></li>
-    <li class="{{#if come_active}}active{{/if}}"><a href="{{tag}}/come">
-      <span lang="it">Come funziona</span>
-      <span lang="en">How it works</span>
-    </a></li>
-    <li class="{{#if gioca_active}}active{{/if}}"><a href="{{tag}}/gioca">
-      <span lang="it">Gioca</span>
-      <span lang="en">Play</span>
-    </a></li>
+    {{#if tagActive }}
+      <li class="{{#if home_active}}active{{/if}}"><a href="{{tag}}/home">Home</a></li>
+      <li class="{{#if come_active}}active{{/if}}"><a href="{{tag}}/come">
+        <span lang="it">Come funziona</span>
+        <span lang="en">How it works</span>
+      </a></li>
+      {{!-- <li class="{{#if gioca_active}}active{{/if}}"><a href="{{tag}}/gioca">
+        <span lang="it">Gioca</span>
+        <span lang="en">Play</span>
+      </a></li> --}}
+    {{/if}}
+
+    <li class="{{#if tags_active}}active{{/if}}"><a href="{{tag}}/tags">Tags</a></li>
+
     <li class="{{#if gallery_active}}active{{/if}}"><a href="{{tag}}/gallery">Gallery</a></li>
+
     <li class="{{#if profile_active}}active{{/if}}">
       <i class="fa fa-lock"></i>
       <a href="{{tag}}/profile">
@@ -28,7 +34,9 @@
         {{/if}}
       </a>
     </li>
+
     <li class="{{#if about_active}}active{{/if}}"><a href="{{tag}}/about">About</a></li>
+
   </ul>
   <div class="page-name"></div>
 </nav>

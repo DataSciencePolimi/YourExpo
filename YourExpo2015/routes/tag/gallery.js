@@ -3,7 +3,6 @@
 // Load modules
 var Promise = require( 'bluebird' );
 var mongoose = require( 'mongoose' );
-var moment = require( 'moment' );
 var debug = require( 'debug' )( 'yourexpo:routes:tag:gallery' );
 
 // Load my modules
@@ -27,66 +26,88 @@ module.exports = function( req, res ) {
   debug( 'Gallery, min votes: %d', minVotes );
   var Model = mongoose.model( photoCollection );
   var tag = req.tag;
-  var tagObj = req.tagObject;
 
-  var trendingPromise = Model
-  .find()
-  .select( '-raw' )
-  .where( 'tag', tag )
-  .where( 'rejected', false )
-  .where( 'highlighted', false )
-  .where( 'votesCount' ).gt( minVotes )
-  .sort( '-votesCount' )
-  .limit( maxImages )
-  .execAsync();
+  debug( 'Tag %s is active: %s', tag, req.tagActive );
 
-  var topPromise = Model
-  .find()
-  .select( '-raw' )
-  .where( 'tag', tag )
-  .where( 'rejected', false )
-  .where( 'highlighted', false )
-  .where( 'votesCount' ).gt( minVotes )
-  .sort( '-votesCount' )
-  .limit( maxImages )
-  .execAsync();
+  // Active TAG
+  if( req.tagActive ) {
+    var trendingPromise = Model
+    .find()
+    .select( '-raw' )
+    .where( 'tag', tag )
+    .where( 'rejected', false )
+    .where( 'highlighted', false )
+    .where( 'votesCount' ).gt( minVotes )
+    .sort( '-votesCount' )
+    .limit( maxImages )
+    .execAsync();
 
-  var highlightedPromise = Model
-  .find()
-  .select( '-raw' )
-  .where( 'tag', tag )
-  .where( 'rejected', false )
-  .where( 'highlighted', true )
-  .where( 'votesCount' ).gt( minVotes )
-  .sort( '-votesCount' )
-  .limit( maxImages )
-  .execAsync();
+    var topPromise = Model
+    .find()
+    .select( '-raw' )
+    .where( 'tag', tag )
+    .where( 'rejected', false )
+    .where( 'highlighted', false )
+    .where( 'votesCount' ).gt( minVotes )
+    .sort( '-votesCount' )
+    .limit( maxImages )
+    .execAsync();
 
-  var recentPromise = Model
-  .find()
-  .select( '-raw' )
-  .where( 'tag', tag )
-  .where( 'rejected', false )
-  .sort( '-_id' )
-  .limit( maxImages )
-  .execAsync();
+    var highlightedPromise = Model
+    .find()
+    .select( '-raw' )
+    .where( 'tag', tag )
+    .where( 'rejected', false )
+    .where( 'highlighted', true )
+    .where( 'votesCount' ).gt( minVotes )
+    .sort( '-votesCount' )
+    .limit( maxImages )
+    .execAsync();
+
+    var recentPromise = Model
+    .find()
+    .select( '-raw' )
+    .where( 'tag', tag )
+    .where( 'rejected', false )
+    .sort( '-_id' )
+    .limit( maxImages )
+    .execAsync();
 
 
-  var now = moment();
-  var isActive = now.isAfter( tagObj.startDate ) && now.isBefore( tagObj.endDate );
-  var data = {
-    trending: trendingPromise,
-    top: topPromise,
-    highlighted: highlightedPromise,
-    recent: recentPromise,
-    isActive: isActive
-  };
+    var data = {
+      trending: trendingPromise,
+      top: topPromise,
+      highlighted: highlightedPromise,
+      recent: recentPromise
+    };
 
-  Promise
-  .props( data )
-  .then( function( results ) {
-    return res.render( 'gallery', results );
-  } );
+    return Promise
+    .props( data )
+    .then( function( results ) {
+      results.active = true;
+      return res.render( 'gallery', results );
+    } );
+
+
+
+  // Unactive TAG
+  } else {
+
+    return Model
+    .find()
+    .select( '-raw' )
+    .where( 'tag', tag )
+    .where( 'rejected', false )
+    .where( 'votesCount' ).gt( minVotes )
+    .sort( '-_id' )
+    .execAsync()
+    .then( function( images ) {
+      return res.render( 'gallery', {
+        active: false,
+        images: images
+      } );
+    } );
+  }
 };
 
 

@@ -10,29 +10,38 @@
 {{> tag }}
 
 
-{{#if highlighted.length}}
-  <h2 lang="it">Foto in evidenza:</h2>
-  <h2 lang="en">Highlighted:</h2>
+{{#if active}}
+  {{#if highlighted.length}}
+    <h2 lang="it">Foto in evidenza:</h2>
+    <h2 lang="en">Highlighted:</h2>
 
-  {{> gallery highlighted }}
-{{/if}}
+    {{> gallery highlighted }}
+  {{/if}}
 
 
-{{#if isActive }}
   {{#if trending.length }}
     <h2>Trending now:</h2>
     {{> gallery trending }}
   {{/if}}
-{{/if}}
 
 
-{{#if top.length}}
-  <h2>Top voted:</h2>
-  {{> gallery top }}
-{{/if}}
+  {{#if top.length}}
+    <h2>Top voted:</h2>
+    {{> gallery top }}
+  {{/if}}
 
 
-{{#if recent.length}}
-  <h2>Recently posted:</h2>
-  {{> gallery recent }}
+  {{#if recent.length}}
+    <h2>Recently posted:</h2>
+    {{> gallery recent }}
+  {{/if}}
+
+{{else}}
+
+  {{#if images.length}}
+    <h2 lang="en">All images:</h2>
+    <h2 lang="it">Guarda le immagini:</h2>
+    {{> gallery images }}
+  {{/if}}
+
 {{/if}}

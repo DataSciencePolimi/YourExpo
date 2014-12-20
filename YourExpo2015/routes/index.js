@@ -20,12 +20,14 @@ var tags = require( '../tags/' );
 
 
 module.exports = function( req, res ) {
-  debug( 'Index' );
+  debug( 'Index for: %s', req.url );
 
   var closestTag = tags.current.tag;
+  debug( 'Current tag is: %s', closestTag );
 
   var destinationUrl = url.resolve( req.app.baseUrl, closestTag+'/' );
-  res.redirect( destinationUrl );
+  debug( 'Redirecting to root for current tag: %s', destinationUrl );
+  return res.redirect( destinationUrl );
 };
 
 

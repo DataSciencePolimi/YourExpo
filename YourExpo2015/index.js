@@ -8,6 +8,7 @@ var debug = require('debug')('yourexpo:server');
 var _ = require('lodash');
 
 var passport = require('passport');
+var moment = require('moment');
 var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
@@ -105,20 +106,29 @@ router.param('tag', function(req, res, next, tag) {
   debug('Got param tag: "%s"', tag);
 
   if (_.isUndefined(tags[tag])) {
+    debug( 'Tag not present, redirecting to current tag' );
     return res.redirect(req.app.baseUrl);
   }
-  var segments = req.path.toLowerCase().split( '/' );
+  var tagObject = tags[ tag ];
+  var now = moment();
+  var isActive = now.isAfter( tagObject.startDate ) && now.isBefore( tagObject.endDate );
 
   req.tag = tag;
-  req.tagObject = tags[tag];
+  req.tagObject = tagObject;
+  req.tagActive = isActive;
 
   req.session.tag = tag;
 
   res.locals.tag = req.tag;
-  res.locals.tagObject = req.tagObject;
-  res.locals.page = segments.pop();
+  res.locals.tagObject = tagObject;
   res.locals[ res.locals.page+'_active' ] = true;
+  res.locals.tagActive = isActive;
+  res.locals.currentTagObject = tags.current;
+  res.locals.currentTag = res.locals.currentTagObject.tag;
 
+
+  var segments = req.path.toLowerCase().split( '/' );
+  res.locals.page = segments.pop();
   return next();
 });
 
@@ -141,7 +151,8 @@ router.get('/unlike/:id', require('./routes/unlike.js'));
 router.get('/:tag/', require('./routes/tag/index.js'));
 router.get('/:tag/home', require('./routes/tag/home.js'));
 router.get('/:tag/come', require('./routes/tag/come.js'));
-router.get('/:tag/gioca', require('./routes/tag/gioca.js'));
+router.get('/:tag/tags', require('./routes/tag/tags.js'));
+// router.get('/:tag/gioca', require('./routes/tag/gioca.js'));
 router.get('/:tag/gallery', require('./routes/tag/gallery.js'));
 router.get('/:tag/details/:id', require('./routes/tag/details.js'));
 router.get('/:tag/about', require('./routes/about.js'));

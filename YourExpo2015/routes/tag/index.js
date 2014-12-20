@@ -19,12 +19,15 @@ var debug = require( 'debug' )( 'yourexpo:routes:tag:index' );
 
 
 module.exports = function( req, res ) {
-  debug( 'Index' );
+  debug( 'Index called for: %s', req.path );
 
-  var destinationUrl = url.resolve( req.app.baseUrl, req.tag+'/' );
-  destinationUrl = url.resolve( destinationUrl, 'home' );
-  debug( 'Dest url: %s', destinationUrl );
+  var destPage = 'home';
+  if( !req.tagActive ) {
+    destPage = 'gallery';
+  }
+  debug( 'Index for tag "%s" is: %s (%s)', req.tag, destPage, req.tagActive );
 
+  var destinationUrl = url.resolve( req.app.baseUrl, req.tag+'/'+destPage );
   return res.redirect( destinationUrl );
 };
 
