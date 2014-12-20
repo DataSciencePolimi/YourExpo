@@ -141,6 +141,7 @@ var PhotoSchema = new Schema({
    */
   votesCount: {
     type: Number,
+    index: true,
     required: true,
     default: 0
   },
