@@ -1,0 +1,23 @@
+{
+  "preset": "jquery",
+  "indent": {
+    "value": "  ",
+    "MemberExpression": 0,
+    "SwitchStatement": 1
+  },
+  "whiteSpace": {
+    "value": " ",
+    "before": {
+      "IfStatementConditionalOpening": 0,
+      "ForStatementExpressionOpening": 0,
+      "ArgumentListFunctionExpression": 1,
+      "ArgumentListArrayExpression": 1,
+      "ArgumentListObjectExpression": 1
+    },
+    "after": {
+      "ArgumentListArrayExpression": 1,
+      "ArgumentListFunctionExpression": 1,
+      "ArgumentListObjectExpression": 1
+    }
+  }
+}
