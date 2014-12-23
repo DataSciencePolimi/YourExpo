@@ -31,6 +31,7 @@ var Instagram = function constructor( options ) {
   options = options || {};
 
   this.name = 'Instagram';
+  this.accessToken = options.accessToken || rootConfig.instagram.accessToken;
   this.clientId = options.clientId || rootConfig.instagram.clientId;
   this.clientSecret = options.clientSecret || rootConfig.instagram.clientSecret;
   this.api = InstagramLib.instagram();
@@ -39,7 +40,8 @@ var Instagram = function constructor( options ) {
   /* jshint camelcase:false */
   this.api.use( {
     client_id: this.clientId,
-    client_secret: this.clientSecret
+    client_secret: this.clientSecret,
+    access_token: this.accessToken
   } );
   /* jshint camelcase:true */
 
@@ -119,6 +121,23 @@ Instagram.prototype.getMorePages = function( result, pagination ) {
 };
 
 
+Instagram.prototype.likePost = function( id, callback ) {
+  return this.api
+  /* jshint camelcase:false */
+  .add_likeAsync( id )
+  /* jshint camelcase:true */
+  .catch( this.handleError.bind( this ) )
+  .nodeify( callback );
+};
+
+Instagram.prototype.followUser = function( user, callback ) {
+  return this.api
+  /* jshint camelcase:false */
+  .set_user_relationshipAsync( user, 'follow' )
+  /* jshint camelcase:true */
+  .catch( this.handleError.bind( this ) )
+  .nodeify( callback );
+};
 
 Instagram.prototype.searchTag = function( tag, options, callback ) {
   if( _.isFunction( options ) ) {

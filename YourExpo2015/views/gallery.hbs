@@ -38,9 +38,16 @@
 
 {{else}}
 
+  {{#if highlighted.length}}
+    <h2 lang="it">Foto in evidenza di {{tag}}:</h2>
+    <h2 lang="en">{{tag}} highlighted:</h2>
+
+    {{> gallery highlighted }}
+  {{/if}}
+
   {{#if images.length}}
-    <h2 lang="en">All images:</h2>
-    <h2 lang="it">Guarda le immagini:</h2>
+    <h2 lang="en">All images for {{tag}}:</h2>
+    <h2 lang="it">Guarda le immagini di {{tag}}:</h2>
     {{> gallery images }}
   {{/if}}
 

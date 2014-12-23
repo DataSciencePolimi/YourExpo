@@ -10,7 +10,7 @@ var moment = require('moment');
 // Load my modules
 var rootConfig = require('../../config/');
 var config = require('./config/');
-var postToCS = require('./post.js');
+var actions = require('./actions.js');
 
 
 // Constant declaration
@@ -82,7 +82,7 @@ function savePhotos(tag, wrappedElements) {
         }
       });
 
-      return postToCS(toPost);
+      return actions(toPost);
 
 
     })

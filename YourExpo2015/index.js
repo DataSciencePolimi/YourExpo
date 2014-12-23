@@ -1,25 +1,25 @@
 // Load system modules
-var url = require('url');
-var path = require('path');
+var url = require( 'url' );
+var path = require( 'path' );
 
 // Load modules
-var Promise = require('bluebird');
-var debug = require('debug')('yourexpo:server');
-var _ = require('lodash');
+var Promise = require( 'bluebird' );
+var debug = require( 'debug' )( 'yourexpo:server' );
+var _ = require( 'lodash' );
 
-var passport = require('passport');
-var moment = require('moment');
-var express = require('express');
-var cors = require('cors');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var serveStatic = require('serve-static');
+var passport = require( 'passport' );
+var moment = require( 'moment' );
+var express = require( 'express' );
+var cors = require( 'cors' );
+var bodyParser = require( 'body-parser' );
+var session = require( 'express-session' );
+var serveStatic = require( 'serve-static' );
 
 // Load my modules
-var config = require('../config/');
-var tags = require('./tags/');
-var configureHandlebars = require('./config/handlebars.js');
-var configurePassport = require('./config/passport.js');
+var config = require( '../config/' );
+var tags = require( './tags/' );
+var configureHandlebars = require( './config/handlebars.js' );
+var configurePassport = require( './config/passport.js' );
 
 
 // Constant declaration
@@ -29,12 +29,12 @@ var configurePassport = require('./config/passport.js');
 var app = express();
 var Router = express.Router;
 var router = new Router();
-var viewsPath = path.join(__dirname, 'views');
-var publicPath = path.join(__dirname, 'public');
+var viewsPath = path.join( __dirname, 'views' );
+var publicPath = path.join( __dirname, 'public' );
 
 
 // Module initialization (at first load)
-var hbsInstance = configureHandlebars(app);
+var hbsInstance = configureHandlebars( app );
 
 
 /**
@@ -42,51 +42,51 @@ var hbsInstance = configureHandlebars(app);
  */
 app.name = 'YourEXPO2015';
 app.locals.title = 'YourExpo2015';
-app.enable('trust proxy');
-app.enable('strict routing');
-app.engine('hbs', hbsInstance.__express);
-app.set('views', viewsPath);
-app.set('view engine', 'hbs');
+app.enable( 'trust proxy' );
+app.enable( 'strict routing' );
+app.engine( 'hbs', hbsInstance.__express );
+app.set( 'views', viewsPath );
+app.set( 'view engine', 'hbs' );
 
-app.on('mount', function(parent) {
-  var baseUrl = url.resolve(config.server.externalUrl, parent.mountpath);
-  baseUrl = url.resolve(baseUrl, app.mountpath);
+app.on( 'mount', function( parent ) {
+  var baseUrl = url.resolve( config.server.externalUrl, parent.mountpath );
+  baseUrl = url.resolve( baseUrl, app.mountpath );
 
   app.baseUrl = baseUrl;
   app.locals.baseUrl = baseUrl;
-});
+} );
 
 
-configurePassport(app);
+configurePassport( app );
 
 
 
 /**
  * Middleware functions for Authorization.
  */
-function checkAuth(req, res, next) {
-  if (req.isAuthenticated())
+function checkAuth( req, res, next ) {
+  if( req.isAuthenticated() )
     return next();
 
-  var instagramAuthUrl = url.resolve(req.app.baseUrl, 'auth/instagram');
-  debug('Redirecting to %s', instagramAuthUrl);
-  res.redirect(instagramAuthUrl);
+  var instagramAuthUrl = url.resolve( req.app.baseUrl, 'auth/instagram' );
+  debug( 'Redirecting to %s', instagramAuthUrl );
+  res.redirect( instagramAuthUrl );
 }
 
-function successAuth(req, res) {
+function successAuth( req, res ) {
   var tag = req.session.tag;
-  var instagramAuthUrl = url.resolve(req.app.baseUrl, tag + '/profile');
-  debug('Redirecting to %s', instagramAuthUrl);
+  var instagramAuthUrl = url.resolve( req.app.baseUrl, tag + '/profile' );
+  debug( 'Redirecting to %s', instagramAuthUrl );
 
   // Successful authentication, redirect home.
-  res.redirect(instagramAuthUrl);
+  res.redirect( instagramAuthUrl );
 }
 
-router.use(function(req, res, next) {
+router.use( function( req, res, next ) {
   res.locals.user = req.user;
 
   return next();
-});
+} );
 
 /**
  * Auth endpoints
@@ -94,20 +94,20 @@ router.use(function(req, res, next) {
 var authenticateOptions = {
   failureRedirect: '/'
 };
-router.get('/auth/instagram', passport.authenticate('instagram'));
-router.get('/auth/instagram/callback', passport.authenticate('instagram', authenticateOptions), successAuth);
+router.get( '/auth/instagram', passport.authenticate( 'instagram' ) );
+router.get( '/auth/instagram/callback', passport.authenticate( 'instagram', authenticateOptions ), successAuth );
 
 
 
 /**
  * Parameters
  */
-router.param('tag', function(req, res, next, tag) {
-  debug('Got param tag: "%s"', tag);
+router.param( 'tag', function( req, res, next, tag ) {
+  debug( 'Got param tag: "%s"', tag );
 
-  if (_.isUndefined(tags[tag])) {
+  if( _.isUndefined( tags[ tag ] ) ) {
     debug( 'Tag not present, redirecting to current tag' );
-    return res.redirect(req.app.baseUrl);
+    return res.redirect( req.app.baseUrl );
   }
   var tagObject = tags[ tag ];
   var now = moment();
@@ -121,7 +121,7 @@ router.param('tag', function(req, res, next, tag) {
 
   res.locals.tag = req.tag;
   res.locals.tagObject = tagObject;
-  res.locals[ res.locals.page+'_active' ] = true;
+  res.locals[ res.locals.page + '_active' ] = true;
   res.locals.tagActive = isActive;
   res.locals.currentTagObject = tags.current;
   res.locals.currentTag = res.locals.currentTagObject.tag;
@@ -130,49 +130,49 @@ router.param('tag', function(req, res, next, tag) {
   var segments = req.path.toLowerCase().split( '/' );
   res.locals.page = segments.pop();
   return next();
-});
+} );
 
 
 /**
  * Endpoints
  */
-router.post('/approve', require('./routes/approve.js'));
-router.post('/reject', require('./routes/reject.js'));
-router.post('/highlight', require('./routes/highlight.js'));
+router.post( '/approve', require( './routes/approve.js' ) );
+router.post( '/reject', require( './routes/reject.js' ) );
+router.post( '/highlight', require( './routes/highlight.js' ) );
 // router.get( '/sample/:id', require( './routes/sample.js' ) );
 /**
  * Routes
  */
-router.get('/', require('./routes/index.js'));
-router.get('/tag', cors(), require('./routes/tag.js'));
-router.get('/profile', checkAuth, require('./routes/profile.js'));
-router.get('/like/:id', require('./routes/like.js'));
-router.get('/unlike/:id', require('./routes/unlike.js'));
-router.get('/:tag/', require('./routes/tag/index.js'));
-router.get('/:tag/home', require('./routes/tag/home.js'));
-router.get('/:tag/come', require('./routes/tag/come.js'));
-router.get('/:tag/tags', require('./routes/tag/tags.js'));
+router.get( '/', require( './routes/index.js' ) );
+router.get( '/tag', cors(), require( './routes/tag.js' ) );
+router.get( '/profile', checkAuth, require( './routes/profile.js' ) );
+router.get( '/like/:id', require( './routes/like.js' ) );
+router.get( '/unlike/:id', require( './routes/unlike.js' ) );
+router.get( '/:tag/', require( './routes/tag/index.js' ) );
+router.get( '/:tag/home', require( './routes/tag/home.js' ) );
+router.get( '/:tag/come', require( './routes/tag/come.js' ) );
+router.get( '/:tag/tags', require( './routes/tag/tags.js' ) );
 // router.get('/:tag/gioca', require('./routes/tag/gioca.js'));
-router.get('/:tag/gallery', require('./routes/tag/gallery.js'));
-router.get('/:tag/details/:id', require('./routes/tag/details.js'));
-router.get('/:tag/about', require('./routes/about.js'));
-router.get('/:tag/profile', checkAuth, require('./routes/profile.js'));
+router.get( '/:tag/gallery', require( './routes/tag/gallery.js' ) );
+router.get( '/:tag/details/:id', require( './routes/tag/details.js' ) );
+router.get( '/:tag/about', require( './routes/about.js' ) );
+router.get( '/:tag/profile', checkAuth, require( './routes/profile.js' ) );
 
 
 
 /**
  * Application middlewares
  */
-app.use(serveStatic(publicPath));
-app.use(session({
+app.use( serveStatic( publicPath ) );
+app.use( session( {
   secret: 'asderfingf',
   resave: false,
   saveUninitialized: false
-}));
-app.use(bodyParser.json());
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(router);
+} ) );
+app.use( bodyParser.json() );
+app.use( passport.initialize() );
+app.use( passport.session() );
+app.use( router );
 
 
 module.exports = app;

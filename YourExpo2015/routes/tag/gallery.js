@@ -26,94 +26,73 @@ module.exports = function( req, res ) {
   debug( 'Gallery, min votes: %d', minVotes );
   var Model = mongoose.model( photoCollection );
   var tag = req.tag;
+  var tagActive = req.tagActive;
+
+  var baseQuery = Model
+  .find()
+  .select( '-raw' )
+  .where( 'tag', tag )
+  .where( 'rejected', false )
+  // .where( 'highlighted', true )
+  // .where( 'votesCount' ).gt( minVotes )
+  // .sort( '-votesCount' )
+  .limit( maxImages )
+  .lean()
+  .toConstructor();
 
   debug( 'Tag %s is active: %s', tag, req.tagActive );
 
+  var highlightedPromise = baseQuery()
+  .where( 'highlighted', true )
+  .where( 'votesCount' ).gt( minVotes )
+  .sort( '-_id' ) // TODO change with the highlighted timestamp
+  .execAsync();
+
+  var data = {
+    highlighted: highlightedPromise,
+    active: tagActive
+  };
+
   // Active TAG
-  if( req.tagActive ) {
-    var trendingPromise = Model
-    .find()
-    .select( '-raw' )
-    .where( 'tag', tag )
-    .where( 'rejected', false )
+  if( tagActive ) {
+    // Add trending
+    data.trending = baseQuery()
+    .where( 'highlighted', false )
+    .where( 'votesCount' ).gt( minVotes )
+    .sort( '-delta' )
+    .execAsync();
+
+    // Add top voted
+    data.top = baseQuery()
     .where( 'highlighted', false )
     .where( 'votesCount' ).gt( minVotes )
     .sort( '-votesCount' )
-    .limit( maxImages )
-    .lean()
     .execAsync();
 
-    var topPromise = Model
-    .find()
-    .select( '-raw' )
-    .where( 'tag', tag )
-    .where( 'rejected', false )
+    // Add recent
+    data.recent = baseQuery()
     .where( 'highlighted', false )
-    .where( 'votesCount' ).gt( minVotes )
-    .sort( '-votesCount' )
-    .limit( maxImages )
-    .lean()
-    .execAsync();
-
-    var highlightedPromise = Model
-    .find()
-    .select( '-raw' )
-    .where( 'tag', tag )
-    .where( 'rejected', false )
-    .where( 'highlighted', true )
-    .where( 'votesCount' ).gt( minVotes )
-    .sort( '-votesCount' )
-    .limit( maxImages )
-    .lean()
-    .execAsync();
-
-    var recentPromise = Model
-    .find()
-    .select( '-raw' )
-    .where( 'tag', tag )
-    .where( 'rejected', false )
     .sort( '-_id' )
-    .limit( maxImages )
-    .lean()
     .execAsync();
-
-
-    var data = {
-      trending: trendingPromise,
-      top: topPromise,
-      highlighted: highlightedPromise,
-      recent: recentPromise
-    };
-
-    return Promise
-    .props( data )
-    .then( function( results ) {
-      results.active = true;
-      return res.render( 'gallery', results );
-    } );
-
-
 
   // Unactive TAG
   } else {
-
-    return Model
-    .find()
-    .select( '-raw' )
-    .where( 'tag', tag )
-    .where( 'rejected', false )
+    // Add all images
+    data.images = baseQuery()
     .where( 'votesCount' ).gt( minVotes )
     .sort( '-_id' )
-    .limit( 100 ) // BAD FIX
-    .lean()
-    .execAsync()
-    .then( function( images ) {
-      return res.render( 'gallery', {
-        active: false,
-        images: images
-      } );
-    } );
+    .limit( 100 ) // TODO: BAD FIX due to memory exception
+    .execAsync();
   }
+
+
+
+  // Make the promise for the datas
+  return Promise
+  .props( data )
+  .then( function( results ) {
+    return res.render( 'gallery', results );
+  } );
 };
 
 

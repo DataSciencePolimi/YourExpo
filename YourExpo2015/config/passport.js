@@ -13,14 +13,13 @@ var config = require( '../../config/' );
 
 
 // Constant declaration
-
+var profileCollectionName = config.mongo.collections.profile;
 
 // Module variables declaration
-var userCollection = config.mongo.collections.user;
 function instagramStrategyCallback( accessToken, refreshToken, profile, done ) {
-  var User = mongoose.model( 'User' );
+  var Profile = mongoose.model( profileCollectionName );
 
-  User
+  Profile
   .find()
   .where( 'provider', 'instagram' )
   .where( 'providerId', profile.id )
@@ -29,7 +28,7 @@ function instagramStrategyCallback( accessToken, refreshToken, profile, done ) {
 
     if( !user ) {
       // Create one
-      user = new User( {
+      user = new Profile( {
         provider: 'instagram',
         providerId: profile.id,
         token: accessToken,
@@ -85,16 +84,16 @@ module.exports = function( app ) {
       done( null, user._id );
     } );
     /**
-     * Deserialize the user from the session, get the Mongoose User.
+     * Deserialize the user from the session, get the Mongoose Profile.
      * @param  {String}   id   The id of the user.
      * @param  {Function} done Callback when finished.
      */
     passport.deserializeUser( function( id, done ) {
       // debug( 'Deserializing user: %s', id );
       //
-      var User = mongoose.model( userCollection );
+      var Profile = mongoose.model( profileCollectionName );
 
-      User
+      Profile
       .findById( id )
       .execAsync()
       .then( function( user ) {

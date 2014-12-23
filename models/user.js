@@ -4,9 +4,10 @@
 var Promise = require( 'bluebird' );
 var debug = require( 'debug' )( 'models:user' );
 var mongoose = require( 'mongoose' );
+var _ = require( 'lodash' );
 
 // Load my modules
-
+var tags = require( '../YourExpo2015/tags/index.js' );
 
 // Constant declaration
 
@@ -23,49 +24,36 @@ var UserSchema = new Schema( {
    *
    * @type {String}
    */
-  provider: {
-    type: String,
-    required: true,
-    index: true
-  },
-  /**
-   * Id from the provider
-   * @type {String}
-   */
-  providerId: {
-    type: String,
-    required: true,
-    index: true,
-    unique: true
-  },
-  /**
-   * Username from the provider
-   * @type {String}
-   */
   username: {
     type: String,
     index: true,
-    required: true,
-    //unique: true
-  },
-  /**
-   * The creation date of the user
-   * @type {Date}
-   */
-  creationDate: {
-    type: Date,
-    required: true,
-    default: Date.now
+    required: true
   },
 
-  /**
-   * Additional information
-   */
-  fullName: String,
-  profilePicture: String,
-  email: String,
-  token: String,
-  profile: {}
+  greeted: {
+    type: Boolean,
+    index: true
+  },
+  greetedTimestamp: {
+    type: Date
+  },
+
+  followed: {
+    type: Boolean,
+    index: true
+  },
+  followedTimestamp: {
+    type: Date
+  },
+
+  invited: {
+    type: Boolean,
+    index: true
+  },
+  invitedTimestamp: {
+    type: Date
+  }
+
 }, {
   /**
    * Allow to save custom fields to the document
@@ -74,6 +62,34 @@ var UserSchema = new Schema( {
   strict: false
 } );
 
+
+_.each( tags, function( tag, name ) {
+  var data = { name: name };
+  var greetedName = _.template( 'greeted${name}', data );
+  var greetedTimestampName = _.template( 'greeted${name}Timestamp', data );
+  var likedName = _.template( 'likes${name}', data );
+  var likedTimestampName = _.template( 'likes${name}Timestamp', data );
+
+  var fields = {};
+
+  fields[ greetedName ] = {
+    type: Boolean,
+    index: true
+  };
+  fields[ greetedTimestampName ] = {
+    type: Date
+  };
+  fields[ likedName ] = {
+    type: Boolean,
+    index: true
+  };
+  fields[ likedTimestampName ] = {
+    type: Date
+  };
+
+  // Add the new fields
+  UserSchema.add( fields );
+} );
 
 module.exports = UserSchema;
 

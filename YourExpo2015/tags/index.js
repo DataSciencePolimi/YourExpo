@@ -44,9 +44,9 @@ Object.defineProperty( tags, 'current', {
 
     // if we have a valid tag then use it, otherwise use first... :(
     var closestTag = sortedTags[ 0 ];
-    if( tagMatches.length===1 ) {
+    if( tagMatches.length === 1 ) {
       closestTag = tagMatches[ 0 ];
-    } else if( tagMatches.length===2 ) {
+    } else if( tagMatches.length === 2 ) {
       closestTag = tagMatches[ 1 ];
     }
 

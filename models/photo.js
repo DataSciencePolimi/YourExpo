@@ -92,6 +92,9 @@ var PhotoSchema = new Schema({
     index: true,
     default: false
   },
+  highlightedTimestamp: {
+    type: Date
+  },
   /**
    * Flag indicating wether the post must be rejected.
    * @type {Boolean}
@@ -100,6 +103,9 @@ var PhotoSchema = new Schema({
     type: Boolean,
     index: true,
     default: false
+  },
+  rejectedTimestamp: {
+    type: Date
   },
   /**
    * The post is in moderation.
@@ -115,7 +121,27 @@ var PhotoSchema = new Schema({
    */
   moderated: {
     type: Boolean,
+    index: true,
     default: false
+  },
+  moderatingTimestamp: {
+    type: Date
+  },
+
+  liked: {
+    type: Boolean,
+    index: true
+  },
+  likedTimestamp: {
+    type: Date
+  },
+
+  fixed: {
+    type: Boolean,
+    index: true
+  },
+  fixedTimestamp: {
+    type: Date
   },
 
 

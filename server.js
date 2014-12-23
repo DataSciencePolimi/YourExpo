@@ -13,7 +13,7 @@ var serveStatic = require( 'serve-static' );
 var config = require( './config/' );
 var initMongo = require( './models/' );
 var yourExpo = require( './YourExpo2015/' );
-var publicPath = path.join(__dirname, 'public');
+var publicPath = path.join( __dirname, 'public' );
 
 
 // Constant declaration

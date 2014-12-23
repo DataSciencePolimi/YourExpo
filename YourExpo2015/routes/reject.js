@@ -24,14 +24,16 @@ module.exports = function(req, res, next) {
   Model
     .findById(id)
     .exec(function(err, photo) {
-      if (err) throw new Error(err);
+      if (err)
+        throw new Error(err);
 
       photo.moderated = true;
       photo.moderating = false;
       photo.rejected = true;
 
       photo.save(function(err) {
-        if (err) throw new Error(err);
+        if (err)
+          throw new Error(err);
 
         res.json({});
       });

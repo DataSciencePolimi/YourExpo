@@ -8,6 +8,7 @@ var mongoose = require( 'mongoose' );
 
 // Load my modules
 var config = require( '../config/' );
+var ProfileSchema = require( './profile.js' );
 var UserSchema = require( './user.js' );
 var PhotoSchema = require( './photo.js' );
 var PostSchema = require( './post.js' );
@@ -29,9 +30,10 @@ function resolver( resolve, reject ) {
 Promise.promisifyAll( mongoose );
 
 var collections = config.mongo.collections;
-mongoose.model( collections.user, UserSchema );
+mongoose.model( collections.profile, ProfileSchema );
 mongoose.model( collections.photo, PhotoSchema );
 mongoose.model( collections.post, PostSchema );
+mongoose.model( collections.user, UserSchema );
 
 
 
