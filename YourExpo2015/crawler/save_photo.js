@@ -82,7 +82,7 @@ function savePhotos(tag, wrappedElements) {
         }
       });
 
-      return actions(toPost);
+      //return actions(toPost);
 
 
     })

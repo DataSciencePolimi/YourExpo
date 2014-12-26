@@ -33,7 +33,7 @@ var collections = config.mongo.collections;
 mongoose.model( collections.profile, ProfileSchema );
 mongoose.model( collections.photo, PhotoSchema );
 mongoose.model( collections.post, PostSchema );
-mongoose.model( collections.user, UserSchema );
+// mongoose.model( collections.user, UserSchema );
 
 
 

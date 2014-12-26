@@ -49,8 +49,8 @@ config.mongo = {
   collections: {
     post: 'Post',
     photo: 'Photo',
-    profile: 'Profile',
-    user: 'User'
+    profile: 'User',
+    // user: 'User'
   }
 };
 
