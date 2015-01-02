@@ -4,8 +4,6 @@
 var Promise = require('bluebird');
 var _ = require('lodash');
 var debug = require('debug')('crawler:actions');
-var mongoose = require('mongoose');
-var moment = require('moment');
 
 // Load my modules
 var rootConfig = require('../../config/');
@@ -17,6 +15,7 @@ var config = require('./config/');
 
 // Module variables declaration
 var tasks = {
+  monitorLikers: require( './actions/monitor_likers.js' ),
   like: require( './actions/like.js' ),
   // follow: require( './actions/follow.js' ),
   // comment: require( './actions/comment.js' ),
@@ -31,7 +30,9 @@ function doActions( prevPromise, document ) {
 
     var actionsPromise = Promise.resolve( document );
     _.each( tasks, function( action ) {
-      actionsPromise = actionsPromise.then( action );
+      actionsPromise = actionsPromise
+      .then( action )
+      .return( document );
     } );
 
     return actionsPromise;

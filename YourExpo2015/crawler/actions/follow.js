@@ -2,9 +2,10 @@
 
 // Load modules
 var Promise = require('bluebird');
-var debug = require('debug')('crawler:actions:like');
-var moment = require('moment');
+var _ = require('lodash');
+var debug = require('debug')('crawler:actions:follow');
 var mongoose = require('mongoose');
+var moment = require('moment');
 
 // Load my modules
 var rootConfig = require('../../../config/');
@@ -21,44 +22,34 @@ var instagram = new Instagram( {
 var userCollectionName = rootConfig.mongo.collections.user;
 
 // Module exports
-module.exports = function like( photo ) {
-  var tag = photo.tag;
-  var id = photo.providerId;
+module.exports = function follow( photo ) {
   var username = photo.username;
+  var userId = photo.userId;
   var Model = mongoose.model( userCollectionName );
-  debug( 'Liking photo %s', id );
+
+  debug( 'Following user %s: %s', username, userId );
 
   return instagram
-  .likePost( id )
+  .followUser( userId )
   .then( function() {
-    debug( 'Photo %s liked', id );
+    debug( 'User followed', username );
 
-    photo.liked = true;
-    photo.likedTimestamp = moment().utc().toDate();
-
-    return photo
-    .saveAsync();
-  } )
-
-  // Update the user model
-  .then( function() {
+    // Try to find the user
     return Model
     .findOrCreateUser( username );
   } )
   .then( function( user ) {
 
-    var likedTagName = 'liked'+tag;
-    var likedTimestampTagName = likedTagName+'Timestamp';
-    user[ likedTagName ] = true;
-    user[ likedTimestampTagName ] = moment().utc().toDate();
+    user.followed = true;
+    user.followedTimestamp = moment().utc().toDate();
 
     return user
     .saveAsync();
   } )
   .catch( function( err ) {
-    debug( 'Unable to like/save photo %s: %s', id, err.message );
+    debug( 'Unable to follow/save user %s: %s', username, err.message );
   } )
-  .log( debug, 'Done liking photo %s', id )
+  .log( debug, 'Done following user %s', username )
   ;
 };
 

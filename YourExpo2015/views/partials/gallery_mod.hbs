@@ -1,0 +1,15 @@
+<div class="gallery">
+  {{#each this}}
+    {{!-- <pre>{{ json this }}</pre> --}}
+    <div class="image" style="background-image: url('img/load.gif');" data-id="{{_id}}" data-image="http://instagram.com/p/{{shortLink}}/media/?size=m">
+      <div class="overlay {{#if moderated }}active{{/if}}">
+        <div class="vote highlight {{#if highlighted }}active{{/if}}">
+          <img src="img/star.png" alt="Highlight">
+        </div>
+        <div class="vote reject {{#if rejected }}active{{/if}}">
+          <img src="img/reject.png" alt="Reject">
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</div>

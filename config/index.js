@@ -20,8 +20,10 @@ var config = {};
 // Module initialization (at first load)
 Promise.prototype.log = function( out, message /*, args... */ ) {
   var args = _.toArray( arguments ).slice( 2 );
-  _.partial( out, message ).apply( null, args );
-  return this;
+  return this
+  .tap( function() {
+    _.partial( out, message ).apply( null, args );
+  } );
 };
 
 
@@ -50,7 +52,7 @@ config.mongo = {
     post: 'Post',
     photo: 'Photo',
     profile: 'User',
-    // user: 'User'
+    user: 'IgUser'
   }
 };
 

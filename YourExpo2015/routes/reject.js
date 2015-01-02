@@ -3,42 +3,59 @@
 // Load modules
 var debug = require('debug')('yourexpo:routes:reject');
 var mongoose = require('mongoose');
+var moment = require('moment');
+
 // Load my modules
 var rootConfig = require('../../config/');
+
 
 // Constant declaration
 
 
 // Module variables declaration
+var photoCollectionName = rootConfig.mongo.collections.photo;
 
 
 // Module initialization (at first load)
 
 
 module.exports = function(req, res, next) {
-  debug('Reject');
+  debug( 'Reject' );
+  var Model = mongoose.model( photoCollectionName );
 
-  var Model = mongoose.model(rootConfig.mongo.collections.photo);
-  var id = req.body.id;
+  var id = req.params.id;
+  var method = req.method.toUpperCase();
+  var reject = method==='DELETE'? false : true;
 
-  Model
-    .findById(id)
-    .exec(function(err, photo) {
-      if (err)
-        throw new Error(err);
+  debug( 'Reject set to: %s', reject );
 
-      photo.moderated = true;
-      photo.moderating = false;
-      photo.rejected = true;
+  return Model
+  .findById( id )
+  .execAsync()
+  .then( function( photo ) {
+    if( !photo )
+      throw new Error( 'Photo not found' );
 
-      photo.save(function(err) {
-        if (err)
-          throw new Error(err);
+    var now = moment().utc().toDate();
+    photo.moderated = true;
+    photo.moderatedTimestamp = now;
+    photo.rejected = reject;
+    photo.rejectedTimestamp = now;
 
-        res.json({});
-      });
+    return photo
+    .saveAsync();
+  } )
+  .then( function() {
+    return res.json( {
+      message: 'ok'
+    } );
+  } )
+  .catch( function( err ) {
+    debug( 'Error rejecting the photo: %s', err.message );
+    debug( err );
 
-    });
+    return next( err );
+  } );
 };
 
 

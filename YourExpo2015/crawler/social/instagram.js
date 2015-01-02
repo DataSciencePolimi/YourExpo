@@ -38,11 +38,16 @@ var Instagram = function constructor( options ) {
 
 
   /* jshint camelcase:false */
-  this.api.use( {
-    client_id: this.clientId,
-    client_secret: this.clientSecret,
-    access_token: this.accessToken
-  } );
+  if( options.token ) {
+    this.api.use( {
+      access_token: this.accessToken
+    } );
+  } else {
+    this.api.use( {
+      client_id: this.clientId,
+      client_secret: this.clientSecret,
+    } );
+  }
   /* jshint camelcase:true */
 
   Promise.promisifyAll( this.api );
@@ -72,6 +77,7 @@ Instagram.prototype.wrapElement = function( element ) {
   return {
     providerId: element.id,
     username: element.user.username,
+    userId: element.user.id,
     shortLink: shortLink,
     imageUrl: url.resolve( element.link, 'media/?size=l' ),
     postLink: element.link,
@@ -121,6 +127,14 @@ Instagram.prototype.getMorePages = function( result, pagination ) {
 };
 
 
+Instagram.prototype.getLikers = function( id, callback ) {
+  return this.api
+  /* jshint camelcase:false */
+  .likesAsync( id )
+  /* jshint camelcase:true */
+  .catch( this.handleError.bind( this ) )
+  .nodeify( callback );
+};
 Instagram.prototype.likePost = function( id, callback ) {
   return this.api
   /* jshint camelcase:false */
@@ -130,10 +144,10 @@ Instagram.prototype.likePost = function( id, callback ) {
   .nodeify( callback );
 };
 
-Instagram.prototype.followUser = function( user, callback ) {
+Instagram.prototype.followUser = function( userId, callback ) {
   return this.api
   /* jshint camelcase:false */
-  .set_user_relationshipAsync( user, 'follow' )
+  .set_user_relationshipAsync( userId, 'follow' )
   /* jshint camelcase:true */
   .catch( this.handleError.bind( this ) )
   .nodeify( callback );

@@ -27,6 +27,7 @@ var UserSchema = new Schema( {
   username: {
     type: String,
     index: true,
+    unique: true,
     required: true
   },
 
@@ -90,6 +91,42 @@ _.each( tags, function( tag, name ) {
   // Add the new fields
   UserSchema.add( fields );
 } );
+
+
+/**
+ * Model static methods
+ */
+UserSchema.statics.findOrCreateUser = function( username, callback ) {
+  var Model = this;
+
+  return Model
+  .findOne()
+  .where( 'username', username )
+  .execAsync()
+  .then( function( user ) {
+     var notPresent = !user;
+
+    if( notPresent ) {
+      user = new Model( {
+        username: username
+      } );
+
+      return user
+      .saveAsync();
+    }
+
+    return [ user ];
+  } )
+  .spread( function( user ) {
+    return user;
+  } )
+  .nodeify( callback );
+};
+
+/**
+ * Model instance methods
+ */
+
 
 module.exports = UserSchema;
 

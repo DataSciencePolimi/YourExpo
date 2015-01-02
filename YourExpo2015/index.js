@@ -136,9 +136,11 @@ router.param( 'tag', function( req, res, next, tag ) {
 /**
  * Endpoints
  */
-router.post( '/approve', require( './routes/approve.js' ) );
-router.post( '/reject', require( './routes/reject.js' ) );
-router.post( '/highlight', require( './routes/highlight.js' ) );
+router.post( '/approve/:id', require( './routes/approve.js' ) );
+router.post( '/reject/:id', require( './routes/reject.js' ) );
+router.delete( '/reject/:id', require( './routes/reject.js' ) );
+router.post( '/highlight/:id', require( './routes/highlight.js' ) );
+router.delete( '/highlight/:id', require( './routes/highlight.js' ) );
 // router.get( '/sample/:id', require( './routes/sample.js' ) );
 /**
  * Routes
@@ -157,7 +159,17 @@ router.get( '/:tag/gallery', require( './routes/tag/gallery.js' ) );
 router.get( '/:tag/details/:id', require( './routes/tag/details.js' ) );
 router.get( '/:tag/about', require( './routes/about.js' ) );
 router.get( '/:tag/profile', checkAuth, require( './routes/profile.js' ) );
+router.get( '/:tag/moderate', require( './routes/tag/moderate.js' ) );
 
+/**
+ * Defaults redirects
+ */
+router.get( '/:tag/*', function( req, res ) {
+  debug( 'Default route' );
+
+  var destinationUrl = url.resolve( req.app.baseUrl, req.tag+'/' );
+  return res.redirect( destinationUrl );
+} );
 
 
 /**

@@ -37,17 +37,25 @@ app.use( forceTrailingSlash() );
 
 
 // Redirect to the challenge
+var yourExpoBaseUrl = '/YourExpo2015';
+/*
 app.get( '/', function( req, res ) {
-  res.redirect( '/YourExpo2015' );
+  res.redirect( yourExpoBaseUrl );
 } );
+*/
 
-app.use( '/YourExpo2015/', yourExpo );
+app.use( yourExpoBaseUrl+'/', yourExpo );
 
 app.use( serveStatic( publicPath ) ); // Placed after the 'GET /' route to enable redirects
 
 // Default redirect
 app.use( '/*', function( req, res ) {
-  res.redirect( '/' );
+  debug( req.originalUrl );
+
+  if( req.originalUrl.indexOf( yourExpoBaseUrl )===-1 ) {
+    debug( 'Redirecting' );
+    res.redirect( yourExpoBaseUrl );
+  }
 } );
 
 // Entry point

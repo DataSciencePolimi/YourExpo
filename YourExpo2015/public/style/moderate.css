@@ -1,0 +1,55 @@
+
+.gallery > .image:nth-child(n+7) {
+  display: block;
+}
+
+
+.overlay.active .vote {
+  display: flex;
+}
+
+.overlay:hover .vote {
+  display: flex;
+}
+.vote {
+  cursor: pointer;
+  display: none;
+
+  flex: 1 1 auto;
+  align-self: stretch;
+
+  text-align: center;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.vote.active {
+}
+
+.vote img {
+  flex: 0 0 auto;
+}
+
+.highlight {
+  color: yellow;
+}
+.highlight:hover,
+.highlight.active {
+  background-color: rgba(255, 255, 0, 0.5);
+}
+
+.reject {
+  color: #f00;
+}
+.reject:hover,
+.reject.active {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+}
+@media (max-width: 550px) {
+}
+
+

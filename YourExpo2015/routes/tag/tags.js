@@ -22,6 +22,10 @@ module.exports = function( req, res ) {
 
   var sortedTags = _.sortBy( tags, 'startDate' ).reverse();
 
+  sortedTags = _.filter( sortedTags, function( element ) {
+    return element.startDate.isBefore();
+  } );
+
   return res.render( 'tags', {
     tags: sortedTags
   } );

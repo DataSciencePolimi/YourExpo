@@ -1,0 +1,81 @@
+
+.gallery > .image:nth-child(n+7) {
+  display: block;
+}
+
+
+.overlay.active .vote {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.overlay:hover .vote {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.vote {
+  cursor: pointer;
+  display: none;
+
+  -webkit-box-flex: 1;
+
+  -webkit-flex: 1 1 auto;
+
+  -ms-flex: 1 1 auto;
+
+  flex: 1 1 auto;
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+
+  text-align: center;
+
+  -webkit-box-align: center;
+
+  -webkit-align-items: center;
+
+  -ms-flex-align: center;
+
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.vote.active {
+}
+
+.vote img {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+}
+
+.highlight {
+  color: yellow;
+}
+.highlight:hover,
+.highlight.active {
+  background-color: rgba(255, 255, 0, 0.5);
+}
+
+.reject {
+  color: #f00;
+}
+.reject:hover,
+.reject.active {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+}
+@media (max-width: 550px) {
+}
+
+

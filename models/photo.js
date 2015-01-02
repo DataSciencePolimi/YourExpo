@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 
 // Load my modules
 var VoteSchema = require('./vote.js');
+var LikersSchema = require('./liker.js');
 
 // Constant declaration
 
@@ -124,7 +125,7 @@ var PhotoSchema = new Schema({
     index: true,
     default: false
   },
-  moderatingTimestamp: {
+  moderatedTimestamp: {
     type: Date
   },
 
@@ -190,6 +191,15 @@ var PhotoSchema = new Schema({
     required: true,
     default: 0
   },
+
+  /**
+   * List of people that liked the photo
+   * @type {Array}
+   */
+  likers: {
+    type: [LikersSchema],
+    default: []
+  }
 });
 
 module.exports = PhotoSchema;

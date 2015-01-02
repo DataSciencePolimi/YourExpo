@@ -22,11 +22,6 @@ var actions = require('./actions.js');
 // Constant declaration
 
 // Module variables declaration
-tags[ 'EXPO2015volotest' ] = {
-  tag: 'EXPO2015volotest',
-  startDate: moment( '2013-12-13', 'YYYY-MM-DD' ).startOf( 'day' ),
-  endDate: moment( '2015-12-20', 'YYYY-MM-DD' ).endOf( 'day' ),
-};
 var Model = mongoose.model(rootConfig.mongo.collections.photo);
 var tag = argv._[ 0 ];
 var tagObject;

@@ -1,0 +1,14 @@
+{{#extend "css"}}
+  <link href="css/gallery.css" rel="stylesheet">
+  <link href="css/moderate.css" rel="stylesheet">
+{{/extend}}
+
+{{#extend "js"}}
+  <script src="js/gallery.js"></script>
+  <script src="js/moderate.js"></script>
+{{/extend}}
+
+
+{{#if images.length}}
+  {{> gallery_mod images }}
+{{/if}}

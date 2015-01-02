@@ -3,6 +3,8 @@
 // Load modules
 var debug = require('debug')('yourexpo:routes:highlight');
 var mongoose = require('mongoose');
+var moment = require('moment');
+
 // Load my modules
 var rootConfig = require('../../config/');
 
@@ -11,35 +13,48 @@ var rootConfig = require('../../config/');
 
 
 // Module variables declaration
-
+var photoCollectionName = rootConfig.mongo.collections.photo;
 
 // Module initialization (at first load)
 
 
 module.exports = function(req, res, next) {
-  debug('Highlight');
+  debug( 'Highlight' );
+  var Model = mongoose.model( photoCollectionName );
 
+  var id = req.params.id;
+  var method = req.method.toUpperCase();
+  var highlight = method==='DELETE'? false : true;
 
-  var Model = mongoose.model(rootConfig.mongo.collections.photo);
-  var id = req.body.id;
+  debug( 'Highlight set to: %s', highlight );
 
-  Model
-    .findById(id)
-    .exec(function(err, photo) {
-      if (err) throw new Error(err);
+  return Model
+  .findById( id )
+  .execAsync()
+  .then( function( photo ) {
+    if( !photo )
+      throw new Error( 'Photo not found' );
 
-      photo.moderated = true;
-      photo.highlighted = true;
-      photo.moderating = false;
+    var now = moment().utc().toDate();
+    photo.moderated = true;
+    photo.moderatedTimestamp = now;
+    photo.highlighted = highlight;
+    photo.highlightedTimestamp = now;
 
+    return photo
+    .saveAsync();
+  } )
+  .then( function() {
+    return res.json( {
+      message: 'ok'
+    } );
+  } )
+  .catch( function( err ) {
+    debug( 'Error highlighting the photo: %s', err.message );
+    debug( err );
 
-      photo.save(function(err) {
-        if (err) throw new Error(err);
-
-        res.json({});
-      });
-
-    });
+    return next( err );
+  } );
 };
 
 
