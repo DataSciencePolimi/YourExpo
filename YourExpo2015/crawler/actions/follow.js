@@ -29,25 +29,26 @@ module.exports = function follow( photo ) {
 
   debug( 'Following user %s: %s', username, userId );
 
-  return instagram
-  .followUser( userId )
-  .then( function() {
-    debug( 'User followed', username );
 
-    // Try to find the user
-    return Model
-    .findOrCreateUser( username );
-  } )
+  return Model
+  .findOrCreateUser( username )
   .then( function( user ) {
 
-    user.followed = true;
-    user.followedTimestamp = moment().utc().toDate();
+    if( !user.followed ) {
+      return instagram
+      .followUser( userId )
+      .then( function() {
 
-    return user
-    .saveAsync();
-  } )
-  .catch( function( err ) {
-    debug( 'Unable to follow/save user %s: %s', username, err.message );
+        user.followed = true;
+        user.followedTimestamp = moment().utc().toDate();
+
+        return user
+        .saveAsync();
+      } )
+      .catch( function( err ) {
+        debug( 'Unable to follow/save user %s: %s', username, err.message );
+      } );
+    }
   } )
   .log( debug, 'Done following user %s', username )
   ;
