@@ -121,14 +121,15 @@ router.param( 'tag', function( req, res, next, tag ) {
 
   res.locals.tag = req.tag;
   res.locals.tagObject = tagObject;
-  res.locals[ res.locals.page + '_active' ] = true;
   res.locals.tagActive = isActive;
   res.locals.currentTagObject = tags.current;
   res.locals.currentTag = res.locals.currentTagObject.tag;
 
 
   var segments = req.path.toLowerCase().split( '/' );
-  res.locals.page = segments.pop();
+  var page = segments.pop();
+  res.locals.page = page;
+  res.locals[ page + '_active' ] = true;
   return next();
 } );
 
@@ -136,7 +137,7 @@ router.param( 'tag', function( req, res, next, tag ) {
 /**
  * Endpoints
  */
-router.post( '/approve/:id', require( './routes/approve.js' ) );
+//router.post( '/approve/:id', require( './routes/approve.js' ) );
 router.post( '/reject/:id', require( './routes/reject.js' ) );
 router.delete( '/reject/:id', require( './routes/reject.js' ) );
 router.post( '/highlight/:id', require( './routes/highlight.js' ) );

@@ -25,8 +25,8 @@ module.exports = function( req, res, next ) {
   debug( 'Moderating: %j', req.query );
 
   // Auth required
-  if( _.isUndefined( req.query.asd ) ) {
-  debug( 'Auth not valid' );
+  if( req.query.asd!=='polimi' ) {
+    debug( 'Auth not valid' );
     return next();
   }
 
@@ -42,7 +42,7 @@ module.exports = function( req, res, next ) {
   .execAsync()
   .then( function( images ) {
 
-    res.render( 'moderate', {
+    return res.render( 'moderate', {
       images: images
     } );
   } )

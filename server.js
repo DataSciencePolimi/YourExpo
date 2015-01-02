@@ -38,11 +38,9 @@ app.use( forceTrailingSlash() );
 
 // Redirect to the challenge
 var yourExpoBaseUrl = '/YourExpo2015';
-/*
 app.get( '/', function( req, res ) {
   res.redirect( yourExpoBaseUrl );
 } );
-*/
 
 app.use( yourExpoBaseUrl+'/', yourExpo );
 
