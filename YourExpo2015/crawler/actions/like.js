@@ -29,7 +29,6 @@ module.exports = function like( photo ) {
 
   var promise = Promise.resolve();
 
-
   if( !photo.liked ) {
     debug( 'Liking photo %s', id );
 
@@ -44,13 +43,15 @@ module.exports = function like( photo ) {
       return photo
       .saveAsync();
     } )
-
     // Update the user model
     .then( function() {
+      debug( 'Search/create the user: %s', username );
+
       return Model
       .findOrCreateUser( username );
     } )
     .then( function( user ) {
+      debug( 'Updating user model' );
 
       var likedTagName = 'liked'+tag;
       var likedTimestampTagName = likedTagName+'Timestamp';
@@ -62,6 +63,7 @@ module.exports = function like( photo ) {
     } )
     .catch( function( err ) {
       debug( 'Unable to like/save photo %s: %s', id, err.message );
+      debug( err );
     } );
   }
 

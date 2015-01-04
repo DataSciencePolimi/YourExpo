@@ -14,25 +14,48 @@ var tags = require( '../tags/' );
 var config = require( './config/' );
 var initMongo = require( '../../models/' );
 var saveInstagramPhotos = require( './save_photo.js' );
-var saveSocialPosts = require( './save_post.js' );
+// var saveSocialPosts = require( './save_post.js' );
 var Instagram = require( './social/instagram.js' );
 var Twitter = require( './social/twitter.js' );
 
 
 // Module variables declaration
 
+/*
+Promise
+.delay( 1000 )
+.then( function() {
+  debug( 'In then' );
+  throw new Error( 'FUUU' );
+})
+.catch( function() {
+  debug( 'In catch' );
+  return Promise
+  .delay(1000)
+  .then( function() {
+    debug( 'In catch after' );
+  });
+} )
+.then( function() {
+  debug( 'After all' );
+})
+.catch( function() {
+  debug( 'Later catch' );
+});
 
+
+return;
+*/
 
 // Constant declaration
-var INTERVAL = config.INTERVAL;
 
 // Module variables declaration
-var social = {
-  instagram: new Instagram(),
-  twitter: new Twitter()
-};
 var tag = argv._[ 0 ];
 var tagObject;
+var social = {
+  instagram: new Instagram( { tag: tag } ),
+  // twitter: new Twitter()
+};
 
 
 function searchTag( tag, implementation ) {
@@ -79,48 +102,59 @@ function handleTag( tag ) {
 
 function crawlLoop() {
   debug( 'Crawl loop started' );
+  var start = moment();
 
   return handleTag( tag )
-  .catch( function( error ) {
-    debug( 'Crawl loop error' );
-    debug( error );
+  .catch( function( err ) {
+    debug( 'Crawl loop error: %s', err.message );
+    debug( err );
   } )
   .then( function() {
-    debug( 'Pausing for %d ms before next loop', INTERVAL );
+    var diff = moment().diff( start, 'h', true );
+    debug( 'Check if 1 hour is passed: %d', diff );
+
+    if( diff<1 ) {
+      var interval = (1-diff)*60*60;
+      debug( 'Pausing for %d seconds', interval );
+
+      return Promise
+      .delay( interval*1000 );
+    }
   } )
-  .delay( INTERVAL )
   .then( crawlLoop );
 }
 
+function handleFatalError( err ) {
+  debug( 'Fatal error: %s', err.message );
+  debug( err );
+
+  return mongoose
+  .disconnectAsync()
+  .then( function() {
+    process.exit( 1 );
+  } );
+}
+
 // Module initialization (at first load)
-
-
 social.instagram.on( 'data', _.partial( saveInstagramPhotos, tag ) );
-social.twitter.on( 'data', _.partial( saveSocialPosts, tag ) );
+// social.twitter.on( 'data', _.partial( saveSocialPosts, tag ) );
 //social.facebook.on( 'data', _.partial( saveSocialPosts, tag ) );
 
 
 
 // Entry point
-
-if( _.isUndefined( tags[ tag ] ) ) {
-  debug( 'Tag "%s" not present in the configuration', tag );
-  return;
-}
-tagObject = tags[ tag ];
-
 Promise
-.resolve()
-.then( initMongo )
-.catch( debug )
-.then( crawlLoop )
-.catch( debug )
-.finally( function() {
-  debug( 'Finished' );
-
-  return mongoose
-  .disconnectAsync();
+.resolve( tag )
+.then( function( tag ) {
+  if( _.isUndefined( tags[ tag ] ) ) {
+    throw new Error( 'Tag "'+tag+'" not present in the configuration' );
+  }
+  tagObject = tags[ tag ];
 } )
+.then( initMongo )
+.catch( handleFatalError )
+.then( crawlLoop )
+.catch( handleFatalError )
 ;
 
 //  50 6F 77 65 72 65 64  62 79  56 6F 6C 6F 78

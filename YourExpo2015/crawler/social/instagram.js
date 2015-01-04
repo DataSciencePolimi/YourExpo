@@ -12,17 +12,32 @@ var _ = require( 'lodash' );
 
 // Load my modules
 var rootConfig = require( '../../../config/' );
-
-
-
+// var saveInstagramPhotos = require( '../save_photo.js' );
 
 
 // Constant declaration
 var WINDOW_SIZE = 60*60*1000;
 
 // Module variables declaration
-
-
+/*
+var keys = [
+  {
+    'clientId': 'fd5404fd42ec400db007736e2517100b',
+    'clientSecret': 'bf4965608d7d4380838bea047634f854',
+    'accessToken': '1574448514.fd5404f.3f2edfc6269b44dc95ecf991384828b0'
+  },
+  {
+    'clientId': '3bb9963f72584b12a668ec4a9af6d3e1',
+    'clientSecret': 'e81f75f0699a43c68e88032151c080ba',
+    'accessToken': '1574448514.3bb9963.0419e8f021dd4ed899f41c07c23b53bb'
+  },
+  {
+    'clientId': '50ddf91cf2e34652993aef6c2d07f820',
+    'clientSecret': '05aadbd93fdc4489a752b33de27af48a',
+    'accessToken': '1574448514.50ddf91.0b7b28f8ee7d4fb49fa5fce72382b397'
+  }
+];
+*/
 // Module initialization (at first load)
 
 
@@ -31,39 +46,68 @@ var Instagram = function constructor( options ) {
   options = options || {};
 
   this.name = 'Instagram';
-  this.accessToken = options.accessToken || rootConfig.instagram.accessToken;
-  this.clientId = options.clientId || rootConfig.instagram.clientId;
-  this.clientSecret = options.clientSecret || rootConfig.instagram.clientSecret;
   this.api = InstagramLib.instagram();
+  this.token = options.token;
+  this.tag = options.tag;
 
-
-  /* jshint camelcase:false */
-  if( options.token ) {
-    this.api.use( {
-      access_token: this.accessToken
-    } );
-  } else {
-    this.api.use( {
-      client_id: this.clientId,
-      client_secret: this.clientSecret,
-    } );
-  }
-  /* jshint camelcase:true */
+  // this.setKeys( keys[ 0 ] );
+  this.setKeys( rootConfig.instagram );
 
   Promise.promisifyAll( this.api );
 };
 util.inherits( Instagram, EventEmitter );
 
 
-Instagram.prototype.handleError = function( error ) {
-  debug( 'Got error: %s', error.message );
-  var retryPromise = Promise.promisify( error.retry );
+Instagram.prototype.setKeys = function( data ) {
+  this.accessToken = data.accessToken;
+  this.clientId = data.clientId;
+  this.clientSecret = data.clientSecret;
+
+  /* jshint camelcase:false */
+  if( this.token ) {
+    debug( 'Set Access token to: %s', this.accessToken );
+
+    this.api.use( {
+      access_token: this.accessToken
+    } );
+  } else {
+    debug( 'Set clientId to: %s', this.clientId );
+    debug( 'Set clientSecret to: %s', this.clientSecret );
+
+    this.api.use( {
+      client_id: this.clientId,
+      client_secret: this.clientSecret,
+    } );
+  }
+};
+Instagram.prototype.handleError = function( err ) {
+  var _this = this;
+  var cause = err.cause;
+  debug( 'Got error: %s', cause.error_type );
+  var retryPromise = Promise.method( cause.retry );
 
   return Promise
   .delay( WINDOW_SIZE )
   .then( function() {
+    debug( 'Retry request' );
     return retryPromise();
+  } )
+  .catch( _this.handleError.bind( _this ) );
+  /*
+  return getNewKeys()
+  .then( function( data ) {
+    _this.setKeys( data );
+
+    return retryPromise()
+    .tap( function() {
+      debug( 'Hello i\'m here' );
+    } )
+    .catch( function() {
+      debug( err );
+    } )
+    .catch( _this.handleError.bind( _this ) );
   } );
+  */
 };
 
 Instagram.prototype.wrapElement = function( element ) {
@@ -95,6 +139,7 @@ Instagram.prototype.wrapElements = function( elements ) {
 
 Instagram.prototype.sendData = function( wrappedElements ) {
   this.emit( 'data', wrappedElements );
+  // return saveInstagramPhotos( this.tag, wrappedElements );
 };
 
 Instagram.prototype.parseData = function( results ) {
@@ -127,41 +172,32 @@ Instagram.prototype.getMorePages = function( result, pagination ) {
 };
 
 
-Instagram.prototype.getLikers = function( id, callback ) {
+Instagram.prototype.getLikers = function( id ) {
   return this.api
   /* jshint camelcase:false */
   .likesAsync( id )
   /* jshint camelcase:true */
-  .catch( this.handleError.bind( this ) )
-  .nodeify( callback );
+  .catch( this.handleError.bind( this ) );
 };
-Instagram.prototype.likePost = function( id, callback ) {
+Instagram.prototype.likePost = function( id ) {
   return this.api
   /* jshint camelcase:false */
   .add_likeAsync( id )
   /* jshint camelcase:true */
-  .catch( this.handleError.bind( this ) )
-  .nodeify( callback );
+  .catch( this.handleError.bind( this ) );
 };
 
-Instagram.prototype.followUser = function( userId, callback ) {
+Instagram.prototype.followUser = function( userId ) {
   return this.api
   /* jshint camelcase:false */
   .set_user_relationshipAsync( userId, 'follow' )
   /* jshint camelcase:true */
-  .catch( this.handleError.bind( this ) )
-  .nodeify( callback );
+  .catch( this.handleError.bind( this ) );
 };
 
-Instagram.prototype.searchTag = function( tag, options, callback ) {
-  if( _.isFunction( options ) ) {
-    callback = options;
-    options = null;
-  }
-
+Instagram.prototype.searchTag = function( tag, options ) {
   options = options || {};
   var fetchAll = options.fetchAll || false;
-
   var minId = options.startFromId;
   if( !minId && options.startDate && _.isFunction( options.startDate.unix ) ) {
     minId = options.startDate.unix()+'000000';
@@ -190,8 +226,7 @@ Instagram.prototype.searchTag = function( tag, options, callback ) {
     .spread( this.getMorePages.bind( this ) );
   }
 
-  return tagPromise
-  .nodeify( callback );
+  return tagPromise;
 };
 
 

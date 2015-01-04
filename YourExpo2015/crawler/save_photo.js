@@ -9,8 +9,8 @@ var moment = require( 'moment' );
 
 // Load my modules
 var rootConfig = require( '../../config/' );
-var config = require( './config/' );
-var actions = require( './actions.js' );
+// var config = require( './config/' );
+
 
 
 // Constant declaration
@@ -85,7 +85,9 @@ function savePhotos( tag, wrappedElements ) {
       }
     } );
 
-    return actions( savedElements );
+    // var actions = require( './actions.js' );
+
+    // return actions( savedElements );
   } )
 
   ;

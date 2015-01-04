@@ -25,6 +25,7 @@ Promise.prototype.log = function( out, message /*, args... */ ) {
     _.partial( out, message ).apply( null, args );
   } );
 };
+Promise.longStackTraces();
 
 
 // Facebook

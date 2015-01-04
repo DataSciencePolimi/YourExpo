@@ -1,13 +1,10 @@
 // Load system modules
 
 // Load modules
-var Promise = require('bluebird');
 var debug = require('debug')('crawler:actions:monitor_likers');
 var _ = require('lodash');
 
 // Load my modules
-var rootConfig = require('../../../config/');
-var config = require('../config/');
 var Instagram = require( '../social/instagram.js' );
 
 // Constant declaration
@@ -15,7 +12,7 @@ var Instagram = require( '../social/instagram.js' );
 
 // Module variables declaration
 var instagram = new Instagram( {
-  token: true
+  // token: true
 } );
 
 // Module exports

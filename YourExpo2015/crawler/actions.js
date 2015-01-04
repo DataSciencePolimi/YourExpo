@@ -6,8 +6,8 @@ var _ = require('lodash');
 var debug = require('debug')('crawler:actions');
 
 // Load my modules
-var rootConfig = require('../../config/');
-var config = require('./config/');
+// var rootConfig = require('../../config/');
+// var config = require('./config/');
 
 
 // Constant declaration
@@ -22,30 +22,31 @@ var tasks = {
 };
 
 
-function doActions( prevPromise, document ) {
-  return Promise
-  .resolve( prevPromise )
-  .then( function() {
-    debug( 'Doing actions on element %s', document.id );
+function doActions( document ) {
+  debug( 'Doing actions on element %s', document.id );
 
-    var actionsPromise = Promise.resolve( document );
-    _.each( tasks, function( action ) {
-      actionsPromise = actionsPromise
-      .then( action )
-      .return( document );
-    } );
+  var actionsPromise = Promise.resolve( document );
 
-    return actionsPromise;
-  } )
-  ;
+  _.each( tasks, function( action ) {
+    actionsPromise = actionsPromise
+    .then( action )
+    .return( document );
+  } );
+
+  return actionsPromise;
 }
 
 // Module exports
 module.exports = function actions( documents ) {
+  var promise = Promise.resolve();
 
+  _.each( documents, function( doc ) {
+    promise = promise
+    .return( doc )
+    .then( doActions );
+  } );
 
-  Promise
-  .reduce( documents, doActions, Promise.resolve() )
+  return promise
   .catch( function( err ) {
     debug( 'Cannot perform actions on documents' );
     debug( err );
