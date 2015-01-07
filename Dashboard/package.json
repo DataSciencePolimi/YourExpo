@@ -1,0 +1,38 @@
+{
+  "name": "ExpoData",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "mongo": "mongod --dbpath db/",
+    "bower": "bower i",
+    "css": "gulp prefix",
+    "css-watch": "gulp watch",
+    "start": "node server.js",
+    "debug": "nodemon --debug server.js"
+  },
+  "keywords": [
+    "expo"
+  ],
+  "author": "Volox",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "1.x",
+    "cors": "2.x",
+    "express-session": "1.x",
+    "hbs": "2.x",
+    "instagram-node": "0.x",
+    "marked": "0.3.x",
+    "moment": "2.x",
+    "passport": "0.x",
+    "passport-instagram": "0.x",
+    "request": "2.x",
+    "serve-static": "1.x"
+  },
+  "devDependencies": {
+    "nodemon": "1.x",
+    "bower": "1.3.x",
+    "gulp": "3.x",
+    "gulp-autoprefixer": "2.x"
+  }
+}

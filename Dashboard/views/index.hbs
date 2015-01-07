@@ -1,0 +1,9 @@
+{{#extend "css"}}
+  <link href="css/home.css" rel="stylesheet">
+{{/extend}}
+
+<ul>
+  {{#each tags}}
+    <li><a href="{{baseUrl}}{{tag}}/" title="{{tag}}">{{tag}}</a></li>
+  {{/each}}
+</ul>
