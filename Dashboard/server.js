@@ -57,8 +57,7 @@ app.set( 'view engine', 'hbs' );
 
 router.param( 'tag', function( req, res, next, tag ) {
   if( _.isUndefined( tags[ tag ] ) ) {
-    debug( 'Tag not present' );
-    return next( new Error( 'Tag not present' ) );
+    return next( new Error( 'Tag "'+tag+'" not present' ) );
   }
 
   var tagObject = tags[ tag ];
@@ -74,7 +73,7 @@ router.param( 'tag', function( req, res, next, tag ) {
  * Routes
  */
 router.get( '/', require( './routes/index.js' ) );
-router.get( '/:tag', require( './routes/tag_index.js' ) );
+router.get( '/:tag/', require( './routes/tag_index.js' ) );
 router.get( '/:tag/data', require( './routes/tag_data.js' ) );
 
 

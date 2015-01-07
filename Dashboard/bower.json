@@ -23,6 +23,7 @@
     "jquery": "2.x",
     "fontawesome": "4.x",
     "moment": "2.x",
-    "highcharts": "4.x"
+    "highcharts": "4.x",
+    "datetimepicker": "~2.4.1"
   }
 }

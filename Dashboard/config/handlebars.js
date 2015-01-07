@@ -47,10 +47,8 @@ module.exports = function( app ) {
   } );
 
 
-  instance.registerHelper( 'date', function( data, format, locale ) {
-    var localized = moment( data );
-    localized.locale( locale || 'en' );
-    return localized.format( format );
+  instance.registerHelper( 'date', function( data, format ) {
+    return moment( data ).format( format );
   } );
 
   return instance;

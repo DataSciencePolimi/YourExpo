@@ -22,9 +22,12 @@ var DATE_FORMAT = 'YYYY-MM-DD_HH:mm:ss';
 
 module.exports = function( req, res ) {
   debug( 'Tag data index for: %s', req.tag );
+
   var Model = mongoose.model( photoCollectionName );
   var from = moment( req.query.from, DATE_FORMAT ).utc();
   var to = moment( req.query.to, DATE_FORMAT ).utc();
+  debug( 'From: %s', from );
+  debug( 'To: %s', to );
 
   var query = Model
   .find()
