@@ -60,3 +60,9 @@ article > section {
   font-size: 20px;
   font-weight: lighter;
 }
+
+@media (max-width: 550px) {
+  .image .term {
+    font-size: 70%;
+  }
+}

@@ -26,38 +26,48 @@ module.exports = function like( photo ) {
   var id = photo.providerId;
   var username = photo.username;
   var Model = mongoose.model( userCollectionName );
-  debug( 'Liking photo %s', id );
 
-  return instagram
-  .likePost( id )
-  .then( function() {
-    debug( 'Photo %s liked', id );
+  var promise = Promise.resolve();
 
-    photo.liked = true;
-    photo.likedTimestamp = moment().utc().toDate();
+  if( !photo.liked ) {
+    debug( 'Liking photo %s', id );
 
-    return photo
-    .saveAsync();
-  } )
+    promise = instagram
+    .likePost( id )
+    .then( function() {
+      debug( 'Photo %s liked', id );
 
-  // Update the user model
-  .then( function() {
-    return Model
-    .findOrCreateUser( username );
-  } )
-  .then( function( user ) {
+      photo.liked = true;
+      photo.likedTimestamp = moment().utc().toDate();
 
-    var likedTagName = 'liked'+tag;
-    var likedTimestampTagName = likedTagName+'Timestamp';
-    user[ likedTagName ] = true;
-    user[ likedTimestampTagName ] = moment().utc().toDate();
+      return photo
+      .saveAsync();
+    } )
+    // Update the user model
+    .then( function() {
+      debug( 'Search/create the user: %s', username );
 
-    return user
-    .saveAsync();
-  } )
-  .catch( function( err ) {
-    debug( 'Unable to like/save photo %s: %s', id, err.message );
-  } )
+      return Model
+      .findOrCreateUser( username );
+    } )
+    .then( function( user ) {
+      debug( 'Updating user model' );
+
+      var likedTagName = 'liked'+tag;
+      var likedTimestampTagName = likedTagName+'Timestamp';
+      user[ likedTagName ] = true;
+      user[ likedTimestampTagName ] = moment().utc().toDate();
+
+      return user
+      .saveAsync();
+    } )
+    .catch( function( err ) {
+      debug( 'Unable to like/save photo %s: %s', id, err.message );
+      debug( err );
+    } );
+  }
+
+  return promise
   .log( debug, 'Done liking photo %s', id )
   ;
 };

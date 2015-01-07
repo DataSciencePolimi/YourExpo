@@ -462,7 +462,7 @@ footer > .partners > .partners-container > .partners-list {
 .ratio-box:before {
   content: "";
   display: block;
-  padding-top: 100% /* 1:1 ratio*/
+  padding-top: 100%; /* 1:1 ratio*/
 }
 .ratio-box > .ratio-content {
   position: absolute;
@@ -627,7 +627,7 @@ footer > .partners > .partners-container > .partners-list {
     margin: 30px -10px;
   }
   .tag h1 {
-    font-size: 30px;
+    font-size: 25px;
   }
 }
 

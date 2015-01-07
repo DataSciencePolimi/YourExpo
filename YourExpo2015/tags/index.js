@@ -56,13 +56,11 @@ Object.defineProperty( tags, 'current', {
 } );
 
 // Module initialization (at first load)
-/*
 tags[ 'EXPO2015volotest' ] = {
   tag: 'EXPO2015volotest',
   startDate: moment( '2013-12-13', 'YYYY-MM-DD' ).startOf( 'day' ),
   endDate: moment( '2015-12-20', 'YYYY-MM-DD' ).endOf( 'day' ),
 };
-*/
 
 module.exports = tags;
 

@@ -47,8 +47,8 @@ var exported = {
 
   locale: {
     en: {
-      topic1: 'wonder',
-      topic2: 'flavor',
+      topic1: 'amazing',
+      topic2: 'tasty',
       description: readMarkdown( 'description.en.md' ),
     }
   }
