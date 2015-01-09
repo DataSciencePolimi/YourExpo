@@ -22,7 +22,7 @@ var rootConfig = require( '../../../config/' );
 Promise.promisifyAll( request );
 
 
-module.exports = function( req, res ) {
+module.exports = function( req, res, next ) {
   debug( 'Details' );
   var PhotoModel = mongoose.model( rootConfig.mongo.collections.photo );
   var id = req.params.id;
@@ -59,7 +59,10 @@ module.exports = function( req, res ) {
       photo: photo
     } );
   } )
-  .catch( debug );
+  .catch( function( err ) {
+    debug( err );
+    return next();
+  } );
 };
 
 
