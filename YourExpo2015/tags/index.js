@@ -17,6 +17,7 @@ var moment = require( 'moment' );
 
 // Module variables declaration
 var tags = {
+  EXPO2015gustomondo: require( './EXPO2015gustomondo/' ),
   EXPO2015stuporesapore: require( './EXPO2015stuporesapore/' ),
   EXPO2015artfun: require( './EXPO2015artfun/' ),
   EXPO2015showcooking: require( './EXPO2015showcooking/' ),
@@ -56,11 +57,13 @@ Object.defineProperty( tags, 'current', {
 } );
 
 // Module initialization (at first load)
+/*
 tags[ 'EXPO2015volotest' ] = {
   tag: 'EXPO2015volotest',
   startDate: moment( '2013-12-13', 'YYYY-MM-DD' ).startOf( 'day' ),
   endDate: moment( '2015-12-20', 'YYYY-MM-DD' ).endOf( 'day' ),
 };
+*/
 
 module.exports = tags;
 
