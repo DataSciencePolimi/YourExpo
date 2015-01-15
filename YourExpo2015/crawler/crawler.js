@@ -121,7 +121,8 @@ function crawlLoop() {
       .delay( interval*1000 );
     }
   } )
-  .then( crawlLoop );
+  .then( function() { setImmediate( crawlLoop ); } );
+  // .then( crawlLoop );
 }
 
 function handleFatalError( err ) {
