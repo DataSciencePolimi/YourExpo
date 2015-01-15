@@ -67,7 +67,8 @@ function fixerLoop() {
       .delay( interval*1000 );
     }
   } )
-  .then( fixerLoop );
+  // .then( fixerLoop );
+  .then( function() { setImmediate( fixerLoop ); } );
 }
 
 function handleFatalError( err ) {
