@@ -15,7 +15,7 @@ var debug = require('debug')('crawler:actions');
 
 // Module variables declaration
 var tasks = {
-  monitorLikers: require( './actions/monitor_likers.js' ),
+  // monitorLikers: require( './actions/monitor_likers.js' ),
   like: require( './actions/like.js' ),
   // follow: require( './actions/follow.js' ),
   // comment: require( './actions/comment.js' ),

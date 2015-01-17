@@ -12,7 +12,8 @@ var Instagram = require( '../social/instagram.js' );
 
 // Module variables declaration
 var instagram = new Instagram( {
-  // token: true
+  clientId: '3bb9963f72584b12a668ec4a9af6d3e1',
+  clientSecret: 'e81f75f0699a43c68e88032151c080ba'
 } );
 
 // Module exports

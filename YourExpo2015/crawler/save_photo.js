@@ -10,7 +10,7 @@ var moment = require( 'moment' );
 // Load my modules
 var rootConfig = require( '../../config/' );
 // var config = require( './config/' );
-
+var monitorLikers = require( './actions/monitor_likers.js' );
 
 
 // Constant declaration
@@ -75,19 +75,21 @@ function savePhotos( tag, wrappedElements ) {
   .settle( promises )
   .then( function( promiseList ) {
     var savedElements = [];
+    var monitorPromise = Promise.resolve();
 
     _.each( promiseList, function( promise ) {
       if( promise.isFulfilled() ) {
-
         var object = promise.value()[ 0 ];
 
         savedElements.push( object );
+
+        monitorPromise = monitorPromise
+        .return( object )
+        .then( monitorLikers );
       }
     } );
 
-    // var actions = require( './actions.js' );
-
-    // return actions( savedElements );
+    return monitorPromise;
   } )
 
   ;

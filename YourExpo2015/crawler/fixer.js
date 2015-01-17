@@ -37,7 +37,9 @@ function handleTag( tag ) {
   return Model
   .find()
   .where( 'tag', tag )
+  .where( 'liked' ).ne( true )
   .select( '-raw' )
+  .limit( 100 )
   .execAsync()
   .then( actions )
   ;
@@ -65,7 +67,8 @@ function fixerLoop() {
       .delay( interval*1000 );
     }
   } )
-  .then( fixerLoop );
+  // .then( fixerLoop );
+  .then( function() { setImmediate( fixerLoop ); } );
 }
 
 function handleFatalError( err ) {
