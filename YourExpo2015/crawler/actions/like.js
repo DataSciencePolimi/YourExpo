@@ -16,6 +16,7 @@ var Instagram = require( '../social/instagram.js' );
 
 // Module variables declaration
 var instagram = new Instagram( {
+  accessToken: '1574448514.00cd22b.ac1d3efbf3074877a97150b708018b52',
   token: true
 } );
 var userCollectionName = rootConfig.mongo.collections.user;

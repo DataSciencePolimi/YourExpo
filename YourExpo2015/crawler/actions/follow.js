@@ -16,7 +16,9 @@ var Instagram = require( '../social/instagram.js' );
 
 
 // Module variables declaration
+var userCollectionName = rootConfig.mongo.collections.user;
 var instagram = new Instagram( {
+  accessToken: '1574448514.00cd22b.ac1d3efbf3074877a97150b708018b52',
   token: true
 } );
 var userCollectionName = rootConfig.mongo.collections.user;
@@ -24,7 +26,7 @@ var userCollectionName = rootConfig.mongo.collections.user;
 // Module exports
 module.exports = function follow( photo ) {
   var username = photo.username;
-  var userId = photo.userId;
+  var userId = photo.raw.user.id;
   var Model = mongoose.model( userCollectionName );
 
   debug( 'Following user %s: %s', username, userId );

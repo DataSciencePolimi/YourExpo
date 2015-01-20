@@ -37,8 +37,8 @@ function handleTag( tag ) {
   return Model
   .find()
   .where( 'tag', tag )
-  .where( 'liked' ).ne( true )
-  .select( '-raw' )
+  .where( 'followed' ).ne( true )
+  // .select( '-raw' )
   .limit( 100 )
   .execAsync()
   .then( actions )

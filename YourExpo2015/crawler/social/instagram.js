@@ -50,8 +50,8 @@ var Instagram = function constructor( options ) {
   this.token = options.token;
   this.tag = options.tag;
 
-  // this.setKeys( keys[ 0 ] );
-  this.setKeys( rootConfig.instagram );
+  this.setKeys( options );
+  // this.setKeys( rootConfig.instagram );
 
   Promise.promisifyAll( this.api );
 };
@@ -84,6 +84,7 @@ Instagram.prototype.handleError = function( err ) {
   var _this = this;
   var cause = err.cause;
   debug( 'Got error: %s', cause.error_type );
+  debug( cause );
   var retryPromise = Promise.method( cause.retry );
 
   return Promise
@@ -177,7 +178,8 @@ Instagram.prototype.getLikers = function( id ) {
   /* jshint camelcase:false */
   .likesAsync( id )
   /* jshint camelcase:true */
-  .catch( this.handleError.bind( this ) );
+  // .catch( this.handleError.bind( this ) )
+  ;
 };
 Instagram.prototype.likePost = function( id ) {
   return this.api
