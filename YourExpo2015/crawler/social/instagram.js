@@ -59,9 +59,9 @@ util.inherits( Instagram, EventEmitter );
 
 
 Instagram.prototype.setKeys = function( data ) {
-  this.accessToken = data.accessToken;
-  this.clientId = data.clientId;
-  this.clientSecret = data.clientSecret;
+  this.accessToken = data.accessToken || rootConfig.instagram.accessToken;
+  this.clientId = data.clientId || rootConfig.instagram.clientId;
+  this.clientSecret = data.clientSecret || rootConfig.instagram.clientSecret;
 
   /* jshint camelcase:false */
   if( this.token ) {
