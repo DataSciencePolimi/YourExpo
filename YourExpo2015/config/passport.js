@@ -65,8 +65,8 @@ module.exports = function( app ) {
     var callbackURL = url.resolve( app.baseUrl, 'auth/instagram/callback' );
 
     var instagramStrategy = new InstagramStrategy( {
-      clientID: config.instagram.clientId,
-      clientSecret: config.instagram.clientSecret,
+      clientID: config.instagram.web.clientId,
+      clientSecret: config.instagram.web.clientSecret,
       callbackURL: callbackURL
     }, instagramStrategyCallback );
 
