@@ -16,7 +16,7 @@ var serveStatic = require( 'serve-static' );
 // Load my modules
 var config = require( '../config/' );
 var initMongo = require( '../models/' );
-var tags = require( '../YourExpo2015/tags/' );
+var tags = require( '../tags/' );
 var configureHandlebars = require( './config/handlebars.js' );
 
 

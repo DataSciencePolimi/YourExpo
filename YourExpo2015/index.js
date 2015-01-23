@@ -17,7 +17,7 @@ var serveStatic = require( 'serve-static' );
 
 // Load my modules
 var config = require( '../config/' );
-var tags = require( './tags/' );
+var tags = require( '../tags/' );
 var configureHandlebars = require( './config/handlebars.js' );
 var configurePassport = require( './config/passport.js' );
 
@@ -40,7 +40,7 @@ var hbsInstance = configureHandlebars( app );
 /**
  * Configure app
  */
-app.name = 'YourEXPO2015';
+app.name = 'YourExpo2015';
 app.locals.title = 'YourExpo2015';
 app.enable( 'trust proxy' );
 app.enable( 'strict routing' );
@@ -103,10 +103,10 @@ router.get( '/auth/instagram/callback', passport.authenticate( 'instagram', auth
  * Parameters
  */
 router.param( 'tag', function( req, res, next, tag ) {
-  debug( 'Got param tag: "%s"', tag );
+  debug( 'Got param tag "%s" from: %s', tag, req.originalUrl );
 
   if( _.isUndefined( tags[ tag ] ) ) {
-    debug( 'Tag not present, redirecting to current tag' );
+    debug( 'Tag not present, skip route' );
     return res.redirect( req.app.baseUrl );
   }
   var tagObject = tags[ tag ];
@@ -116,12 +116,14 @@ router.param( 'tag', function( req, res, next, tag ) {
   req.tag = tag;
   req.tagObject = tagObject;
   req.tagActive = isActive;
+  req.tagNotActive = !isActive;
 
   req.session.tag = tag;
 
   res.locals.tag = req.tag;
-  res.locals.tagObject = tagObject;
-  res.locals.tagActive = isActive;
+  res.locals.tagObject = req.tagObject;
+  res.locals.tagActive = req.tagActive;
+  res.locals.tagNotActive = req.tagNotActive;
   res.locals.currentTagObject = tags.current;
   res.locals.currentTag = res.locals.currentTagObject.tag;
 
@@ -161,15 +163,12 @@ router.get( '/:tag/details/:id', require( './routes/tag/details.js' ) );
 router.get( '/:tag/about', require( './routes/about.js' ) );
 router.get( '/:tag/profile', checkAuth, require( './routes/profile.js' ) );
 router.get( '/:tag/moderate', require( './routes/tag/moderate.js' ) );
-
-/**
- * Defaults redirects
- */
-router.get( '/:tag/*', function( req, res ) {
-  debug( 'Default route' );
-
-  var destinationUrl = url.resolve( req.app.baseUrl, req.tag+'/' );
-  return res.redirect( destinationUrl );
+router.get( '/:tag/winner.jpg', function( req, res ) {
+  if( req.tagObject.postcard ) {
+    return res.sendFile( req.tagObject.postcard );
+  } else {
+    return res.send( 404, 'Winner not found... yet ;)' );
+  }
 } );
 
 
@@ -186,6 +185,17 @@ app.use( bodyParser.json() );
 app.use( passport.initialize() );
 app.use( passport.session() );
 app.use( router );
+
+
+/**
+ * Defaults redirects
+ */
+app.use( function( req, res ) {
+  debug( 'Default route' );
+
+  var destinationUrl = url.resolve( req.app.baseUrl, req.tag+'/' );
+  return res.redirect( destinationUrl );
+} );
 
 
 module.exports = app;

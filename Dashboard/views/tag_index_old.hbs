@@ -1,0 +1,102 @@
+{{#extend "css"}}
+  <link href="css/home.css" rel="stylesheet">
+  <link href="lib/datetimepicker/jquery.datetimepicker.css" rel="stylesheet">
+{{/extend}}
+{{#extend "js"}}
+  <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="lib/datetimepicker/jquery.datetimepicker.js"></script>
+  <script src="lib/highcharts/highcharts.js"></script>
+  <script src="lib/highcharts/modules/no-data-to-display.js"></script>
+  <script src="lib/highcharts/highcharts-more.js"></script>
+  <script>
+    var tag = '{{tag}}';
+    {{#if singleTag }}
+      var tagObject = {{{json tagObject}}};
+    {{/if}}
+  </script>
+  <script src="js/data.js"></script>
+{{/extend}}
+
+
+<div class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Loading data...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<h1>
+  {{tag}}
+  {{#if singleTag }}
+    <small>
+      {{date @tagObject.startDate 'D MMMM YYYY'}}
+      -
+      {{date @tagObject.endDate 'D MMMM YYYY'}}
+    </small>
+  {{/if}}
+</h1>
+
+<form class="form-inline" onsubmit="return false;">
+  <div class="form-group">
+    <label class="sr-only" for="from">From: </label>
+    <input id="from" type="datetime" class="form-control from" placeholder="Start date">
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="from">To: </label>
+    <input id="to" type="datetime" class="form-control to" placeholder="End date">
+  </div>
+  <button class="btn btn-default" id="btn">Refresh</button>
+</form>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <h4>Unique users: <span class="users"></span></h4>
+    <h4>Photos: <span class="photos"></span></h4>
+  </div>
+</div>
+
+
+{{!-- <div class="row">
+  <div class="col-md-12">
+    <h2>Mega chart</h2>
+  </div>
+  <div class="col-md-12 mega">
+  </div>
+</div> --}}
+
+<div class="row">
+  <div class="col-md-12">
+    <h2>Photo creation date</h2>
+  </div>
+  <div class="col-md-12 photo-spread">
+  </div>
+  <div class="col-md-12">
+    <button class="btn btn-default photo-change" data-sort="date">Date</button>
+    <button class="btn btn-default photo-change" data-sort="start">Start votes</button>
+    <button class="btn btn-default photo-change" data-sort="delta">Delta votes</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <h2>Top posting users</h2>
+    <div class="top-users"></div>
+  </div>
+  <div class="col-md-6">
+    <h2>Top highlighted users</h2>
+    <div class="highlighted-users"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h2>Top trending photos</h2>
+  </div>
+  <div class="col-md-12 trending-photos">
+  </div>
+</div>

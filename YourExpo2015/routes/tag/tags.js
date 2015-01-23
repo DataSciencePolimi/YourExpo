@@ -1,12 +1,11 @@
 // Load system modules
 
 // Load modules
-var Promise = require( 'bluebird' );
 var _ = require( 'lodash' );
 var debug = require( 'debug' )( 'yourexpo:routes:tag:tags' );
 
 // Load my modules
-var tags = require('../../tags/');
+var tags = require('../../../tags/');
 
 
 

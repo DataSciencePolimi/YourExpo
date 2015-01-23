@@ -47,13 +47,10 @@ app.use( yourExpoBaseUrl+'/', yourExpo );
 app.use( serveStatic( publicPath ) ); // Placed after the 'GET /' route to enable redirects
 
 // Default redirect
-app.use( '/*', function( req, res ) {
-  debug( req.originalUrl );
+app.use( function( req, res ) {
+  debug( 'Root server default route'  );
 
-  if( req.originalUrl.indexOf( yourExpoBaseUrl )===-1 ) {
-    debug( 'Redirecting' );
-    res.redirect( yourExpoBaseUrl );
-  }
+  res.redirect( yourExpoBaseUrl );
 } );
 
 // Entry point

@@ -10,7 +10,7 @@
 {{> tag }}
 
 
-{{#if active}}
+{{#if tagActive}}
   {{#if highlighted.length}}
     <h2 lang="it">Foto in evidenza:</h2>
     <h2 lang="en">Highlighted:</h2>
@@ -37,6 +37,21 @@
   {{/if}}
 
 {{else}}
+
+  {{#if tagObject.winnerPost }}
+    <div class="winner text-center">
+      <p class="lead">
+        I vincitori di <span>{{tag}}</span> sono:<br>
+        <a target="_blank" href="http://instagram.com/{{tagObject.winner1}}/">@{{tagObject.winner1}}</a>
+        e
+        <a target="_blank" href="http://instagram.com/{{tagObject.winner2}}/">@{{tagObject.winner2}}</a>
+      </p>
+      <a href="http://instagram.com/p/{{tagObject.winnerPost}}" target="_blank">
+        <img class="img-responsive" src="{{tag}}/winner.jpg" alt="{{ tag }} winners!">
+      </a>
+    </div>
+  {{/if}}
+
 
   {{#if highlighted.length}}
     <h2 lang="it">Foto in evidenza di {{tag}}:</h2>

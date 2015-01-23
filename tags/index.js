@@ -17,6 +17,7 @@ var moment = require( 'moment' );
 
 // Module variables declaration
 var tags = {
+  EXPO2015italianlife: require( './EXPO2015italianlife/' ),
   EXPO2015fastslow: require( './EXPO2015fastslow/' ),
   EXPO2015gustomondo: require( './EXPO2015gustomondo/' ),
   EXPO2015stuporesapore: require( './EXPO2015stuporesapore/' ),
@@ -42,8 +43,6 @@ Object.defineProperty( tags, 'current', {
         return false;
       }
     } );
-    debug( 'sortedTags: %j', _.map( sortedTags, 'tag' ) );
-    debug( 'tagMatches: %j', _.map( tagMatches, 'tag' ) );
 
     // if we have a valid tag then use it, otherwise use first... :(
     var closestTag = sortedTags[ 0 ];
@@ -53,6 +52,7 @@ Object.defineProperty( tags, 'current', {
       closestTag = tagMatches[ 1 ];
     }
 
+    debug( 'Get current tag "%s" from %d matches: %j', closestTag.tag, tagMatches.length, _.map( tagMatches, 'tag' ) );
     return closestTag;
   }
 } );

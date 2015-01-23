@@ -8,7 +8,7 @@ var debug = require( 'debug' )( 'yourexpo:routes:profile' );
 
 // Load my modules
 var rootConfig = require( '../../config/' );
-var tags = require( '../tags/' );
+var tags = require( '../../tags/' );
 
 
 

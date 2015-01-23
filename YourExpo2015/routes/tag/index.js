@@ -25,7 +25,7 @@ module.exports = function( req, res ) {
   if( !req.tagActive ) {
     destPage = 'gallery';
   }
-  debug( 'Index for tag "%s" is: %s (%s)', req.tag, destPage, req.tagActive );
+  debug( 'Index for %s tag "%s" is page %s', req.tagActive? 'active': 'inactive', req.tag, destPage );
 
   var destinationUrl = url.resolve( req.app.baseUrl, req.tag+'/'+destPage );
   return res.redirect( destinationUrl );

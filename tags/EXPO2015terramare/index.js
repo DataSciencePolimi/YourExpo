@@ -23,7 +23,7 @@ var topic2 = 'mare';
 var startDate = '2014-12-07';
 var endDate = '2014-12-13';
 var sampleId = 'wEkUiMtuzr';
-
+var winnerPost = 'yMOmrbNuxn';
 
 
 var tag = 'EXPO2015'+topic1+topic2;
@@ -44,6 +44,12 @@ var exported = {
   endDate: moment( endDate, DATE_FORMAT ).endOf( 'day' ),
   sampleId: sampleId,
   description: readMarkdown( 'description.md' ),
+
+  winnerPost: winnerPost,
+  winner1: 'headlesschickblog',
+  winner2: 'taste.and.shake',
+
+  postcard: path.resolve( __dirname, 'postcard.jpg' ),
 
   locale: {
     en: {

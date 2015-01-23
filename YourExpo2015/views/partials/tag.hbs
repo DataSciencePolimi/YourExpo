@@ -1,7 +1,16 @@
+
 <div class="tag">
+  {{#if tagNotActive }}
+    <a href="{{currentTag}}">
+  {{/if}}
+
   <h3 lang="it">L'hashtag di questa settimana è:</h3>
   <h3 lang="en">The hashtag of this week is:</h3>
   <h1>{{currentTag}}</h1>
   <p lang="en">{{date @currentTagObject.startDate 'DD MMMM' 'en' }} - {{date @currentTagObject.endDate 'DD MMMM' 'en' }}</p>
   <p lang="it">{{date @currentTagObject.startDate 'DD MMMM' 'it' }} - {{date @currentTagObject.endDate 'DD MMMM' 'it' }}</p>
+
+  {{#if tagNotActive }}
+    </a>
+  {{/if}}
 </div>

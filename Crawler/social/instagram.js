@@ -1,7 +1,4 @@
 // Load system modules
-var url = require( 'url' );
-var util = require( 'util' );
-var EventEmitter = require( 'events' ).EventEmitter;
 
 // Load modules
 var Promise = require( 'bluebird' );
@@ -11,8 +8,6 @@ var InstagramLib = require( 'instagram-node' );
 var _ = require( 'lodash' );
 
 // Load my modules
-var rootConfig = require( '../../../config/' );
-// var saveInstagramPhotos = require( '../save_photo.js' );
 
 
 // Constant declaration
@@ -55,13 +50,12 @@ var Instagram = function constructor( options ) {
 
   Promise.promisifyAll( this.api );
 };
-util.inherits( Instagram, EventEmitter );
 
 
 Instagram.prototype.setKeys = function( data ) {
-  this.accessToken = data.accessToken || rootConfig.instagram.accessToken;
-  this.clientId = data.clientId || rootConfig.instagram.clientId;
-  this.clientSecret = data.clientSecret || rootConfig.instagram.clientSecret;
+  this.accessToken = data.accessToken;
+  this.clientId = data.clientId;
+  this.clientSecret = data.clientSecret;
 
   /* jshint camelcase:false */
   if( this.token ) {
@@ -94,80 +88,27 @@ Instagram.prototype.handleError = function( err ) {
     return retryPromise();
   } )
   .catch( _this.handleError.bind( _this ) );
-  /*
-  return getNewKeys()
-  .then( function( data ) {
-    _this.setKeys( data );
-
-    return retryPromise()
-    .tap( function() {
-      debug( 'Hello i\'m here' );
-    } )
-    .catch( function() {
-      debug( err );
-    } )
-    .catch( _this.handleError.bind( _this ) );
-  } );
-  */
 };
 
-Instagram.prototype.wrapElement = function( element ) {
-  debug( 'Wrapping %s element', element.id );
 
-  var date = moment.unix( 1*element.created_time ).utc().toDate();
-
-  var matches = element.link.match( /.*\/([-\w]+)\/?/ );
-  var shortLink = matches? matches[1] : undefined;
-
-  return {
-    providerId: element.id,
-    username: element.user.username,
-    userId: element.user.id,
-    shortLink: shortLink,
-    imageUrl: url.resolve( element.link, 'media/?size=l' ),
-    postLink: element.link,
-    creationDate: date,
-    raw: element,
-
-    votes: element.likes.count,
-  };
-};
-
-Instagram.prototype.wrapElements = function( elements ) {
-  debug( 'Wrapping %d elements to the model structure', elements.length );
-  return _.map( elements, this.wrapElement );
-};
-
-Instagram.prototype.sendData = function( wrappedElements ) {
-  this.emit( 'data', wrappedElements );
-  // return saveInstagramPhotos( this.tag, wrappedElements );
-};
-
-Instagram.prototype.parseData = function( results ) {
-  // debug( 'Got %d results', results.length );
-
-  return Promise
-  .resolve( results )
-  .then( this.wrapElements.bind( this ) )
-  .then( this.sendData.bind( this ) )
-  // .then( this.saveElements.bind( this ) )
-  .return( _.toArray( arguments ) )
-  ;
-};
-
-Instagram.prototype.getMorePages = function( result, pagination ) {
+Instagram.prototype.getMorePages = function( partial, results, pagination ) {
   pagination = pagination || {};
+
+  // Concat the new results
+  partial = partial.concat( results );
 
   // We have more pages
   if( _.isFunction( pagination.next ) ) {
-    // debug( 'Next page available' );
+    debug( 'Next page available' );
     var nextPagePromise = Promise.promisify( pagination.next );
+    var morePages = _.bind( this.getMorePages, this, partial );
 
     return nextPagePromise()
     .catch( this.handleError.bind( this ) )
-    .spread( this.parseData.bind( this ) )
-    .spread( this.getMorePages.bind( this ) )
+    .spread( morePages )
     ;
+  } else {
+    return partial;
   }
 
 };
@@ -200,16 +141,9 @@ Instagram.prototype.followUser = function( userId ) {
 Instagram.prototype.searchTag = function( tag, options ) {
   options = options || {};
   var fetchAll = options.fetchAll || false;
-  var minId = options.startFromId;
-  if( !minId && options.startDate && _.isFunction( options.startDate.unix ) ) {
-    minId = options.startDate.unix()+'000000';
-  }
 
   var params = {
     count: 100,
-    /* jshint camelcase: false */
-    min_tag_id: minId,
-    /* jshint camelcase: true */
   };
 
 
@@ -220,12 +154,14 @@ Instagram.prototype.searchTag = function( tag, options ) {
   .tag_media_recentAsync( tag, params )
   /* jshint camelcase:true */
   .catch( this.handleError.bind( this ) )
-  .spread( this.parseData.bind( this ) )
   ;
 
   if( fetchAll ) {
+    var partial = [];
+
+    var morePages = _.bind( this.getMorePages, this, partial );
     tagPromise = tagPromise
-    .spread( this.getMorePages.bind( this ) );
+    .spread( morePages );
   }
 
   return tagPromise;

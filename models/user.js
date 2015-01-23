@@ -7,7 +7,7 @@ var mongoose = require( 'mongoose' );
 var _ = require( 'lodash' );
 
 // Load my modules
-var tags = require( '../YourExpo2015/tags/index.js' );
+var tags = require( '../tags/index.js' );
 
 // Constant declaration
 
@@ -18,17 +18,15 @@ var Schema = mongoose.Schema;
 // Module initialization (at first load)
 
 var UserSchema = new Schema( {
-  /**
-   * Provider for the user.
-   * Can be `instagram`, `facebook`, etc
-   *
-   * @type {String}
-   */
   username: {
     type: String,
     index: true,
     unique: true,
     required: true
+  },
+  userId: {
+    type: String,
+    index: true
   },
 
   greeted: {
@@ -96,19 +94,20 @@ _.each( tags, function( tag, name ) {
 /**
  * Model static methods
  */
-UserSchema.statics.findOrCreateUser = function( username, callback ) {
+UserSchema.statics.findOrCreateUser = function( user, callback ) {
   var Model = this;
 
   return Model
   .findOne()
-  .where( 'username', username )
+  .where( 'username', user.username )
   .execAsync()
   .then( function( user ) {
      var notPresent = !user;
 
     if( notPresent ) {
       user = new Model( {
-        username: username
+        username: user.username,
+        userId: user.userId
       } );
 
       return user

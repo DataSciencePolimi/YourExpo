@@ -6,6 +6,8 @@
       "name": "Expo Root",
       "folder_exclude_patterns": [
         "node_modules",
+        "tags",
+        "Crawler",
         "Dashboard",
         "YourExpo2015",
         "database"
@@ -15,11 +17,16 @@
       ]
     },
     {
+      "name": "Tags",
+      "path": "tags",
+      "folder_exclude_patterns": [],
+      "file_exclude_patterns": []
+    },
+    {
       "path": "YourExpo2015",
       "name": "Your Expo",
       "folder_exclude_patterns": [
         "node_modules",
-        "crawler",
         "public/lib",
         "public/css"
       ],
@@ -29,7 +36,7 @@
     },
     {
       "path": "Dashboard",
-      "name": "Your Expo Dashboard",
+      "name": "Dashboard",
       "folder_exclude_patterns": [
         "node_modules",
         "dump",
@@ -42,8 +49,8 @@
       ]
     },
     {
-      "path": "YourExpo2015/crawler",
-      "name": "Your Expo Crawler",
+      "path": "Crawler",
+      "name": "Crawler",
       "folder_exclude_patterns": [
         "node_modules"
       ],

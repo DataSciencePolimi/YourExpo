@@ -4,6 +4,7 @@ var path = require( 'path' );
 // Load modules
 var moment = require( 'moment' );
 var hbs = require( 'hbs' );
+var debug = require( 'debug' )( 'yourexpo:handlebars' );
 
 // Load my modules
 

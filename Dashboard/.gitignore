@@ -1,3 +1,4 @@
 # Do not sync database
 db
 dump
+dump_old

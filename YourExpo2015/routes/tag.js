@@ -4,7 +4,7 @@
 var debug = require( 'debug' )( 'yourexpo:routes:tag' );
 
 // Load my modules
-var tags = require( '../tags/' );
+var tags = require( '../../tags/' );
 
 
 

@@ -40,7 +40,7 @@ module.exports = function( req, res ) {
   .lean()
   .toConstructor();
 
-  debug( 'Tag %s is active: %s', tag, req.tagActive );
+  debug( 'Tag %s is active: %s', tag, tagActive );
 
   var highlightedPromise = baseQuery()
   .where( 'highlighted', true )
@@ -50,7 +50,6 @@ module.exports = function( req, res ) {
 
   var data = {
     highlighted: highlightedPromise,
-    active: tagActive
   };
 
   // Active TAG

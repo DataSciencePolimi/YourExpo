@@ -231,8 +231,11 @@ footer > .partners > .partners-container > .partners-list {
   max-height: 45px;
 }
 
-
-
+.tag a,
+.tag a:hover {
+  text-decoration: none;
+  color: #D90985;
+}
 .tag {
   margin: 50px;
   color: #D90985;
@@ -240,6 +243,9 @@ footer > .partners > .partners-container > .partners-list {
 }
 .tag h1 {
   font-weight: bold;
+}
+.tag a:hover h1 {
+  text-decoration: underline;
 }
 .tag h1:before {
   content: "#";
