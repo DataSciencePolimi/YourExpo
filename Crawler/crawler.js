@@ -94,6 +94,7 @@ function saveOrUpdatePhoto( photo ) {
 
 function wrapInstagramPhotos( igPhotos ) {
   debug( 'Wrapping %d photos', igPhotos.length );
+  if( igPhotos.length===0 ) return [];
 
   return _.map( igPhotos, function( photo ) {
 
@@ -131,6 +132,7 @@ function loop() {
     return data;
   } )
   .then( function mapInsagramPhotos( wrappedElements ) {
+    if( wrappedElements.length===0 ) return;
 
     var promise = saveOrUpdatePhoto( wrappedElements[ 0 ] );
 

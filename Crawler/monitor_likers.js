@@ -93,8 +93,8 @@ function loop() {
   .lean()
   .execAsync()
   .then( function mapIdToPromises( photos ) {
-    if( photos.length===0 )
-      return;
+    if( photos.length===0 ) return;
+
     var ids = _.map( photos, 'providerId' );
 
     var promise = photoLikers( ids[ 0 ] );
