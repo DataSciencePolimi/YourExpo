@@ -17,6 +17,7 @@ var moment = require( 'moment' );
 
 // Module variables declaration
 var tags = {
+  EXPO2015nightday: require( './EXPO2015nightday/' ),
   EXPO2015italianlife: require( './EXPO2015italianlife/' ),
   EXPO2015fastslow: require( './EXPO2015fastslow/' ),
   EXPO2015gustomondo: require( './EXPO2015gustomondo/' ),

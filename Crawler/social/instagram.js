@@ -77,8 +77,7 @@ Instagram.prototype.setKeys = function( data ) {
 Instagram.prototype.handleError = function( err ) {
   var _this = this;
   var cause = err.cause;
-  debug( 'Got error: %s', cause.error_type );
-  debug( cause );
+  debug( 'Got error: %j', cause );
   var retryPromise = Promise.method( cause.retry );
 
   return Promise
