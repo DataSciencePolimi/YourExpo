@@ -59,17 +59,32 @@ Instagram.prototype.setKeys = function( data ) {
 Instagram.prototype.handleError = function( err ) {
   var _this = this;
   var cause = err.cause;
-  debug( 'Got error: %s', cause.error_type );
-  debug( cause );
-  var retryPromise = Promise.method( cause.retry );
 
-  return Promise
-  .delay( WINDOW_SIZE )
-  .then( function() {
-    debug( 'Retry request' );
-    return retryPromise();
-  } )
-  .catch( _this.handleError.bind( _this ) );
+  // Instagram error
+  if( cause.error_type ) {
+    var igError = cause.error_type;
+    debug( 'Got Instagram error: %s', igError );
+
+    // Retry only if rate limit reached
+    if( igError==='OAuthRateLimitException' ) {
+      debug( 'Rate limit reached, pausing for 1 hour and retry the request' );
+      var retryPromise = Promise.method( cause.retry );
+
+      return Promise
+      .delay( WINDOW_SIZE )
+      .then( function() {
+        debug( 'Retring the request' );
+        return retryPromise();
+      } )
+      .catch( _this.handleError.bind( _this ) );
+    } else {
+      debug( cause );
+    }
+
+  // Other error
+  } else {
+    debug( 'Got generic error: %j', cause );
+  }
 };
 
 
