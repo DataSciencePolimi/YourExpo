@@ -22,7 +22,8 @@ var topic1 = 'terra';
 var topic2 = 'mare';
 var startDate = '2014-12-07';
 var endDate = '2014-12-13';
-var sampleId = 'wEkUiMtuzr';
+// var sampleId = 'wEkUiMtuzr';
+var sampleId = 'yMOmrbNuxn';
 var winnerPost = 'yMOmrbNuxn';
 
 

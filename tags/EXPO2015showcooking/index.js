@@ -22,7 +22,9 @@ var topic1 = 'show';
 var topic2 = 'cooking';
 var startDate = '2014-12-20';
 var endDate = '2014-12-27';
-var sampleId = 'wEkUiMtuzr';
+// var sampleId = 'wEkUiMtuzr';
+var sampleId = 'yhrzy5Nu9Q';
+var winnerPost = 'yhrzy5Nu9Q';
 
 
 
@@ -44,6 +46,12 @@ var exported = {
   endDate: moment( endDate, DATE_FORMAT ).endOf( 'day' ),
   sampleId: sampleId,
   description: readMarkdown( 'description.md' ),
+
+  winnerPost: winnerPost,
+  winner1: 'coluco',
+  winner2: 'tortelliniandco',
+
+  postcard: path.resolve( __dirname, 'postcard.jpg' ),
 
   locale: {
     en: {

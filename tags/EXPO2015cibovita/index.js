@@ -22,8 +22,9 @@ var topic1 = 'cibo';
 var topic2 = 'vita';
 var startDate = '2014-12-13';
 var endDate = '2014-12-20';
-var sampleId = 'wEkUiMtuzr';
-
+// var sampleId = 'wEkUiMtuzr';
+var sampleId = 'yUFO9-tu-G';
+var winnerPost = 'yUFO9-tu-G';
 
 
 var tag = 'EXPO2015'+topic1+topic2;
@@ -44,6 +45,13 @@ var exported = {
   endDate: moment( endDate, DATE_FORMAT ).endOf( 'day' ),
   sampleId: sampleId,
   description: readMarkdown( 'description.md' ),
+
+  winnerPost: winnerPost,
+  winner1: 'silvianagliati',
+  winner2: 'kristinaneral',
+
+  postcard: path.resolve( __dirname, 'postcard.jpg' ),
+
 
   locale: {
     en: {

@@ -41,8 +41,9 @@ function handleFatalError( err ) {
 }
 
 
-
+var i = 0;
 function likePhoto( data ) {
+  debug( 'Iteration %d', i++ );
   debug( 'Like photo: %s', data.id );
 
   return instagram
@@ -130,7 +131,7 @@ function loop() {
   } )
   .then( function() {
     debug( 'Loop ended' );
-
+    i = 0;
     setImmediate( loop );
   } );
 }
