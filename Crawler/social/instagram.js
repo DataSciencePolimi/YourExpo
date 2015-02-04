@@ -2,7 +2,7 @@
 
 // Load modules
 var Promise = require( 'bluebird' );
-var moment = require( 'moment' );
+// var moment = require( 'moment' );
 var debug = require( 'debug' )( 'crawler:social:instagram' );
 var InstagramLib = require( 'instagram-node' );
 var _ = require( 'lodash' );
