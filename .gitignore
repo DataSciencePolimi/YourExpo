@@ -17,7 +17,7 @@ lib
 public/**/*
 
 # Do not sync database
-database
+database*
 
 # Do not sync configuration files
 config/*.json

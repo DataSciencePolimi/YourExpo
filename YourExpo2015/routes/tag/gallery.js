@@ -30,13 +30,13 @@ module.exports = function( req, res ) {
 
   var baseQuery = Model
   .find()
-  .select( '-raw' )
+  .limit( maxImages )
+  .select( '-raw -votes -likers' )
   .where( 'tag', tag )
   .where( 'rejected', false )
   // .where( 'highlighted', true )
   // .where( 'votesCount' ).gt( minVotes )
   // .sort( '-votesCount' )
-  .limit( maxImages )
   .lean()
   .toConstructor();
 
@@ -80,7 +80,6 @@ module.exports = function( req, res ) {
     data.images = baseQuery()
     .where( 'votesCount' ).gt( minVotes )
     .sort( '-_id' )
-    .limit( 100 ) // TODO: BAD FIX due to memory exception
     .execAsync();
   }
 

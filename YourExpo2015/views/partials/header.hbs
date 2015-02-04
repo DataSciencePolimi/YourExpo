@@ -1,7 +1,11 @@
 <div class="logos">
-  <img class="logo left" src="img/logo-expo.png" alt="EXPO 2015">
+  <a href="http://www.expo2015.org/" target="_blank">
+    <img class="logo left" src="img/logo-expo.png" alt="EXPO 2015">
+  </a>
   <div class="title">{{title}}</div>
-  <img class="logo right" src="img/logo-polimi.png" alt="Politecnico di Milano">
+  <a href="http://www.polimi.it/" target="_blank">
+    <img class="logo right" src="img/logo-polimi.png" alt="Politecnico di Milano">
+  </a>
 </div>
 <nav>
   <label for="toggle_menu" class="toggle"><i class="fa fa-navicon"></i></label>
@@ -19,7 +23,10 @@
       </a></li> --}}
     {{/if}}
 
-    <li class="{{#if tags_active}}active{{/if}}"><a href="{{tag}}/tags">Tags</a></li>
+    <li class="{{#if tags_active}}active{{/if}}"><a href="{{tag}}/tags">
+      <span lang="it">Risultati</span>
+      <span lang="en">Results</span>
+    </a></li>
 
     <li class="{{#if gallery_active}}active{{/if}}"><a href="{{tag}}/gallery">Gallery</a></li>
 

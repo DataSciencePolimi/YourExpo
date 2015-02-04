@@ -114,17 +114,17 @@ body {
   -ms-flex-align: center;
   align-items: center;
 }
-.logos > .logo {
+.logos .logo {
   -webkit-box-flex: 0;
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
 }
-.logos > .logo.left {
+.logos .logo.left {
   /*flex: 0 0 155px;*/
   height: 68px;
 }
-.logos > .logo.right {
+.logos .logo.right {
   height: 68px;
 }
 .logos > .title {
