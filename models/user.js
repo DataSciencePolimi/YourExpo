@@ -51,7 +51,22 @@ var UserSchema = new Schema( {
   },
   invitedTimestamp: {
     type: Date
-  }
+  },
+
+  externalLike: {
+    type: Boolean,
+    index: true
+  },
+  externalLikeTag: {
+    type: String,
+  },
+  externalLikePhotoId: {
+    type: String,
+    index: true
+  },
+  externalLikeTimestamp: {
+    type: Date
+  },
 
 }, {
   /**

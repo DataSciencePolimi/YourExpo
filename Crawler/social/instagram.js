@@ -14,25 +14,7 @@ var _ = require( 'lodash' );
 var WINDOW_SIZE = 60*60*1000;
 
 // Module variables declaration
-/*
-var keys = [
-  {
-    'clientId': 'fd5404fd42ec400db007736e2517100b',
-    'clientSecret': 'bf4965608d7d4380838bea047634f854',
-    'accessToken': '1574448514.fd5404f.3f2edfc6269b44dc95ecf991384828b0'
-  },
-  {
-    'clientId': '3bb9963f72584b12a668ec4a9af6d3e1',
-    'clientSecret': 'e81f75f0699a43c68e88032151c080ba',
-    'accessToken': '1574448514.3bb9963.0419e8f021dd4ed899f41c07c23b53bb'
-  },
-  {
-    'clientId': '50ddf91cf2e34652993aef6c2d07f820',
-    'clientSecret': '05aadbd93fdc4489a752b33de27af48a',
-    'accessToken': '1574448514.50ddf91.0b7b28f8ee7d4fb49fa5fce72382b397'
-  }
-];
-*/
+
 // Module initialization (at first load)
 
 
@@ -138,16 +120,26 @@ Instagram.prototype.followUser = function( userId ) {
   .catch( this.handleError.bind( this ) );
 };
 
+
+Instagram.prototype.addComment = function( id, comment ) {
+  return this.api
+  /* jshint camelcase:false */
+  .add_commentAsync( id, comment )
+  /* jshint camelcase:true */
+  .catch( this.handleError.bind( this ) );
+};
+
+
 Instagram.prototype.searchTag = function( tag, options ) {
   options = options || {};
   var fetchAll = options.fetchAll || false;
 
   var params = {
-    count: 100,
+    count: options.count || 100,
   };
 
 
-  debug( 'Seaching for tag "%s" with %j', tag, options );
+  debug( 'Seaching for tag "%s" with %j', tag, params );
 
   var tagPromise = this.api
   /* jshint camelcase:false */

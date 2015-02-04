@@ -28,6 +28,7 @@ function resolver( resolve, reject ) {
 
 // Module initialization (at first load)
 Promise.promisifyAll( mongoose );
+Promise.promisifyAll( mongoose );
 
 var collections = config.mongo.collections;
 mongoose.model( collections.profile, ProfileSchema );
