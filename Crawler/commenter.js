@@ -51,6 +51,7 @@ function commentPhoto( id ) {
   .addComment( id, comment )
   .spread( function() {
     debug( 'Commented photo: %s', id );
+    throw new Error( 'MUST be implemented with user update' );
   } )
   .catch( function( err ) {
     debug( 'Comment photo error: %j', err );
@@ -64,6 +65,7 @@ function loop() {
   var aggregate = Promise.promisifyAll( Model.aggregate() );
 
   aggregate
+  .allowDiskUse( true )
   .match( {
     tag: tag
   } )
@@ -78,7 +80,6 @@ function loop() {
     }
   } )
   .sort( '-topPhotoVotes' )
-  // .allowDiskUse( true )
   .execAsync()
   .then( function mapIdToPromises( photos ) {
     if( photos.length===0 )
