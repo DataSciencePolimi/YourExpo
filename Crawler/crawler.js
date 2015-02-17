@@ -120,7 +120,7 @@ function wrapInstagramPhotos( igPhotos ) {
 
 function loop() {
   debug( 'Loop init' );
-  var start = moment();
+  // var start = moment();
 
   instagram
   .searchTag( tag, {
@@ -147,16 +147,10 @@ function loop() {
   .then( function() {
     debug( 'Saved all photos' );
   } )
-  .then( function() {
-    var diff = moment().diff( start, 'h', true );
-    if( diff<1 ) {
-      var interval = ( 1 - diff )*60*60;
-      debug( 'Pausing for %d seconds', interval );
-
-      return Promise
-      .delay( interval*1000 );
-    }
+  .catch( function( err ) {
+    debug( 'Error during loop: %j', err );
   } )
+  .delay( 60*60*1000 )
   .then( function() {
     debug( 'Loop ended' );
 

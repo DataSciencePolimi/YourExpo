@@ -79,12 +79,14 @@ Instagram.prototype.handleError = function( err ) {
       } )
       .catch( _this.handleError.bind( _this ) );
     } else {
-      debug( cause );
+      debug( 'Cause: %j', cause );
+      throw cause;
     }
 
   // Other error
   } else {
-    debug( 'Got generic error: %j', cause );
+    debug( 'Got generic error: %j', err );
+    throw err;
   }
 };
 
@@ -117,7 +119,7 @@ Instagram.prototype.getLikers = function( id ) {
   /* jshint camelcase:false */
   .likesAsync( id )
   /* jshint camelcase:true */
-  // .catch( this.handleError.bind( this ) )
+  .catch( this.handleError.bind( this ) )
   ;
 };
 Instagram.prototype.likePost = function( id ) {
