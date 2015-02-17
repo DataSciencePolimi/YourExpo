@@ -6,6 +6,7 @@ var debug = require('debug')('models:photo');
 var mongoose = require('mongoose');
 
 // Load my modules
+var CommentSchema = require('./comment.js');
 var VoteSchema = require('./vote.js');
 var LikersSchema = require('./liker.js');
 
@@ -151,6 +152,13 @@ var PhotoSchema = new Schema({
    */
   votes: {
     type: [VoteSchema],
+    default: []
+  },
+  /**
+   * Comments
+   */
+  comments: {
+    type: [CommentSchema],
     default: []
   },
   /**

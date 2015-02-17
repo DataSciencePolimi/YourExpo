@@ -1,3 +1,4 @@
+"use strict";
 // Load system modules
 
 // Load modules
@@ -140,6 +141,13 @@ Instagram.prototype.addComment = function( id, comment ) {
   return this.api
   /* jshint camelcase:false */
   .add_commentAsync( id, comment )
+  /* jshint camelcase:true */
+  .catch( this.handleError.bind( this ) );
+};
+Instagram.prototype.getComments = function( id ) {
+  return this.api
+  /* jshint camelcase:false */
+  .commentsAsync( id )
   /* jshint camelcase:true */
   .catch( this.handleError.bind( this ) );
 };
