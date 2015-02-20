@@ -20,7 +20,7 @@ var DATE_FORMAT = 'YYYY-MM-DD';
 // Module variables declaration
 var topic1 = 'bio';
 var topic2 = 'diversity';
-var startDate = '2015-02-20';
+var startDate = '2015-02-21';
 var endDate = '2015-02-28';
 var sampleId = 'wEkUiMtuzr';
 
