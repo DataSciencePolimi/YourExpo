@@ -22,8 +22,9 @@ var topic1 = 'gusto';
 var topic2 = 'mondo';
 var startDate = '2015-01-10';
 var endDate = '2015-01-17';
-var sampleId = 'wEkUiMtuzr';
-
+// var sampleId = 'wEkUiMtuzr';
+var sampleId = 'zC48iEtu4L';
+var winnerPost = 'zC48iEtu4L';
 
 
 var tag = 'EXPO2015'+topic1+topic2;
@@ -44,6 +45,12 @@ var exported = {
   endDate: moment( endDate, DATE_FORMAT ).endOf( 'day' ),
   sampleId: sampleId,
   description: readMarkdown( 'description.md' ),
+
+  winnerPost: winnerPost,
+  winner1: 'daicuciniamo_conlaiaia',
+  winner2: 'cook_eat_love',
+
+  postcard: path.resolve( __dirname, 'postcard.jpg' ),
 
   locale: {
     en: {

@@ -17,7 +17,9 @@ var Instagram = require( './social/instagram.js' );
 
 // Module variables declaration
 var photoCollectionName = config.mongo.collections.photo;
-var Model = mongoose.model( photoCollectionName );
+var commentCollectionName = config.mongo.collections.comment;
+var Photo = mongoose.model( photoCollectionName );
+var Comment = mongoose.model( commentCollectionName );
 
 // Constant declaration
 
@@ -45,14 +47,17 @@ function handleFatalError( err ) {
 function convertComment( comment ) {
   var date = moment.unix( 1*comment.created_time ).utc().toDate();
 
-  return {
+  return new Comment( {
     timestamp: date,
     id: comment.id,
     text: comment.text,
     username: comment.from.username,
-    userId: comment.from.id
-  };
+    userId: comment.from.id,
+    postId: this.id
+  } ).saveAsync();
 }
+
+
 
 
 var index = 0;
@@ -64,11 +69,14 @@ function getComments( photo ) {
   .spread( function( comments ) {
     debug( 'Comments [%d]', comments.length );
 
-    var mappedComments = _.map( comments, convertComment );
-    photo.comments = mappedComments;
+    if( comments.length===0 ) return;
 
-    return photo
-    .saveAsync();
+    var mappedComments = _.map( comments, convertComment, {
+      id: photo.providerId
+    } );
+
+    return Promise
+    .settle( mappedComments );
   } )
   .then( function() {
     index++;
@@ -85,9 +93,10 @@ function getComments( photo ) {
 
 function loop() {
   debug( 'Loop init' );
-  Model
+
+  Photo
   .find()
-  .select( '_id providerId comments' )
+  .select( '_id providerId' )
   .execAsync()
   .then( function mapIdToPromises( photos ) {
     if( photos.length===0 )

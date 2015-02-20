@@ -53,6 +53,7 @@ config.mongo = {
     post: 'Post',
     photo: 'Photo',
     profile: 'User',
+    comment: 'Comment',
     user: 'IgUser'
   }
 };

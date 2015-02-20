@@ -12,6 +12,7 @@ var ProfileSchema = require( './profile.js' );
 var UserSchema = require( './user.js' );
 var PhotoSchema = require( './photo.js' );
 var PostSchema = require( './post.js' );
+var CommentSchema = require( './comment.js' );
 
 // Constant declaration
 
@@ -35,6 +36,7 @@ mongoose.model( collections.profile, ProfileSchema );
 mongoose.model( collections.photo, PhotoSchema );
 mongoose.model( collections.post, PostSchema );
 mongoose.model( collections.user, UserSchema );
+mongoose.model( collections.comment, CommentSchema );
 
 
 

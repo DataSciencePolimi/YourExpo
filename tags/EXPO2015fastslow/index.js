@@ -22,8 +22,9 @@ var topic1 = 'fast';
 var topic2 = 'slow';
 var startDate = '2015-01-17';
 var endDate = '2015-01-24';
-var sampleId = 'wEkUiMtuzr';
-
+// var sampleId = 'wEkUiMtuzr';
+var sampleId = 'zSWPCstu5a';
+var winnerPost = 'zSWPCstu5a';
 
 
 var tag = 'EXPO2015'+topic1+topic2;
@@ -44,6 +45,12 @@ var exported = {
   endDate: moment( endDate, DATE_FORMAT ).endOf( 'day' ),
   sampleId: sampleId,
   description: readMarkdown( 'description.md' ),
+
+  winnerPost: winnerPost,
+  winner1: 'kwizinz',
+  winner2: 'incucinaconpijou',
+
+  postcard: path.resolve( __dirname, 'postcard.jpg' ),
 
   locale: {
     en: {

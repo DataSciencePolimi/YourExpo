@@ -3,7 +3,7 @@ var fs = require( 'fs' );
 var path = require( 'path' );
 
 // Load modules
-var debug = require( 'debug' )( 'yourexpo:tag:artfun' );
+var debug = require( 'debug' )( 'yourexpo:tag:biodiversity' );
 var _ = require( 'lodash' );
 var marked = require( 'marked' );
 var moment = require( 'moment' );
@@ -18,13 +18,12 @@ var moment = require( 'moment' );
 var DATE_FORMAT = 'YYYY-MM-DD';
 
 // Module variables declaration
-var topic1 = 'art';
-var topic2 = 'fun';
-var startDate = '2014-12-27';
-var endDate = '2015-01-03';
-// var sampleId = 'wEkUiMtuzr';
-var sampleId = 'yue8CmNuxN';
-var winnerPost = 'yue8CmNuxN';
+var topic1 = 'bio';
+var topic2 = 'diversity';
+var startDate = '2015-02-20';
+var endDate = '2015-02-28';
+var sampleId = 'wEkUiMtuzr';
+
 
 
 var tag = 'EXPO2015'+topic1+topic2;
@@ -46,16 +45,10 @@ var exported = {
   sampleId: sampleId,
   description: readMarkdown( 'description.md' ),
 
-  winnerPost: winnerPost,
-  winner1: 'recettedubonheur',
-  winner2: 'annamoru',
-
-  postcard: path.resolve( __dirname, 'postcard.jpg' ),
-
   locale: {
     en: {
-      topic1: 'art',
-      topic2: 'fun',
+      topic1: 'bio',
+      topic2: 'diversity',
       description: readMarkdown( 'description.en.md' ),
     }
   }

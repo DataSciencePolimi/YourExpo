@@ -25,10 +25,33 @@ var CommentSchema = new Schema( {
     type: Date,
     required: true
   },
-  id: String,
-  text: String,
-  username: String,
-  userId: String
+
+  id: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true
+  },
+
+  postId: {
+    type: String,
+    required: true,
+    index: true
+  },
+
+  username: {
+    type: String,
+    required: true,
+    index: true
+  },
+
+  userId: {
+    type: String,
+    required: true,
+    index: true
+  },
+
+  text: String
 } );
 
 
