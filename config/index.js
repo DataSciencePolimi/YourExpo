@@ -1,13 +1,11 @@
 // Load system modules
 
 // Load modules
-var Promise = require( 'bluebird' );
-var _ = require( 'lodash' );
-var debug = require( 'debug' )( 'config:index' );
+var Promise = require('bluebird');
+var _ = require('lodash');
+var debug = require('debug')('config:index');
 
 // Load my modules
-
-
 
 
 
@@ -18,12 +16,12 @@ var config = {};
 
 
 // Module initialization (at first load)
-Promise.prototype.log = function( out, message /*, args... */ ) {
-  var args = _.toArray( arguments ).slice( 2 );
+Promise.prototype.log = function(out, message /*, args... */ ) {
+  var args = _.toArray(arguments).slice(2);
   return this
-  .tap( function() {
-    _.partial( out, message ).apply( null, args );
-  } );
+    .tap(function() {
+      _.partial(out, message).apply(null, args);
+    });
 };
 // Promise.longStackTraces();
 
@@ -31,9 +29,9 @@ Promise.prototype.log = function( out, message /*, args... */ ) {
 // Facebook
 // config.facebook = require( './facebook.json' );
 // Twitter
-config.twitter = require( './twitter.json' );
+config.twitter = require('./twitter.json');
 // Instagram
-config.instagram = require( './instagram.json' );
+config.instagram = require('./instagram.json');
 
 
 // Crawler config
@@ -48,7 +46,7 @@ config.gallery = {
 
 // MongoDB configuration
 config.mongo = {
-  url: 'mongodb://localhost/YourExpo2015',
+  url: 'mongodb://localhost/yourexpo2015newnew',
   collections: {
     post: 'Post',
     photo: 'Photo',
@@ -76,10 +74,10 @@ config.crowdSearcher = {
 
 // Load override if present
 try {
-  var override = require( './override.js' );
-  config = _.assign( config, override );
-} catch( ex ) {
-  debug( 'No override file found' );
+  var override = require('./override.js');
+  config = _.assign(config, override);
+} catch (ex) {
+  debug('No override file found');
 }
 
 
